@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd"
+		 >
+		 
+    <!-- 自动扫描包 -->
+    <context:component-scan base-package="com.swjtu.aroundyou.persistence.dao,com.swjtu.aroundyou.biz"/>
+    
+    <context:property-placeholder location="classpath:db.properties" />
+
+    <!-- 使用C3P0的连接池技术 --> 
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"> 
+        <property name="driverClass" value="${jdbc.driverClass}" /> 
+        <property name="jdbcUrl" value="${jdbc.jdbcUrl}" /> 
+        <property name="user" value="${jdbc.user}" /> 
+        <property name="password" value="${jdbc.password}" /> 
+        <!-- 指定连接数据库连接池的最大连接数 --> 
+        <property name="maxPoolSize" value="20" /> 
+        <!-- 指定连接数据库连接池的最小连接数 --> 
+        <property name="minPoolSize" value="4" /> 
+        <!-- 指定连接数据库连接池的初始化连接数 --> 
+        <property name="initialPoolSize" value="4" /> 
+        <!-- 指定连接数据库连接池的连接的最大空闲时间 --> 
+        <property name="maxIdleTime" value="20" /> 
+    </bean>  
+    
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+               <property name="dataSource" ref="dataSource"/>
+               <property name="hibernateProperties">
+                      <props>
+                              <prop key="hibernate.format_sql">true</prop>
+                              <prop key="hibernate.show_sql">true</prop>
+                              <!--jdbc.fetch_size是指Hibernate每次从数据库中取出并放到JDBC的Statement中的记录条数。Fetch Size设的越大，读数据库的次数越少，速度越快，Fetch Size越小，读数据库的次数越多，速度越慢-->   
+                              <prop key="jdbc.fetch_size">50</prop>
+                              <!--jdbc.batch_size是指Hibernate批量插入,删除和更新时每次操作的记录数。Batch Size越大，批量操作的向数据库发送Sql的次数越少，速度就越快，同样耗用内存就越大-->  
+                              <prop key="jdbc.batch_size">23</prop>
+                              <prop key="Connection.useUnicode">true</prop>
+                              <prop key="connection.characterEncoding">utf-8</prop>
+                              <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+
+                      </props>
+               </property>
+               <property name="mappingLocations">
+                      <list>
+                            <value>classpath:com/swjtu/aroundyou/persistence/dto/user/UserLoginDTO.hbm.xml</value>
+                      </list>
+               </property>
+    </bean>
+    
+<!-- 启用注解方式的声明式事务支持 
+    <tx:annotation-driven transaction-manager="transactionManager" /> -->
+    
+    <!-- 开启事物 -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+            <property name="sessionFactory" ref="sessionFactory" />
+    </bean> 
+    
+    <tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+            <tx:attributes>
+                   <tx:method name="save*" propagation="REQUIRED"/>
+                   <tx:method name="update*" propagation="REQUIRED"/>
+                   <tx:method name="delete*" propagation="REQUIRED"/>
+                                    
+             <tx:method name="get*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="find*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="select*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="load*" propagation="SUPPORTS" read-only="true" />
+
+			<!-- 其他采用默认事务方式 -->
+			<tx:method name="*" />
+            </tx:attributes>
+    </tx:advice>
+    
+    <aop:config>
+            <aop:pointcut expression="execution(* com.swjtu.aroundyou.biz.service.user..*Impl.*(..))" id="transactionPointcut"/>
+            <aop:advisor advice-ref="transactionAdvice" pointcut-ref="transactionPointcut"/>
+    </aop:config>
+</beans>

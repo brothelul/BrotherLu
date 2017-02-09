@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-2-8 21:33:28 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.swjtu.aroundyou.persistence.dto.user.UserLoginDTO" table="user_login">       
+        <composite-id name="id" class="com.swjtu.aroundyou.persistence.dto.user.UserIdDTO">            
+            <key-property name="userNo" column="user_no" type="integer"/>
+            <key-property name="userType" column="user_type" type="integer"/>
+        </composite-id>
+        
+        <property name="username" type="string">
+            <column name="username" />
+        </property>
+        <property name="password" type="string">
+            <column name="password" />
+        </property>
+        <property name="lastLoginIP" type="string">
+            <column name="last_login_ip"/>
+        </property>
+        <property name="lastLoginDate" type="timestamp">
+            <column name="last_login_date"/>
+        </property>
+        <property name="createId" type="integer">
+            <column name="create_id"/>
+        </property>
+        <property name="createDate" type="timestamp">
+            <column name="create_date"/>
+        </property>
+    </class>
+</hibernate-mapping>

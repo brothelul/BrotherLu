@@ -8,9 +8,6 @@
         <welcome-file>index.html</welcome-file>  
         <welcome-file>index.htm</welcome-file>  
         <welcome-file>index.jsp</welcome-file>  
-        <welcome-file>default.html</welcome-file>  
-        <welcome-file>default.htm</welcome-file>  
-        <welcome-file>default.jsp</welcome-file>  
     </welcome-file-list>  
   
     <!-- 配置Spring IOC 容器 -->  
@@ -35,7 +32,7 @@
     </servlet>  
     <servlet-mapping>  
         <servlet-name>dispatcherServlet</servlet-name>  
-        <url-pattern>/*</url-pattern>  
+        <url-pattern>*.do</url-pattern>  
     </servlet-mapping>  
   
     <!-- 配置编码方式过滤器,注意一点:要配置在所有过滤器的前面 -->  
@@ -46,6 +43,10 @@
             <param-name>encoding</param-name>  
             <param-value>UTF-8</param-value>  
         </init-param>  
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
     </filter>  
     <filter-mapping>  
         <filter-name>characterEncodingFilter</filter-name>  

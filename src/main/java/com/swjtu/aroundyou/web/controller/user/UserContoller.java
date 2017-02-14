@@ -1,12 +1,15 @@
 package com.swjtu.aroundyou.web.controller.user;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.swjtu.aroundyou.biz.entity.user.UserLogin;
+import com.swjtu.aroundyou.biz.entity.user.UserInfo;
 import com.swjtu.aroundyou.biz.service.user.UserInfoService;
 import com.swjtu.aroundyou.biz.service.user.UserLoginService;
 
@@ -20,12 +23,16 @@ public class UserContoller {
 	@Autowired
 	private UserInfoService userInfoService;
 	
-	@RequestMapping(name="/login",method=RequestMethod.GET)
-	public String getUserLogin(){
+	@RequestMapping(name="/login.do",method=RequestMethod.POST)
+	public void getUserLogin(HttpServletRequest request , HttpSession session){
 		
-		UserLogin userLogin = userLoginService.getUserLogin("", "");
-		logger.info(userLogin.getUsername());
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
 		
-		return "redirect:index.jsp";
+		UserInfo userInfo = userLoginService.getUserLogin(username, password);
+		
+		session.setAttribute("userInfo", userInfo);
+		
+		logger.info("user "+username+" login");
 	}
 }

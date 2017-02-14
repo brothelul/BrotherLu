@@ -13,7 +13,7 @@ public class UserLoginTest extends AbstractTest{
 		
 		UserLoginService userLoginService = (UserLoginService)getBean("userLoginService");
 		
-		UserLogin userLogin = userLoginService.getUserLogin("", "");
+		UserLogin userLogin = null;
 		
 		logger.info(userLogin.getUsername());
 	}

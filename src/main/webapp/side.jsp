@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="utf-8"%>
-    
-    
+        
         <div class="sidebar">                       
                      <div class="block_search_top">
                         	<h4>热门搜索</h4>                           

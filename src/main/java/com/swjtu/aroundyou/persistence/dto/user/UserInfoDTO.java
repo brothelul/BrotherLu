@@ -1,6 +1,7 @@
 package com.swjtu.aroundyou.persistence.dto.user;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 
@@ -21,6 +22,8 @@ public class UserInfoDTO implements Serializable{
 	private String identifyUri;  //存放认证的图片
 	private Integer passIdentify;  //是否通过认证，1 为通过 ， 0 为未通过，初始值为3
 	private Integer friend;  //存放友好度，用于限制恶劣用户评论和发表反动信息， 总值为5，扣分由后台操作
+	private String lastLoginIP;
+	private Date lastLoginDate;
 	
 	public UserIdDTO getId() {
 		return id;
@@ -75,6 +78,18 @@ public class UserInfoDTO implements Serializable{
 	}
 	public void setFriend(Integer friend) {
 		this.friend = friend;
+	}
+	public String getLastLoginIP() {
+		return lastLoginIP;
+	}
+	public void setLastLoginIP(String lastLoginIP) {
+		this.lastLoginIP = lastLoginIP;
+	}
+	public Date getLastLoginDate() {
+		return lastLoginDate;
+	}
+	public void setLastLoginDate(Date lastLoginDate) {
+		this.lastLoginDate = lastLoginDate;
 	}
 	
 }

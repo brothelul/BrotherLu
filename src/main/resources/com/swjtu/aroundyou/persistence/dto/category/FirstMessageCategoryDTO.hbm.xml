@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-2-15 20:56:44 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.swjtu.aroundyou.persistence.dto.category.FirstMessageCategoryDTO" table="first_message_category">
+        <id name="categoryNo" type="integer">
+            <column name="first_category_no" />
+            <generator class="native" />
+        </id>
+
+        <property name="categoryName" type="string">
+            <column name="first_category_name" />
+        </property>
+
+        <set name="secondCategorySet" table="second_message_category" inverse="false" lazy="true">
+            <key>
+                <column name="second_category_no" />
+            </key>
+            <one-to-many class="com.swjtu.aroundyou.persistence.dto.category.SecondMessageCategoryDTO" />
+        </set>
+        
+        <property name="createId" type="integer">
+            <column name="create_id" />
+        </property>
+        <property name="createDate" type="timestamp">
+            <column name="create_date" />
+        </property>
+        <property name="updateId" type="integer">
+            <column name="update_id" />
+        </property>
+        <property name="updateDate" type="timestamp">
+            <column name="update_date" />
+        </property>
+        <property name="deleteId" type="integer">
+            <column name="delete_id" />
+        </property>
+        <property name="deleteDate" type="timestamp">
+            <column name="delete_date" />
+        </property>
+    </class>
+</hibernate-mapping>

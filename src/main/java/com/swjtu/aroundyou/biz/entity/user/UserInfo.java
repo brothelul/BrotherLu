@@ -1,5 +1,7 @@
 package com.swjtu.aroundyou.biz.entity.user;
 
+import java.util.Date;
+
 public class UserInfo {
 
 	private Integer userNo;
@@ -12,6 +14,9 @@ public class UserInfo {
 	private String identifyUri;  
 	private Integer passIdentify;  
 	private Integer friend;
+	private String lastLoginIP;
+	private Date lastLoginDate;
+	
 	public Integer getUserNo() {
 		return userNo;
 	}
@@ -72,5 +77,16 @@ public class UserInfo {
 	public void setFriend(Integer friend) {
 		this.friend = friend;
 	}
-	
+	public String getLastLoginIP() {
+		return lastLoginIP;
+	}
+	public void setLastLoginIP(String lastLoginIP) {
+		this.lastLoginIP = lastLoginIP;
+	}
+	public Date getLastLoginDate() {
+		return lastLoginDate;
+	}
+	public void setLastLoginDate(Date lastLoginDate) {
+		this.lastLoginDate = lastLoginDate;
+	}
 }

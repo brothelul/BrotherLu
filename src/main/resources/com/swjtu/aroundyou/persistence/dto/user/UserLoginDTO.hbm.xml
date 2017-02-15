@@ -15,12 +15,6 @@
         <property name="password" type="string">
             <column name="password" />
         </property>
-        <property name="lastLoginIP" type="string">
-            <column name="last_login_ip"/>
-        </property>
-        <property name="lastLoginDate" type="timestamp">
-            <column name="last_login_date"/>
-        </property>
         <property name="createId" type="integer">
             <column name="create_id"/>
         </property>

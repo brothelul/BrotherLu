@@ -2,9 +2,9 @@ package com.swjtu.aroundyou.biz.service.user;
 
 import com.swjtu.aroundyou.biz.entity.user.UserInfo;
 
-public interface UserLoginService {
+public interface UserService {
 
-	String NAME = "userLoginService";
+	String NAME = "userService";
 	
 	/**
 	 * 

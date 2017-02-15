@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.swjtu.aroundyou.biz.entity.user.UserInfo;
-import com.swjtu.aroundyou.biz.service.user.UserInfoService;
-import com.swjtu.aroundyou.biz.service.user.UserLoginService;
+import com.swjtu.aroundyou.biz.service.user.UserService;
 
 @Controller(value="userContoller")
 public class UserContoller {
@@ -19,9 +18,7 @@ public class UserContoller {
 	private Logger logger = Logger.getLogger(UserContoller.class);
 	
 	@Autowired
-	private UserLoginService userLoginService;
-	@Autowired
-	private UserInfoService userInfoService;
+	private UserService userService;
 	
 	@RequestMapping(name="/login.do",method=RequestMethod.POST)
 	public void getUserLogin(HttpServletRequest request , HttpSession session){
@@ -29,7 +26,7 @@ public class UserContoller {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		
-		UserInfo userInfo = userLoginService.getUserLogin(username, password);
+		UserInfo userInfo = userService.getUserLogin(username, password);
 		
 		session.setAttribute("userInfo", userInfo);
 		

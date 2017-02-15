@@ -8,8 +8,7 @@ public class UserLogin {
 	private Integer userType;
 	private String username;
 	private String password;
-	private String lastLoginIP;
-	private Date lastLoginDate;
+
 	private Integer createId;
 	private Date createDate;
 	
@@ -36,18 +35,6 @@ public class UserLogin {
 	}
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	public String getLastLoginIP() {
-		return lastLoginIP;
-	}
-	public void setLastLoginIP(String lastLoginIP) {
-		this.lastLoginIP = lastLoginIP;
-	}
-	public Date getLastLoginDate() {
-		return lastLoginDate;
-	}
-	public void setLastLoginDate(Date lastLoginDate) {
-		this.lastLoginDate = lastLoginDate;
 	}
 	public Integer getCreateId() {
 		return createId;

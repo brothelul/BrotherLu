@@ -32,7 +32,13 @@
             <column name="pass_identify" />
         </property>
         <property name="friend" type="integer">
-            <column name="friend" />
+            <column name="friend" />      
+        </property>
+        <property name="lastLoginIP" type="string">
+            <column name="last_login_ip"/>
+        </property>
+        <property name="lastLoginDate" type="timestamp">
+            <column name="last_login_date"/>
         </property>
     </class>
 </hibernate-mapping>

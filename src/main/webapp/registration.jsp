@@ -33,7 +33,7 @@
                         <div class="separator" style="height:39px;"></div>
                         
                         <div class="block_registration">
-                        	<form action="#" class="w_validation" />
+                        	<form action="user/regist.do" class="w_validation">
                             	<div class="col_1">
                                 	<div class="label"><p>用户名<span>*</span>:</p></div>
                                     <div class="field"><input type="text" class="req" placeholder="用户名长度大于2小于10" /></div>

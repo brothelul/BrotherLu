@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-2-24 19:50:34 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.swjtu.aroundyou.persistence.entity.message.Message" table="message">
+        <id name="messageNo" type="integer">
+             <column name="message_no"/>
+             <generator class="native"/>
+        </id>
+        <property name="messageName" type="string">
+            <column name="message_name" />
+        </property>
+        <property name="messageTitle" type="string">
+            <column name="message_title" />
+        </property>
+        <property name="photoUri" type="string">
+            <column name="photo_uri" />
+        </property>
+        <property name="active" type="character">
+            <column name="active" />
+        </property>
+        <property name="messageContent" type="string">
+            <column name="message_content" />
+        </property>
+        <property name="isHot" type="character">
+            <column name="is_hot" />
+        </property>
+        <many-to-one name="secondMessageCategory" class="com.swjtu.aroundyou.persistence.entity.category.SecondMessageCategory" fetch="join">
+            <column name="second_category_no" />
+        </many-to-one>
+        <many-to-one name="userInfo" class="com.swjtu.aroundyou.persistence.entity.user.UserInfo" fetch="join">
+            <column name="user_no" />
+            <column name="user_type"/>
+        </many-to-one>
+        
+        <property name="createId" type="integer">
+             <column name="create_id"/>
+        </property>
+        <property name="createDate" type="timestamp">
+            <column name="create_date" />
+        </property>
+        <property name="updateId" type="integer">
+            <column name="update_id" />
+        </property>
+        <property name="updateDate" type="timestamp">
+            <column name="update_date" />
+        </property>
+        <property name="deleteId" type="integer">
+            <column name="delete_id" />
+        </property>
+        <property name="deleteDate" type="timestamp">
+            <column name="delete_date" />
+        </property>
+    </class>
+</hibernate-mapping>

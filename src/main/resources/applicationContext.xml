@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd"
-		 >
+		 default-lazy-init="true">
 		 
     <!-- 自动扫描包 -->
     <context:component-scan base-package="com.swjtu.aroundyou.persistence.dao,com.swjtu.aroundyou.biz"/>
@@ -49,7 +49,11 @@
                </property>
                <property name="mappingLocations">
                       <list>
-                            <value>classpath:com/swjtu/aroundyou/persistence/dto/user/UserLoginDTO.hbm.xml</value>
+                            <value>classpath:com/swjtu/aroundyou/persistence/entity/user/UserLogin.hbm.xml</value>
+                            <value>classpath:com/swjtu/aroundyou/persistence/entity/user/UserInfo.hbm.xml</value>
+                            <value>classpath:com/swjtu/aroundyou/persistence/entity/message/Message.hbm.xml</value>
+                            <value>classpath:com/swjtu/aroundyou/persistence/entity/category/FirstMessageCategory.hbm.xml</value>
+                            <value>classpath:com/swjtu/aroundyou/persistence/entity/category/SecondMessageCategory.hbm.xml</value>
                       </list>
                </property>
     </bean>

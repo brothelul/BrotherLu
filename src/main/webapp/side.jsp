@@ -1,6 +1,37 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="utf-8"%>
-        
+    <script type="text/javascript">
+
+    (function(){    	       	   
+
+  	   $.ajax({
+  		   
+  		   cashe:true,
+  		   dataType:"json",
+  		   type:"get",
+  		   url:"getTodayMostHot.do",
+  		   
+  		   success:function(data){
+  			   
+  			   var item = eval(data);
+  			   
+  			   $.each(item,function(i,item){
+  				   
+  				   var str ="<div class='article'><div class='pic'><a href='#' class='w_hover'><img src='"+item.photoUri+"' alt='' /><span></span></a></div>";
+  				   str = str +"<div class='text'><p class='title'><a href='#'>"+item.messageTitle+"</a></p><div class='date'><p>"
+  				   str = str +item.createDateString+"</p></div><div class='icons'><ul><li><a href='#' class='views'>41</a></li><li><a href='#' class='comments'>22</a></li></ul></div></div></div>";
+  				   str = str +"	<div class='line_3'></div>";
+  				   
+  				   $(".block_popular_posts").append(str);
+  			   });
+  			   
+  			   return false;
+  		   }
+  		   
+  	   });
+    })();
+    </script>
+      
         <div class="sidebar">                       
                      <div class="block_search_top">
                         	<h4>热门搜索</h4>                           
@@ -16,70 +47,8 @@
                      <div class="separator" style="height:31px;"></div>
                         
                         <div class="block_popular_posts">
-                        	<h4>热门话题</h4>
-                            
-                        	<div class="article">
-								<div class="pic">
-									<a href="#" class="w_hover">
-										<img src="resources/images/pic_popular_post_1.jpg" alt="" />
-										<span></span>
-									</a>
-								</div>
-                                        
-								<div class="text">
-									<p class="title"><a href="#">Packages and web page editors their default text.</a></p>
-									<div class="date"><p>11 July, 2012</p></div>
-                                    <div class="icons">
-                                    	<ul>
-                                        	<li><a href="#" class="views">41</a></li>
-                                            <li><a href="#" class="comments">22</a></li>
-                                        </ul>
-                                    </div>
-								</div>
-							</div>
-							<div class="line_3"></div>
-                            
-                            <div class="article">
-								<div class="pic">
-									<a href="#" class="w_hover">
-										<img src="resources/images/pic_popular_post_2.jpg" alt="" />
-										<span></span>
-									</a>
-								</div>
-                                        
-								<div class="text">
-									<p class="title"><a href="#">Web page editors their default model text, and a search for.</a></p>
-									<div class="date"><p>07 July, 2012</p></div>
-                                    <div class="icons">
-                                    	<ul>
-                                        	<li><a href="#" class="views">24</a></li>
-                                            <li><a href="#" class="comments">16</a></li>
-                                        </ul>
-                                    </div>
-								</div>
-							</div>
-							<div class="line_3"></div>
-                            
-                            <div class="article">
-								<div class="pic">
-									<a href="#" class="w_hover">
-										<img src="resources/images/pic_popular_post_3.jpg" alt="" />
-										<span></span>
-									</a>
-								</div>
-                                        
-								<div class="text">
-									<p class="title"><a href="#">Editors their default model text, and a search uncover.</a></p>
-									<div class="date"><p>05 July, 2012</p></div>
-                                    <div class="icons">
-                                    	<ul>
-                                        	<li><a href="#" class="views">33</a></li>
-                                            <li><a href="#" class="comments">25</a></li>
-                                        </ul>
-                                    </div>
-								</div>
-							</div>
-							<div class="line_2"></div>
+                             <h4>今日最热</h4>                       
+
                         </div>
                         
                         <div class="separator" style="height:31px;"></div>

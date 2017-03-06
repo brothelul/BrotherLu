@@ -3,14 +3,96 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>BusinessNews</title>
+<title>Around You</title>
 
 <%@include file="js&css.jsp" %>
+        <script type="text/javascript">
+  
+        (function(){    	       	   
+
+     	   $.ajax({
+     		   
+     		   type:"get",
+     		   dataType:"json",
+     		   url:"getHotMessages.do",
+     		   cache:true,
+     		   
+     		   success:function(data){
+     			   
+     			   var item = eval(data);
+     			   
+     			   $.each(item,function(i,item){
+     				 	
+     			       // 页面加载时获取旋转框信息
+     				   if(i<5){
+          				 
+     					   var str = "<li><div class='slide'><img src='"+item.photoUri+"' alt='"+item.messageName+"'/><div class='caption'><p class='title'>"+item.messageTitle+"</p><p>"+item.messageContent+"</p></div></div></li>";
+                           $("#sliders").append(str);
+     				   }else{
+     			     	   //获取热门消息
+     					   var str ="<div class='block_home_post'>";
+     					   str = str +"<div class='pic'><a href='news_post.html' class='w_hover'>";
+     					   str = str +"<img src='"+item.photoUri+"' alt='' /><span></span></a></div>";
+     					   str = str +"<div class='text'><p class='title'><a href='news_post.html'>";
+     					   str = str +item.messageTitle+"</a></p>"; 
+     					   str = str +"<div class='date'><p>"+item.createDateString+"</p></div>";
+     					   str = str +"<div class='icons'><ul>";  //后面补充count<a href='#' class='views'>56</a></li><li>
+     					   str = str +"<li><a href='#' class='views'>56</a></li></ul></div></div></div>";//后面补充count
+
+         				   if(i<8){
+
+         					   if(i != 7){str = str +"<div class='line_3' style='margin:14px 0px 17px;'></div>";}
+         					   $(".block_home_col_1").append(str);    					   
+         				   }else if(i>7 && i < 11){
+         					   
+         					   if(i != 10){str = str +"<div class='line_3' style='margin:14px 0px 17px;'></div>";}
+         					   $(".block_home_col_2").append(str);
+         				   }
+     				   }
+
+     			   });
+     		   }
+     	   });
+     	   
+     	   //获取所有消息
+     	   $.ajax({
+     		  
+     		   type:"get",
+     		   dataType:"json",
+     		   url:"getAllMessages.do",
+     		   cache:true,
+     		   
+     		   success:function(data){
+     			   
+     			   var item = eval(data);
+     			   
+     			   $.each(item,function(i,item){
+     				   
+     				   if(i<4){
+     					   
+     				      var str = "<article class='block_topic_post'><p class='title'><a href='news_post.html'>";      
+     				      str = str + item.messageTitle+ "</a></p><div class='f_pic'><a href='news_post.html' class='general_pic_hover scale'>";
+     				      str = str + "<img src='"+item.photoUri+"' alt='' /></a></div><p class='text'>"+item.messageContent+"</p>";
+     				      str = str + "<div class='info'><div class='date'><p>"+item.createDateString+"</p></div>";
+     				      str = str + "<div class='r_part'><div class='category'><p><a href='#'>"+item.secondMessageCategory.categoryName;
+     				      str = str + "</a></p></div><a href='#' class='views'>183</a></div></div></article>";
+     				      $(".block_topic_news").append(str); 
+     				   }
+     			   });
+     			   
+     			   return false;
+     	       }
+     	   });
+     	   
+        })();
+        
+        </script>
 
 <body>
 	<div class="wrapper sticky_footer">
 
         <%@include file="header.jsp" %>
+        
         
         <!-- CONTENT BEGIN -->
         <div id="content" class="right_sidebar">
@@ -18,57 +100,20 @@
             	<div class="general_content">
                 	<div class="main_content">
                     	<div class="block_special_topic">
-                        	<div class="type"><p>特别话题</p></div>
-                            <div class="title"><p><a href="#">long established fact that a reader be distracted.</a></p></div>
+                        	<div class="type"><p>每日鸡汤</p></div>
+                            <div class="title"><p><a href="#">到头来，我们记住的，不是敌人的攻击，而是朋友的沉默。——马丁·路德·金</a></p></div>
                         </div>
                         <div class="separator" style="height:17px;"></div>
                         
                         <div class="block_home_slider">
                         	<div id="home_slider" class="flexslider">
-                            	<ul class="slides">
-                                	<li>
-                                    	<div class="slide">
-                                            <img src="resources/images/pic_home_slider_1.jpg" alt="" />
-                                            <div class="caption">
-                                                <p class="title">我的家乡</p>
-                                                <p>There are many variations of passages of available, but the majority have suffered alteration in some form, by injected humour, or randomised.</p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    
-                                    <li>
-                                    	<div class="slide">
-                                            <img src="resources/images/pic_home_slider_2.jpg" alt="" />
-                                            <div class="caption">
-                                                <p class="title">Many desktop publishing packages.</p>
-                                                <p>There are many variations of passages of available, but the majority have suffered alteration in some form, by injected humour, or randomised.</p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    
-                                    <li>
-                                    	<div class="slide">
-                                            <img src="resources/images/pic_home_slider_3.jpg" alt="" />
-                                            <div class="caption">
-                                                <p class="title">Many desktop publishing packages and web page.</p>
-                                                <p>There are many variations of passages of available, but the majority.</p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    
-                                    <li>
-                                    	<div class="slide">
-                                            <img src="resources/images/pic_home_slider_4.jpg" alt="" />
-                                            <div class="caption">
-                                                <p class="title">Many desktop publishing packages and web page.</p>
-                                                <p>There are many variations of passages of available, but the majority have suffered alteration in some form, by injected humour, or randomised, but the majority have suffered alteration in some form, by injected humour, or randomised.</p>
-                                            </div>
-                                        </div>
-                                    </li>
+                            	<ul class="slides" id="sliders">
                                 </ul>
                             </div>
                             
                             <script type="text/javascript">
+                            
+                                //旋转木马
 								$(function () {
 									$('#home_slider').flexslider({
 										animation : 'slide',
@@ -88,155 +133,21 @@
                         
                         <div class="line_2" style="margin:34px 0px 28px;"></div>
                         
-                        <div class="block_home_col_1">
-                        	<div class="block_home_post">
-								<div class="pic">
-									<a href="news_post.html" class="w_hover">
-										<img src="resources/images/pic_home_news_1.jpg" alt="" />
-										<span></span>
-									</a>
-								</div>
-                                        
-								<div class="text">
-									<p class="title"><a href="news_post.html">There are many variations of of available, but the majority.</a></p>
-									<div class="date"><p>11 July, 2012</p></div>
-                                    <div class="icons">
-                                    	<ul>
-                                        	<li><a href="#" class="views">56</a></li>
-                                        </ul>
-                                    </div>
-								</div>
-							</div>
-                            <div class="line_3" style="margin:14px 0px 17px;"></div>
-                            
-                            <div class="block_home_post">
-								<div class="pic">
-									<a href="news_post.html" class="w_hover">
-										<img src="resources/images/pic_home_news_2.jpg" alt="" />
-										<span></span>
-									</a>
-								</div>
-                                        
-								<div class="text">
-									<p class="title"><a href="news_post.html">Variations of of available, but the majority have suffered.</a></p>
-									<div class="date"><p>11 July, 2012</p></div>
-                                    <div class="icons">
-                                    	<ul>
-                                        	<li><a href="#" class="views">74</a></li>
-                                        </ul>
-                                    </div>
-								</div>
-							</div>
-                            <div class="line_3" style="margin:14px 0px 17px;"></div>
-                            
-                            <div class="block_home_post">
-								<div class="pic">
-									<a href="news_post.html" class="w_hover">
-										<img src="resources/images/pic_home_news_3.jpg" alt="" />
-										<span></span>
-									</a>
-								</div>
-                                        
-								<div class="text">
-									<p class="title"><a href="news_post.html">Majority alteration in some form, by injected humour.</a></p>
-									<div class="date"><p>11 July, 2012</p></div>
-                                    <div class="icons">
-                                    	<ul>
-                                        	<li><a href="#" class="views">88</a></li>
-                                        </ul>
-                                    </div>
-								</div>
-							</div>
-                            
-                        </div>
-                        
-                        <div class="block_home_col_2">
-                        	<div class="line_3 first" style="margin:14px 0px 17px;"></div>
-                            <div class="block_home_post">
-								<div class="pic">
-									<a href="news_post.html" class="w_hover">
-										<img src="resources/images/pic_home_news_4.jpg" alt="" />
-										<span></span>
-									</a>
-								</div>
-                                        
-								<div class="text">
-									<p class="title"><a href="news_post.html">Many variations of of available, but the majority.</a></p>
-									<div class="date"><p>11 July, 2012</p></div>
-                                    <div class="icons">
-                                    	<ul>
-                                        	<li><a href="#" class="views">56</a></li>
-                                        </ul>
-                                    </div>
-								</div>
-							</div>
-                            <div class="line_3" style="margin:14px 0px 17px;"></div>
-                            
-                            <div class="block_home_post">
-								<div class="pic">
-									<a href="news_post.html" class="w_hover">
-										<img src="resources/images/pic_home_news_5.jpg" alt="" />
-										<span></span>
-									</a>
-								</div>
-                                        
-								<div class="text">
-									<p class="title"><a href="news_post.html">Readable content of a page when looking readable content.</a></p>
-									<div class="date"><p>11 July, 2012</p></div>
-                                    <div class="icons">
-                                    	<ul>
-                                        	<li><a href="#" class="views">74</a></li>
-                                        </ul>
-                                    </div>
-								</div>
-							</div>
-                            <div class="line_3" style="margin:14px 0px 17px;"></div>
-                            
-                            <div class="block_home_post">
-								<div class="pic">
-									<a href="news_post.html" class="w_hover">
-										<img src="resources/images/pic_home_news_6.jpg" alt="" />
-										<span></span>
-									</a>
-								</div>
-                                        
-								<div class="text">
-									<p class="title"><a href="news_post.html">Randomised words which don't look even slightly believable.</a></p>
-									<div class="date"><p>11 July, 2012</p></div>
-                                    <div class="icons">
-                                    	<ul>
-                                        	<li><a href="#" class="views">88</a></li>
-                                        </ul>
-                                    </div>
-								</div>
-							</div>
-                            
-                        </div>
+                        <div class="block_home_col_1"></div>                        
+                        <div class="block_home_col_2"></div>
                         <div class="clearboth"></div>
                         
                         <div class="line_3" style="margin:14px 0px 13px;"></div>
-                        <a href="main_news.html" class="lnk_all_news fl">所有消息</a>
+                        <a href="main_news.html" class="lnk_all_news fl">更多热门</a>
                         <div class="clearboth"></div>
                         <div class="line_3" style="margin:13px 0px 35px;"></div>
                         
-                        <h3 style="font-size:16px;">主要消息</h3>
+                        <h3 style="font-size:16px;">推荐消息</h3>
                         <div class="line_4" style="margin:-4px 0px 18px;"></div>
                         
                         <div class="block_topic_news">
-                        	<article class="block_topic_post">
-                            	<p class="title"><a href="news_post.html">Many desktop publishing packages and web page editors now use.</a></p>
-                                <div class="f_pic"><a href="news_post.html" class="general_pic_hover scale"><img src="resources/images/pic_home_main_news_1.jpg" alt="" /></a></div>
-                                <p class="text">There are many variations of passages of available, but the majority have alteration.</p>
-                                <div class="info">
-                                	<div class="date"><p>11 July, 2012</p></div>
-                                    
-                                    <div class="r_part">
-                                    	<div class="category"><p><a href="#">Business</a></p></div>
-                                        <a href="#" class="views">183</a>
-                                    </div>
-                                </div>
-                            </article>
-                            
+
+<!--                             
                             <article class="block_topic_post">
                             	<p class="title"><a href="news_post.html">Many desktop publishing packages and web page editors now use.</a></p>
                                 <div class="f_pic"><a href="news_post.html" class="general_pic_hover scale"><img src="resources/images/pic_home_main_news_2.jpg" alt="" /></a></div>
@@ -277,7 +188,7 @@
                                         <a href="#" class="views">183</a>
                                     </div>
                                 </div>
-                            </article>
+                            </article> -->
                             
                         </div>
                         
@@ -301,104 +212,7 @@
                             <div class="clearboth"></div>
                         </div>
                         
-                        <div class="line_2" style="margin:24px 0px 35px;"></div>
-                        
-                        <h3 style="font-size:16px;">最热话题</h3>
-                        <div class="line_4" style="margin:-4px 0px 18px;"></div>
-                        
-                        <div class="block_best_materials">
-                        	<div class="slider">
-                                <div id="best_materials_slider" class="flexslider">
-                                    <ul class="slides">
-                                        <li>
-                                            <div class="block_best_material_post">
-                                                <div class="f_pic"><a href="news_post.html" class="w_hover"><img src="resources/images/pic_home_best_materials_1.jpg" alt="" /><span></span></a></div>
-                                                <p class="title"><a href="news_post.html">Publishing packages and web page editors their.</a></p>
-                                                <div class="info">
-                                                    <div class="date"><p>08 July, 2012</p></div>
-                                                    <div class="category"><p><a href="#">Business</a></p></div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        
-                                        <li>
-                                            <div class="block_best_material_post">
-                                                <div class="f_pic"><a href="news_post.html" class="w_hover"><img src="resources/images/pic_home_best_materials_2.jpg" alt="" /><span></span></a></div>
-                                                <p class="title"><a href="news_post.html">Publishing packages and web page editors their.</a></p>
-                                                <div class="info">
-                                                    <div class="date"><p>08 July, 2012</p></div>
-                                                    <div class="category"><p><a href="#">People</a></p></div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        
-                                        <li>
-                                            <div class="block_best_material_post">
-                                                <div class="f_pic"><a href="news_post.html" class="w_hover"><img src="resources/images/pic_home_best_materials_3.jpg" alt="" /><span></span></a></div>
-                                                <p class="title"><a href="news_post.html">Publishing packages and web page editors their.</a></p>
-                                                <div class="info">
-                                                    <div class="date"><p>08 July, 2012</p></div>
-                                                    <div class="category"><p><a href="#">Technology</a></p></div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        
-                                        <li>
-                                            <div class="block_best_material_post">
-                                                <div class="f_pic"><a href="news_post.html" class="w_hover"><img src="resources/images/pic_home_best_materials_4.jpg" alt="" /><span></span></a></div>
-                                                <p class="title"><a href="news_post.html">Publishing packages and web page editors their.</a></p>
-                                                <div class="info">
-                                                    <div class="date"><p>08 July, 2012</p></div>
-                                                    <div class="category"><p><a href="#">Business</a></p></div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        
-                                        <li>
-                                            <div class="block_best_material_post">
-                                                <div class="f_pic"><a href="news_post.html" class="w_hover"><img src="resources/images/pic_home_best_materials_5.jpg" alt="" /><span></span></a></div>
-                                                <p class="title"><a href="news_post.html">Publishing packages and web page editors their.</a></p>
-                                                <div class="info">
-                                                    <div class="date"><p>08 July, 2012</p></div>
-                                                    <div class="category"><p><a href="#">People</a></p></div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        
-                                        <li>
-                                            <div class="block_best_material_post">
-                                                <div class="f_pic"><a href="news_post.html" class="w_hover"><img src="resources/images/pic_home_best_materials_6.jpg" alt="" /><span></span></a></div>
-                                                <p class="title"><a href="news_post.html">Publishing packages and web page editors their.</a></p>
-                                                <div class="info">
-                                                    <div class="date"><p>08 July, 2012</p></div>
-                                                    <div class="category"><p><a href="#">Technology</a></p></div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            
-                            <script type="text/javascript">
-								$(function() {
-									$('#best_materials_slider').flexslider({
-										animation : 'slide',
-										controlNav : false,
-										directionNav : true,
-										animationLoop : false,
-										slideshow : false,
-										itemWidth: 213,
-										itemMargin: 0,
-										minItems: 1,
-										maxItems: 3,
-										move: 1,
-										useCSS : false
-									});
-								});
-							</script>
-                        </div>
-                        
-                        <div class="line_2" style="margin:20px 0px 0px;"></div>
+                        <div class="line_2" style="margin:24px 0px 35px;"></div>                       
                         
                     </div>
  

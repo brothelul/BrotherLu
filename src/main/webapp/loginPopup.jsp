@@ -1,7 +1,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="utf-8"%>
 
-        <!-- POPUP BEGIN -->
+<script type="text/javascript">
+
+/*       $(function(){
+    	  
+    	  $("#submit").click(
+    		    	
+        		  $.ajax({
+        			  
+        			  type:"post",
+        			  url:"login.do",
+        			  dataType:"html",
+        			  data:$("#loginForm").serialize(),
+        			  success:function(msg){
+        				  
+        				  alert(msg+$("#loginForm").serialize());
+        				  if(msg == "200"){
+        					  
+        				  }else{
+        					  $(".content").append("<font color='red'>"+msg+"</font>");
+        				  }
+        			  }
+        		  })
+          );
+    	  
+      }) */
+</script>
+     <!-- POPUP BEGIN -->
     <div id="overlay"></div>
     <div id="login" class="block_popup">
     	<div class="popup">
@@ -10,8 +36,8 @@
             <div class="content">
             	<div class="title"><p>登录</p></div>
                 
-                <div class="form">
-                	<form action="login.do" method="post" id="loginForm">
+                <div class="form" >
+                	<form id="loginForm" method="post" action="login.do">
                     	<div class="column">
                         	<p class="label">用户名</p>
                             <div class="field"><input id="username"  name="username" type="text" /></div>
@@ -34,7 +60,8 @@
                         </div>
                         
                         <div class="column button">
-                             <a href="" class="enter" id="submit"><span class="enter">登录</span></a> 
+                          <!--     <a href="" id="submit" class="enter"><span>登录</span></a> --> 
+                              <button type="submit" value="登录" class="enter"></button>                           
                         </div>      
                         <div class="clearboth"></div>
                     </form>

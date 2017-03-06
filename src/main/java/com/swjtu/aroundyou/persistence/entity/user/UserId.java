@@ -1,8 +1,8 @@
-package com.swjtu.aroundyou.persistence.dto.user;
+package com.swjtu.aroundyou.persistence.entity.user;
 
 import java.io.Serializable;
 
-public class UserIdDTO implements Serializable{
+public class UserId implements Serializable{
 
 	private static final long serialVersionUID = -3377038085891752968L;
     
@@ -22,11 +22,11 @@ public class UserIdDTO implements Serializable{
 		this.userType = userType;
 	}
 	
-	public UserIdDTO(Integer userNo, Integer userType) {
+	public UserId(Integer userNo, Integer userType) {
 		this.userNo = userNo;
 		this.userType = userType;
 	}
-	public UserIdDTO() {
+	public UserId() {
 	}
 		
 }

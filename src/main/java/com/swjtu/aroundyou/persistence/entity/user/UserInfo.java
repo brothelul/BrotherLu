@@ -1,4 +1,4 @@
-package com.swjtu.aroundyou.persistence.dto.user;
+package com.swjtu.aroundyou.persistence.entity.user;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -9,11 +9,11 @@ import java.util.Date;
  * @date 下午12:35:59
  * <p>描述：user base info</p>
  */
-public class UserInfoDTO implements Serializable{
+public class UserInfo implements Serializable{
 
 	private static final long serialVersionUID = 6014071030748333040L;
 
-	private UserIdDTO id;
+	private UserId id;
 	private String username;
 	private String faviconUri;
 	private String shortDesc;
@@ -25,10 +25,10 @@ public class UserInfoDTO implements Serializable{
 	private String lastLoginIP;
 	private Date lastLoginDate;
 	
-	public UserIdDTO getId() {
+	public UserId getId() {
 		return id;
 	}
-	public void setId(UserIdDTO id) {
+	public void setId(UserId id) {
 		this.id = id;
 	}
 	public String getUsername() {

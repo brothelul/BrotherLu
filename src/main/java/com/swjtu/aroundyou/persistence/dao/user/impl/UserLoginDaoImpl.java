@@ -5,16 +5,16 @@ import org.springframework.stereotype.Repository;
 
 import com.swjtu.aroundyou.persistence.dao.base.impl.GenericHibernateDaoImpl;
 import com.swjtu.aroundyou.persistence.dao.user.UserLoginDao;
-import com.swjtu.aroundyou.persistence.dto.user.UserIdDTO;
-import com.swjtu.aroundyou.persistence.dto.user.UserLoginDTO;
+import com.swjtu.aroundyou.persistence.entity.user.UserId;
+import com.swjtu.aroundyou.persistence.entity.user.UserLogin;
 
 @Repository(value=UserLoginDao.NAME)
-public class UserLoginDaoImpl extends GenericHibernateDaoImpl<UserLoginDTO> implements UserLoginDao{
+public class UserLoginDaoImpl extends GenericHibernateDaoImpl<UserLogin> implements UserLoginDao{
 
 	@Override
-	public UserIdDTO findUserLoginForLogin(String username, String password) {
+	public UserId findUserLoginForLogin(String username, String password) {
 		
-		String hql = "from UserLoginDTO where username = :username and password = :password";
+		String hql = "from UserLogin where username = :username and password = :password";
 		
 		Query query = getSession().createQuery(hql)
 				                  .setParameter("username", username)
@@ -25,7 +25,7 @@ public class UserLoginDaoImpl extends GenericHibernateDaoImpl<UserLoginDTO> impl
 			return null;
 		}
 		
-		UserLoginDTO userLoginDTO = (UserLoginDTO) query.list().get(0);
+		UserLogin userLoginDTO = (UserLogin) query.list().get(0);
 		
 		return userLoginDTO.getId();
 	}

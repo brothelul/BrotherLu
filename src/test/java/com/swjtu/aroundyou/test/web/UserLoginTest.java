@@ -2,9 +2,7 @@ package com.swjtu.aroundyou.test.web;
 
 import org.testng.annotations.Test;
 
-import com.swjtu.aroundyou.biz.entity.user.UserLogin;
 import com.swjtu.aroundyou.test.AbstractTest;
-import com.swjtu.aroundyou.web.controller.user.UserContoller;
 
 public class UserLoginTest extends AbstractTest{
 

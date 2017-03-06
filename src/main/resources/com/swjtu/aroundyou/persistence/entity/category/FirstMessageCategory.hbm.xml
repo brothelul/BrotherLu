@@ -3,20 +3,22 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 2017-2-15 20:56:44 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
-    <class name="com.swjtu.aroundyou.persistence.dto.category.SecondMessageCategoryDTO" table="second_message_category">
-        
+    <class name="com.swjtu.aroundyou.persistence.entity.category.FirstMessageCategory" table="first_message_category">
         <id name="categoryNo" type="integer">
-             <column name="second_category_no"></column>
-             <generator class="native"/>
-        </id>
-        
-        <property name="categoryName" type="string">
-            <column name="second_category_name" />
-        </property>
-        
-        <many-to-one name="firstCategoryDTO" class="com.swjtu.aroundyou.persistence.dto.category.FirstMessageCategoryDTO" fetch="join">
             <column name="first_category_no" />
-        </many-to-one>
+            <generator class="native" />
+        </id>
+
+        <property name="categoryName" type="string">
+            <column name="first_category_name" />
+        </property>
+
+        <set name="secondCategorySet" table="second_message_category" inverse="false" lazy="true">
+            <key>
+                <column name="second_category_no" />
+            </key>
+            <one-to-many class="com.swjtu.aroundyou.persistence.entity.category.SecondMessageCategory" />
+        </set>
         
         <property name="createId" type="integer">
             <column name="create_id" />

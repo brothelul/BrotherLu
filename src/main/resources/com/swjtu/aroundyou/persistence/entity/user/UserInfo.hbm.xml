@@ -3,9 +3,9 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 2017-2-9 12:49:21 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
-    <class name="com.swjtu.aroundyou.persistence.dto.user.UserInfoDTO" table="user_info">
+    <class name="com.swjtu.aroundyou.persistence.entity.user.UserInfo" table="user_info">
 
-        <composite-id name="id" class="com.swjtu.aroundyou.persistence.dto.user.UserIdDTO">
+        <composite-id name="id" class="com.swjtu.aroundyou.persistence.entity.user.UserId">
                     <key-property name="userNo" column="user_no" type="integer"/>
                     <key-property name="userType" column="user_type" type="integer"/>
         </composite-id>

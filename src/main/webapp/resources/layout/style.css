@@ -47,6 +47,8 @@ table {
 }
 a img {
 	border: none;
+	width:75px;
+	height:50px;
 }
 input, textarea, select, a {outline:0px;}
 textarea {resize:none; overflow:auto;}
@@ -3064,7 +3066,7 @@ input.general_button {margin:0px; padding:0px 15px 4px; border:0px; cursor:point
 	.block_topic_post_feature .info {overflow:hidden;}
 	
 	.block_topic_news .block_topic_post {width:196px;}
-	.block_topic_post .f_pic img {width:186px; height:auto;}
+	.block_topic_post .f_pic img {width:186px; height:103px;}
 	
 	.block_contact_form .textarea {width:478px;}
 	.block_contact_form .textarea textarea {width:458px;}

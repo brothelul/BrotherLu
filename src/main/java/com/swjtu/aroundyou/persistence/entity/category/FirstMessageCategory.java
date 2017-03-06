@@ -1,21 +1,29 @@
-package com.swjtu.aroundyou.biz.entity.category;
+package com.swjtu.aroundyou.persistence.entity.category;
 
+import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
-import com.swjtu.aroundyou.persistence.dto.category.SecondMessageCategoryDTO;
+/**
+ * 
+ * @author brotherlu
+ * @date 下午8:55:00
+ * <p>描述：first message category </p>
+ */
+public class FirstMessageCategory implements Serializable{
 
-public class FirstMessageCategory {
+	private static final long serialVersionUID = 5128883379551492550L;
 
 	private Integer categoryNo;
 	private String categoryName;
+	private Set<SecondMessageCategory> secondCategorySet;
+	
 	private Integer createId;
 	private Date createDate;
 	private Integer updateId;
 	private Date updateDate;
 	private Integer deleteId;
 	private Date deleteDate;
-	private List<SecondMessageCategory> secondCategoryList;
 	public Integer getCategoryNo() {
 		return categoryNo;
 	}
@@ -27,6 +35,12 @@ public class FirstMessageCategory {
 	}
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
+	}
+	public Set<SecondMessageCategory> getSecondCategorySet() {
+		return secondCategorySet;
+	}
+	public void setSecondCategorySet(Set<SecondMessageCategory> secondCategorySet) {
+		this.secondCategorySet = secondCategorySet;
 	}
 	public Integer getCreateId() {
 		return createId;
@@ -64,10 +78,5 @@ public class FirstMessageCategory {
 	public void setDeleteDate(Date deleteDate) {
 		this.deleteDate = deleteDate;
 	}
-	public List<SecondMessageCategory> getSecondCategoryList() {
-		return secondCategoryList;
-	}
-	public void setSecondCategoryList(List<SecondMessageCategory> secondCategoryList) {
-		this.secondCategoryList = secondCategoryList;
-	}	
+	
 }

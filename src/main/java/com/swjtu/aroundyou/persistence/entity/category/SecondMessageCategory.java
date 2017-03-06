@@ -1,18 +1,34 @@
-package com.swjtu.aroundyou.biz.entity.category;
+package com.swjtu.aroundyou.persistence.entity.category;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
-public class SecondMessageCategory {
+import com.swjtu.aroundyou.persistence.entity.message.Message;
+
+
+/**
+ * 
+ * @author brotherlu
+ * @date 下午8:55:32
+ * <p>描述：second message category</p>
+ */
+public class SecondMessageCategory implements Serializable{
+
+	private static final long serialVersionUID = 3033559410286115201L;
 
 	private Integer categoryNo;
 	private String categoryName;
-	private FirstMessageCategory firstCategory;	
+	private FirstMessageCategory firstCategoryDTO;
+	private Set<Message> messageDTOs;
+	
 	private Integer createId;
 	private Date createDate;
 	private Integer updateId;
 	private Date updateDate;
 	private Integer deleteId;
 	private Date deleteDate;
+
 	public Integer getCategoryNo() {
 		return categoryNo;
 	}
@@ -25,11 +41,17 @@ public class SecondMessageCategory {
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
-	public FirstMessageCategory getFirstCategory() {
-		return firstCategory;
+	public FirstMessageCategory getFirstCategoryDTO() {
+		return firstCategoryDTO;
 	}
-	public void setFirstCategory(FirstMessageCategory firstCategory) {
-		this.firstCategory = firstCategory;
+	public void setFirstCategoryDTO(FirstMessageCategory firstCategoryDTO) {
+		this.firstCategoryDTO = firstCategoryDTO;
+	}	
+	public Set<Message> getMessageDTOs() {
+		return messageDTOs;
+	}
+	public void setMessageDTOs(Set<Message> messageDTOs) {
+		this.messageDTOs = messageDTOs;
 	}
 	public Integer getCreateId() {
 		return createId;
@@ -66,5 +88,5 @@ public class SecondMessageCategory {
 	}
 	public void setDeleteDate(Date deleteDate) {
 		this.deleteDate = deleteDate;
-	}	
+	}
 }

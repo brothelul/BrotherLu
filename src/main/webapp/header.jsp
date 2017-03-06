@@ -1,12 +1,37 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="utf-8"%>
-    
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+   
+ <script type="text/javascript">
+ 
+ // 页面加载时获取分类信息
+  (function(){	   
+	   $.ajax({
+		   
+		   type:"get",
+		   dataType:"json",
+		   url:"loadCategory.do",
+		   cache:true,
+		   
+		   success:function(data){
+			   
+			   var item = eval(data);
+			   
+			   $.each(item,function(i,item){
+				   
+                 $(".main_menu ul").append("<li class='big_dropdown' data-content='business'><a>"+item.categoryName+"</a></li>");
+			   });
+		   }
+	   });
+   })();
+ 
+ </script>   
     	<!-- HEADER BEGIN -->
         <header>
             <div id="header">
             	<section class="top">
                 	<div class="inner">
-                    	<div class="fl">
+<!--                     	<div class="fl">
                         	<div class="block_top_menu">
                             	<ul>
                                 	<li class="current"><a href="index.html">首页</a></li>
@@ -15,24 +40,36 @@
                                     <li><a href="contact.html">联系我们</a></li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> -->
                         
-                        <div class="fr">
+                        <c:if test="${userInfo != null}">
+                            <div class="fr">
+                        	<div class="block_top_menu">
+                        	  <ul>
+                        	    <li><a><img src="${userInfo.faviconUri}" alt="" style="margin:-8px 0 0 -5px;height: 30px;border-radius:15px;width: 30px;"/></a></li>
+                        	    <li class="current"><a>${userInfo.username}</a></li>
+                        	    <li><a>退出</a></li>
+                        	  </ul>
+                        	</div>
+                        	</div>
+                        </c:if>
+                        <c:if test="${userInfo == null }">
+                           <div class="fr">
                         	<div class="block_top_menu">
                             	<ul>
                                 	<li class="current"><a href="#login" class="open_popup">登录</a></li>
-                                    <li><a href="registration.html">注册</a></li>
+                                    <li><a href="registration.jsp">注册</a></li>
                                 </ul>
                             </div>
                         </div>
-                        
+                        </c:if>                        
                     	<div class="clearboth"></div>
                     </div>
                 </section>
                 
             	<section class="bottom">
                 	<div class="inner">
-                    	<div id="logo_top"><a href="index.html"><img src="resources/images/logo_top.png" alt="BusinessNews" title="BusinessNews" /></a></div>
+                    	<div id="logo_top"><a href="index.html"><img src="resources/images/logo_top.png" alt="AroundYou" title="AroundYou" /></a></div>
                         
                         <div class="block_today_date">
                         	<div class="num"><p id="num_top" /></div>
@@ -49,8 +86,8 @@
                 	<div class="inner">
                     	<nav class="main_menu">
                         	<ul>
-								<li class="current_page_item"><a href="index.html">首页</a>
-                                	
+								<li class="current_page_item"><a href="index.jsp">首页</a></li>
+                            <!--     	
                                     <ul>
                                     	<li><a href="index.html">风格1</a></li>
                                         <li><a href="home_style_2.html">风格2</a></li>
@@ -105,7 +142,7 @@
                                         <li><a href="video.html">Video</a></li>
                                         <li><a href="typography.html">Typography</a></li>
                                     </ul>
-								</li>
+								</li> -->
 						  </ul>
 						</nav>
                     </div>
@@ -234,7 +271,7 @@
                 
                 <section class="section_secondary_menu">
                 	<div class="inner">
-                    	<nav class="secondary_menu">
+<!--                     	<nav class="secondary_menu">
                         	<ul>
                             	<li><a href="main_news_europe.html">折扣</a></li>
                                 <li><a href="main_news_usa.html">新品</a></li>
@@ -244,7 +281,7 @@
                                 <li><a href="main_news_culture.html">Culture</a></li>
                                 <li><a href="main_news_top.html">热门</a></li>
                           	</ul>
-                        </nav>
+                        </nav> -->
                         
                         <div class="block_clock">
                         	<p>时间: <span id="time"></span></p>

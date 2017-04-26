@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-3-30 21:03:41 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.swjtu.aroundyou.persistence.entity.user.UserLoginLog" table="user_login_log">
+        <id name="logId" type="integer">
+            <column name="login_id" />
+            <generator class="native" />
+        </id>
+        <property name="userNo" type="integer">
+         <column name="user_no"/>
+        </property>
+        <property name="userType" type="integer">
+         <column name="user_type"/>
+        </property>
+        <property name="loginIP" type="string">
+            <column name="login_ip" />
+        </property>
+        <property name="loginDate" type="timestamp">
+            <column name="login_date" />
+        </property>
+    </class>
+</hibernate-mapping>

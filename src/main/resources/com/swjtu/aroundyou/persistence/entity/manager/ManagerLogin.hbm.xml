@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-4-19 14:20:33 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.swjtu.aroundyou.persistence.entity.manager.ManagerLogin" table="manager_login">
+        <id name="managerNo" type="integer">
+            <column name="manager_no" />
+            <generator class="native" />
+        </id>
+        <property name="managerName" type="string">
+            <column name="manager_name" />
+        </property>
+        <property name="password" type="string">
+            <column name="password" />
+        </property>
+    </class>
+</hibernate-mapping>

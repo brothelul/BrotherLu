@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-4-2 20:45:02 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.swjtu.aroundyou.persistence.entity.comment.Comment" table="comment">
+        <id name="cmtNo" type="integer">
+            <column name="cmt_no" />
+            <generator class="native" />
+        </id>
+        <property name="cmtContent" type="string">
+            <column name="cmt_content" />
+        </property>
+        <property name="entryId" type="integer">
+            <column name="entry_id"/>
+        </property>
+        <property name="entryDate" type="timestamp">
+            <column name="entry_date" />
+        </property>
+        <property name="deleteId" type="integer">
+            <column name="delete_id" />
+        </property>
+        <property name="deleteDate" type="timestamp">
+            <column name="delete_date" />
+        </property>
+        <property name="messageNo" type="integer">
+            <column name="message_no"/>
+        </property>
+        <many-to-one name="comment" class="com.swjtu.aroundyou.persistence.entity.comment.Comment">
+            <column name="parent_no"/>
+        </many-to-one>
+        <many-to-one name="userInfo" class="com.swjtu.aroundyou.persistence.entity.user.UserInfo" fetch="join" lazy="false">
+            <column name="user_no"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

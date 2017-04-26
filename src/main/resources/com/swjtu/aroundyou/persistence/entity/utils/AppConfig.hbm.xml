@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-3-28 20:16:07 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.swjtu.aroundyou.persistence.entity.utils.AppConfig" table="app_config">      
+        <composite-id>
+              <key-property name="appCat" type="string" column="app_cat"/>
+              <key-property name="appName" type="string" column="app_name"/>
+        </composite-id>       
+        <property name="appValue" type="string">
+            <column name="app_value" />
+        </property>
+        <property name="entryIP" type="string">
+            <column name="entry_ip" />
+        </property>
+        <property name="entryId" type="integer">
+            <column name="entry_id"/>
+        </property>
+        <property name="entryDate" type="timestamp">
+            <column name="entry_date" />
+        </property>
+    </class>
+</hibernate-mapping>

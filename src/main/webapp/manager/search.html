@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>网站后台管理系统</title>
+<link href="resources/css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="resources/js/jquery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $(".click").click(function(){
+  $(".tip").fadeIn(200);
+  });
+  
+  $(".tiptop a").click(function(){
+  $(".tip").fadeOut(200);
+});
+
+  $(".sure").click(function(){
+  $(".tip").fadeOut(100);
+});
+
+  $(".cancel").click(function(){
+  $(".tip").fadeOut(100);
+});
+  
+  var page = 1;
+  var pageSize = 10;
+  
+  loadUsers(page,pageSize);  // 首次加载
+  $(".pagenxt").click(function(){
+	  if(pageCount > page){
+		  page = page + 1;
+		  loadUsers(page,pageSize); 
+	  }
+  });
+  $(".pagepre").click(function(){
+	  if(1 < page){
+		  page = page - 1;
+		  loadUsers(page,pageSize); 
+	  }
+  });
+});
+
+function loadUsers(page,pageSize){
+
+	$.ajax({		  
+		  type:"post",
+		  dataType:"json",
+		  data:{"page":page,"pageSize":pageSize},
+		  url:"getSearch.do",
+		  
+		  success:function(data){
+			  var item =jQuery.parseJSON(data);
+			  if(item.status == "200"){
+				  $("#search").empty();
+				  var pagin = item.result;
+				  $.each(pagin.items,function(i,key){
+					  var str ="";
+					  if(i%2 == 1){
+						  str = str + "<tr class='odd'>";
+					  }else{
+						  str = str + "<tr>"
+					  }
+					  str = str + "<td>"+key.keyNo+"</td>";
+					  str = str + "<td>"+key.keyWord+"</td><td>"+key.iP+"</td>";
+					  str = str + "<td>"+key.searchDateString+"</td></tr>";
+					  $("#search").append(str);
+				  });
+				  
+				  $("#count").empty();
+				  $("#current").empty();
+				  $("#count").append(pagin.rowsCount);
+				  $("#current").append(pagin.curIndex);
+				  pageCount = pagin.pagesCount;
+			  }
+		  }
+	});
+};
+</script>
+
+
+</head>
+
+
+<body>
+
+	<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="#">首页</a></li>
+    <li><a href="#">数据表</a></li>
+    <li><a href="#">基本内容</a></li>
+    </ul>
+    </div>
+    
+    <div class="rightinfo">
+    
+    <div class="tools">
+    
+    	<ul class="toolbar">
+        <li><span><img src="resources/images/t04.png" /></span>统计</li>
+        </ul>
+        
+        
+        <ul class="toolbar1">
+        <li><span><img src="resources/images/t05.png" /></span>设置</li>
+        </ul>
+    
+    </div>
+    
+    
+    <table class="tablelist">
+    	<thead>
+    	<tr>
+        <th>查询编号</th>
+        <th>关键词</th>
+        <th>查询IP</th>
+        <th>查询时间</th>
+        </tr>
+        </thead>
+        <tbody id="search"></tbody>
+    </table>
+    
+   
+    <div class="pagin">
+    	<div class="message">共<i class="blue" id="count"></i>条记录，当前显示第&nbsp;<i class="blue" id="current">&nbsp;</i>页</div>
+        <ul class="paginList">
+        <li class="paginItem"><a href="javascript:;"><span class="pagepre"></span></a></li>
+        <li class="paginItem"><a href="javascript:;">1</a></li>
+        <li class="paginItem current"><a href="javascript:;">2</a></li>
+        <li class="paginItem"><a href="javascript:;">3</a></li>
+        <li class="paginItem"><a href="javascript:;">4</a></li>
+        <li class="paginItem"><a href="javascript:;">5</a></li>
+        <li class="paginItem more"><a href="javascript:;">...</a></li>
+        <li class="paginItem"><a href="javascript:;">10</a></li>
+        <li class="paginItem"><a href="javascript:;"><span class="pagenxt"></span></a></li>
+        </ul>
+    </div>
+    
+    
+    <div class="tip">
+    	<div class="tiptop"><span>提示信息</span><a></a></div>
+        
+      <div class="tipinfo">
+        <span><img src="images/ticon.png" /></span>
+        <div class="tipright">
+        <p>是否确认对信息的修改 ？</p>
+        <cite>如果是请点击确定按钮 ，否则请点取消。</cite>
+        </div>
+        </div>
+        
+        <div class="tipbtn">
+        <input name="" type="button"  class="sure" value="确定" />&nbsp;
+        <input name="" type="button"  class="cancel" value="取消" />
+        </div>
+    
+    </div>   
+    </div>
+
+</body>
+</html>

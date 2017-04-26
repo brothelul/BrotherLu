@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>网站后台管理系统</title>
+<link href="resources/css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="resources/js/jquery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $(".click").click(function(){
+  $(".tip").fadeIn(200);
+  });
+  
+  $(".tiptop a").click(function(){
+  $(".tip").fadeOut(200);
+});
+
+  $(".sure").click(function(){
+  $(".tip").fadeOut(100);
+});
+
+  $(".cancel").click(function(){
+  $(".tip").fadeOut(100);
+});
+  
+  var page = 1;
+  var pageSize = 5;
+  var pageCount = 2;
+  
+  loadCate(page,pageSize);  // 首次加载
+  $(".pagenxt").click(function(){
+	  if(pageCount > page){
+		  page = page + 1;
+		  loadCate(page,pageSize); 
+	  }
+  });
+  $(".pagepre").click(function(){
+	  if(1 < page){
+		  page = page - 1;
+		  loadCate(page,pageSize); 
+	  }
+  });
+});
+
+function loadCate(page,pageSize){
+
+	$.ajax({		  
+		  type:"post",
+		  dataType:"json",
+		  data:{"page":page,"pageSize":pageSize},
+		  url:"loadCategory.do",
+		  
+		  success:function(data){
+			  var item =jQuery.parseJSON(data);
+			  if(item.status == "200"){
+				  $("#cateContent").empty();
+				  var pagin = item.result;
+				  $.each(pagin.items,function(i,cate){
+					  var str ="";
+					  if(i%2 == 1){
+						  str = str + "<tr class='odd'>";
+					  }else{
+						  str = str + "<tr>"
+					  }
+					  str = str + "<td><input type='checkbox' value='' /></td><td>"+cate.categoryNo+"</td>";
+					  str = str + "<td>"+cate.categoryName+"</td><td>"+cate.managerInfo.managerName+"</td><td>"+cate.categoryDesc+"</td><td>"+cate.createDateString+"</td>";
+					  str = str + "<td><a href='cate.html?cateNo="+cate.categoryNo+"'><img src='resources/images/edit.png'/></a>&nbsp;&nbsp;<a href='deleteCategory.do?cateNo="+cate.categoryNo+"'><img src='resources/images/delete.png'/></a></td></tr>";
+					  $("#cateContent").append(str);
+				  });
+				  
+				  $("#count").empty();
+				  $("#current").empty();
+				  $("#count").append(pagin.rowsCount);
+				  $("#current").append(pagin.curIndex);
+				  pageCount = pagin.pagesCount;
+			  }
+		  }
+	});
+};
+</script>
+
+
+</head>
+
+
+<body>
+
+	<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="#">首页</a></li>
+    <li><a href="#">数据表</a></li>
+    <li><a href="#">基本内容</a></li>
+    </ul>
+    </div>
+    
+    <div class="rightinfo">  
+     <div class="tools">
+       <ul class="toolbar">
+        <li class="click"><a href="cate.html"><span><img src="resources/images/t01.png"/></span>添加</a></li>
+       </ul>
+    </div>
+        
+    <table class="tablelist">
+    	<thead>
+    	<tr>
+        <th><input name="" type="checkbox" value="" checked="checked"/></th>
+        <th>编号<i class="sort"><img src="resources/images/px.gif" /></i></th>
+        <th>分类名</th>
+        <th>创建者</th>
+        <th>分类描述</th>
+        <th>发布时间</th>
+        <th>操作</th>
+        </tr>
+        </thead>
+        <tbody id="cateContent"></tbody>
+    </table>
+    
+   
+    <div class="pagin">
+    	<div class="message">共<i class="blue" id="count"></i>条记录，当前显示第&nbsp;<i class="blue" id="current">&nbsp;</i>页</div>
+        <ul class="paginList">
+        <li class="paginItem"><a href="javascript:;"><span class="pagepre"></span></a></li>
+        <li class="paginItem"><a href="javascript:;">1</a></li>
+        <li class="paginItem current"><a href="javascript:;">2</a></li>
+        <li class="paginItem"><a href="javascript:;">3</a></li>
+        <li class="paginItem"><a href="javascript:;">4</a></li>
+        <li class="paginItem"><a href="javascript:;">5</a></li>
+        <li class="paginItem more"><a href="javascript:;">...</a></li>
+        <li class="paginItem"><a href="javascript:;">10</a></li>
+        <li class="paginItem"><a href="javascript:;"><span class="pagenxt"></span></a></li>
+        </ul>
+    </div>
+    
+   <div class="tip">
+    	<div class="tiptop"><span>提示信息</span><a></a></div>
+        
+      <div class="tipinfo">
+        <span><img src="resources/images/ticon.png" /></span>
+        <div class="tipright">
+        <p>是否确认对信息的修改 ？</p>
+        <cite>如果是请点击确定按钮 ，否则请点取消。</cite>
+        </div>
+        </div>
+        
+        <div class="tipbtn">
+        <input name="" type="button"  class="sure" value="确定" />&nbsp;
+        <input name="" type="button"  class="cancel" value="取消" />
+        </div>
+    
+    </div>
+     </div>
+
+
+</body>
+</html>

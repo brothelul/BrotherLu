@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="resources/css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="resources/js/jquery.js"></script>
+<script type="text/javascript">
+/* $(function () {
+
+    //方法二：
+    (function ($) {
+        $.getUrlParam = function (name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]); return null;
+        }
+    })(jQuery);
+
+}); */
+
+function getUrlVars(){
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+}
+
+
+//得到指定参数的value
+function getUrlVar(name){
+    return getUrlVars()[name];
+
+}
+
+$(document).ready(function(){
+	var cateNo = getUrlVar("cateNo");
+	if(cateNo == null){
+		$("#name").removeAttr("disabled");
+		$("#edit").val("确认添加");
+	}else{
+		$.ajax({		  
+			  type:"post",
+			  dataType:"json",
+			  data:{"cateNo":cateNo},
+			  url:"getCategory.do",
+			  
+			  success:function(data){
+				  var item =jQuery.parseJSON(data);
+				  if(item.status == "200"){
+					  var cate = item.result;
+					  $("#test").after(" <li><label>创建人</label><input id='user' type='text' class='dfinput' disabled='disabled'/></li>");
+					  $("#name").val(cate.categoryName);
+					  $("#desc").val(cate.categoryDesc);
+					  $("#user").val(cate.managerInfo.managerName);
+					  }
+				  }
+		});
+	}
+	
+	$("#edit").click(function(){
+		var desc = $("#desc").val();
+		if(cateNo == null){
+			var cateName = $("#name").val();
+			$.ajax({		  
+				  type:"post",
+				  dataType:"json",
+				  data:{"cateName":cateName,"cateDesc":desc},
+				  url:"saveNewCategory.do",
+				  
+				  success:function(data){
+					  var item =jQuery.parseJSON(data);
+					  if(item.status == "200"){
+						  window.location.href = 'right.html';
+					  }
+				  }
+			});
+		}else{
+			$.ajax({		  
+				  type:"post",
+				  dataType:"json",
+				  data:{"cateNo":cateNo,"desc":desc},
+				  url:"saveCategory.do",
+				  
+				  success:function(data){
+					  var item =jQuery.parseJSON(data);
+					  if(item.status == "200"){
+						  window.location.href = 'right.html';
+					  }
+				  }
+			});
+		}
+	});
+});
+
+</script>
+</head>
+<body>
+
+	<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="#">首页</a></li>
+    <li><a href="#">表单</a></li>
+    </ul>
+    </div>
+    
+    <div class="formbody">
+    
+    <div class="formtitle"><span>分类信息</span></div>
+    
+    <ul class="forminfo">
+    <li><label>分类名称</label><input id="name" type="text" class="dfinput" disabled="disabled"/></li>
+    <li id="test"><label>分类描述</label><input id="desc" type="text" class="dfinput" /></li>
+    <li><label>&nbsp;</label>
+    <input id="edit" type="button" class="btn" value="确认修改"/>
+    </li>
+    </ul>
+    
+    
+    </div>
+</body>
+</html>

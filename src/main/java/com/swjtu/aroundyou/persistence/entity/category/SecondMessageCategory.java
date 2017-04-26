@@ -2,9 +2,12 @@ package com.swjtu.aroundyou.persistence.entity.category;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
+import com.swjtu.aroundyou.persistence.entity.manager.ManagerInfo;
 import com.swjtu.aroundyou.persistence.entity.message.Message;
+import com.swjtu.aroundyou.utils.FormatUtil;
 
 
 /**
@@ -19,11 +22,14 @@ public class SecondMessageCategory implements Serializable{
 
 	private Integer categoryNo;
 	private String categoryName;
+	private String categoryDesc;
 	private FirstMessageCategory firstCategoryDTO;
-	private Set<Message> messageDTOs;
+	private List<Message> messageDTOs;
+	private ManagerInfo managerInfo;
 	
 	private Integer createId;
 	private Date createDate;
+	private String createDateString;
 	private Integer updateId;
 	private Date updateDate;
 	private Integer deleteId;
@@ -47,10 +53,16 @@ public class SecondMessageCategory implements Serializable{
 	public void setFirstCategoryDTO(FirstMessageCategory firstCategoryDTO) {
 		this.firstCategoryDTO = firstCategoryDTO;
 	}	
-	public Set<Message> getMessageDTOs() {
+	public List<Message> getMessageDTOs() {
 		return messageDTOs;
 	}
-	public void setMessageDTOs(Set<Message> messageDTOs) {
+	public ManagerInfo getManagerInfo() {
+		return managerInfo;
+	}
+	public void setManagerInfo(ManagerInfo managerInfo) {
+		this.managerInfo = managerInfo;
+	}
+	public void setMessageDTOs(List<Message> messageDTOs) {
 		this.messageDTOs = messageDTOs;
 	}
 	public Integer getCreateId() {
@@ -88,5 +100,15 @@ public class SecondMessageCategory implements Serializable{
 	}
 	public void setDeleteDate(Date deleteDate) {
 		this.deleteDate = deleteDate;
+	}
+	public String getCategoryDesc() {
+		return categoryDesc;
+	}
+	
+	public void setCategoryDesc(String categoryDesc) {
+		this.categoryDesc = categoryDesc;
+	}
+	public String getCreateDateString() {
+		return FormatUtil.formatDate(createDate, "yyyy-MM-dd HH:mm:ss");
 	}
 }

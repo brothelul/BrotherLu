@@ -1,74 +1,46 @@
-<!DOCTYPE html>
-<html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="utf-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+   
+ <script type="text/javascript">
+ 
+ // 页面加载时获取分类信息
+  (function(){	   
+	   $.ajax({
+		   
+		   type:"get",
+		   dataType:"json",
+		   url:"loadCategory.do",
+		   cache:true,
+		   
+		   success:function(data){
+			   
+			   var item = eval(data);
+			   
+			   $.each(item,function(i,item){
+				   
+                 $(".main_menu ul").append("<li class='big_dropdown' data-content='business'><a href='cate_detail.jsp?cateNo="+item.categoryNo+"'>"+item.categoryName+"</a></li>");
+			   });
+		   }
+	   });
+	   
+	   $.ajax({
+		   
+		   type:"get",
+		   dataType:"json",
+		   url:"weather.do",
+		   cache:true,
+		   
+		   success:function(data){
 
-<head>
-<title>BusinessNews</title>
+                var item =jQuery.parseJSON(data);                			 				   
+                $(".fl div ul").append("<li class='current'><a>"+item.cityName+"</a></li><li><a>"+item.lowTemp+"°/"+item.highTemp+"°</a></li><li><a>"+item.weather+"</a></li><li><a>"+item.quality+"</a></li>");		                
 
-<meta name="keywords" content="" />
-<meta name="description" content="" />
-
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width" />
-
-<!--[if lt IE 9]>
-<script type="text/javascript" src="layout/plugins/html5.js"></script>
-<![endif]-->
-
-<link rel="stylesheet" href="layout/style.css" type="text/css" />
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:400,700" rel="stylesheet" type="text/css" />
-<link href="http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700" rel="stylesheet" type="text/css" />
-<link href="http://fonts.googleapis.com/css?family=Droid+Serif:400,400italic" rel="stylesheet" type="text/css" />
-
-<script type="text/javascript" src="layout/js/jquery.js"></script>
-
-<!-- PrettyPhoto start -->
-<link rel="stylesheet" href="layout/plugins/prettyphoto/css/prettyPhoto.css" type="text/css" />
-<script type="text/javascript" src="layout/plugins/prettyphoto/jquery.prettyPhoto.js"></script>
-<!-- PrettyPhoto end -->
-
-<!-- jQuery tools start -->
-<script type="text/javascript" src="layout/plugins/tools/jquery.tools.min.js"></script>
-<!-- jQuery tools end -->
-
-<!-- Calendar start -->
-<link rel="stylesheet" href="layout/plugins/calendar/calendar.css" type="text/css" />
-<script type="text/javascript" src="layout/plugins/calendar/calendar.js"></script>
-<!-- Calendar end -->
-
-<!-- ScrollTo start -->
-<script type="text/javascript" src="layout/plugins/scrollto/jquery.scroll.to.min.js"></script>
-<!-- ScrollTo end -->
-
-<!-- MediaElements start -->
-<link rel="stylesheet" href="layout/plugins/video-audio/mediaelementplayer.css" />
-<script src="layout/plugins/video-audio/mediaelement-and-player.js"></script>
-<!-- MediaElements end -->
-
-<!-- FlexSlider start -->
-<link rel="stylesheet" href="layout/plugins/flexslider/flexslider.css" type="text/css" />
-<script type="text/javascript" src="layout/plugins/flexslider/jquery.flexslider-min.js"></script>
-<!-- FlexSlider end -->
-
-<!-- iButtons start -->
-<link rel="stylesheet" href="layout/plugins/ibuttons/css/jquery.ibutton.css" type="text/css" />
-<script type="text/javascript" src="layout/plugins/ibuttons/lib/jquery.ibutton.min.js"></script>
-<!-- iButtons end -->
-
-<!-- jQuery Form Plugin start -->
-<script type="text/javascript" src="layout/plugins/ajaxform/jquery.form.js"></script>
-<!-- jQuery Form Plugin end -->
-
-<script type="text/javascript" src="layout/js/main.js"></script>
-
-<script type="text/javascript">
-	jQuery(function () {
-	});
-</script>
-
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
-
-<body>
-	<div class="wrapper sticky_footer">
+		   }
+	   });
+   })();
+ 
+ </script>   
     	<!-- HEADER BEGIN -->
         <header>
             <div id="header">
@@ -77,39 +49,38 @@
                     	<div class="fl">
                         	<div class="block_top_menu">
                             	<ul>
-                                	<li class="current"><a href="index.html">首页</a></li>
-                                    <li><a href="#">Site Map</a></li>
-                                    <li><a href="typography.html">Typography</a></li>
-                                    <li><a href="contact.html">联系我们</a></li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> 
                         
-                        <div class="fr">
+                        <c:if test="${userInfo != null}">
+                            <div class="fr">
+                        	<div class="block_top_menu">
+                        	  <ul>
+                        	    <li><a><img src="${userInfo.faviconUri}" alt="" style="margin:-8px 0 0 -5px;height: 30px;border-radius:15px;width: 30px;"/></a></li>
+                        	    <li class="current"><a href="toUserPage.do?userNo=${userInfo.userNo}">${userInfo.username}</a></li>
+                        	    <li><a href="logout.do">退出</a></li>
+                        	  </ul>
+                        	</div>
+                        	</div>
+                        </c:if>
+                        <c:if test="${userInfo == null }">
+                           <div class="fr">
                         	<div class="block_top_menu">
                             	<ul>
                                 	<li class="current"><a href="#login" class="open_popup">登录</a></li>
-                                    <li><a href="registration.html">注册</a></li>
-                                    <li><a href="#">Subscribe</a></li>
+                                    <li><a href="registration.jsp">注册</a></li>
                                 </ul>
                             </div>
-                            <!--
-                            <div class="block_social_top">
-                            	<ul>
-                                	<li><a href="#" class="fb">Facebook</a></li>
-                                    <li><a href="#" class="tw">Twitter</a></li>
-                                    <li><a href="#" class="rss">RSS</a></li>
-                                </ul>
-                            </div> -->
                         </div>
-                        
+                        </c:if>                        
                     	<div class="clearboth"></div>
                     </div>
                 </section>
                 
             	<section class="bottom">
                 	<div class="inner">
-                    	<div id="logo_top"><a href="index.html"><img src="images/logo_top.png" alt="BusinessNews" title="BusinessNews" /></a></div>
+<!--                     	<div id="logo_top"><a href="index.html"><img src="resources/images/logo_top.png" alt="AroundYou" title="AroundYou" /></a></div> -->
                         
                         <div class="block_today_date">
                         	<div class="num"><p id="num_top" /></div>
@@ -117,32 +88,7 @@
                             	<p class="month_year"><span id="month_top"></span>, <span id="year_top"></span></p>
                                 <p id="day_top" class="day" />
                             </div>
-                        </div>
-                        
-                        <!--
-                         <div class="fr">
-                        	<div class="block_languages">
-                            	<div class="text"><p>Language:</p></div>
-                                <ul>
-                                	<li class="current"><a href="#" class="eng">English</a></li>
-                                    <li><a href="#" class="french">French</a></li>
-                                    <li><a href="#" class="ger">German</a></li>
-                                </ul>
-                                
-                                <div class="clearboth"></div>
-                            </div>
-<div class="block_search_top">
-                            	<form action="#" />
-                                	<div class="field"><input type="text" class="w_def_text" title="Enter Your Email Addres" /></div>
-                                    <input type="submit" class="button" value="Search" />
-                                    
-                                    <div class="clearboth"></div>
-                                </form>
-                            </div>
-                        </div>
-                            -->
-                            
-                        
+                        </div>                                                 
                         <div class="clearboth"></div>
                     </div>
                 </section>
@@ -151,8 +97,8 @@
                 	<div class="inner">
                     	<nav class="main_menu">
                         	<ul>
-								<li class="current_page_item"><a href="index.html">首页</a>
-                                	
+								<li class="current_page_item"><a href="index.jsp">首页</a></li>
+                            <!--     	
                                     <ul>
                                     	<li><a href="index.html">风格1</a></li>
                                         <li><a href="home_style_2.html">风格2</a></li>
@@ -207,7 +153,7 @@
                                         <li><a href="video.html">Video</a></li>
                                         <li><a href="typography.html">Typography</a></li>
                                     </ul>
-								</li>
+								</li> -->
 						  </ul>
 						</nav>
                     </div>
@@ -218,13 +164,13 @@
                     	<div class="block_big_dropdown" data-menu="business">
                         	<div class="content">
                             	<div class="image">
-                                	<a href="blog_post.html" class="pic"><img src="images/pic_big_drop_3.jpg" alt="" /></a>
+                                	<a href="blog_post.html" class="pic"><img src="resources/images/pic_big_drop_3.jpg" alt="" /></a>
                                     <p><a href="blog_post.html">Embarrassing hidden in the middleany thing</a></p>
                                 </div>
                                 <div class="line"></div>
                                 
                                 <div class="image">
-                                	<a href="blog_post.html" class="pic"><img src="images/pic_big_drop_4.jpg" alt="" /></a>
+                                	<a href="blog_post.html" class="pic"><img src="resources/images/pic_big_drop_4.jpg" alt="" /></a>
                                     <p><a href="blog_post.html">Content of a page when looking.</a></p>
                                 </div>
                                 <div class="line"></div>
@@ -257,13 +203,13 @@
                         <div class="block_big_dropdown" data-menu="technology">
                         	<div class="content">
                             	<div class="image">
-                                	<a href="blog_post.html" class="pic"><img src="images/pic_big_drop_5.jpg" alt="" /></a>
+                                	<a href="blog_post.html" class="pic"><img src="resources/images/pic_big_drop_5.jpg" alt="" /></a>
                                     <p><a href="blog_post.html">Simply dummy text of the printing.</a></p>
                                 </div>
                                 <div class="line"></div>
                                 
                                 <div class="image">
-                                	<a href="blog_post.html" class="pic"><img src="images/pic_big_drop_6.jpg" alt="" /></a>
+                                	<a href="blog_post.html" class="pic"><img src="resources/images/pic_big_drop_6.jpg" alt="" /></a>
                                     <p><a href="blog_post.html">Internet tend to repeat predefined chunks.</a></p>
                                 </div>
                                 <div class="line"></div>
@@ -296,13 +242,13 @@
                     	<div class="block_big_dropdown" data-menu="education">
                         	<div class="content">
                             	<div class="image">
-                                	<a href="blog_post.html" class="pic"><img src="images/pic_big_drop_1.jpg" alt="" /></a>
+                                	<a href="blog_post.html" class="pic"><img src="resources/images/pic_big_drop_1.jpg" alt="" /></a>
                                     <p><a href="blog_post.html">Many desktop packages and web page editors.</a></p>
                                 </div>
                                 <div class="line"></div>
                                 
                                 <div class="image">
-                                	<a href="blog_post.html" class="pic"><img src="images/pic_big_drop_2.jpg" alt="" /></a>
+                                	<a href="blog_post.html" class="pic"><img src="resources/images/pic_big_drop_2.jpg" alt="" /></a>
                                     <p><a href="blog_post.html">There are many variations passages</a></p>
                                 </div>
                                 <div class="line"></div>
@@ -336,7 +282,7 @@
                 
                 <section class="section_secondary_menu">
                 	<div class="inner">
-                    	<nav class="secondary_menu">
+<!--                     	<nav class="secondary_menu">
                         	<ul>
                             	<li><a href="main_news_europe.html">折扣</a></li>
                                 <li><a href="main_news_usa.html">新品</a></li>
@@ -346,7 +292,7 @@
                                 <li><a href="main_news_culture.html">Culture</a></li>
                                 <li><a href="main_news_top.html">热门</a></li>
                           	</ul>
-                        </nav>
+                        </nav> -->
                         
                         <div class="block_clock">
                         	<p>时间: <span id="time"></span></p>
@@ -355,154 +301,4 @@
                 </section>
             </div>
         </header>
-    	<!-- HEADER END -->
-        
-        <!-- CONTENT BEGIN -->
-        <div id="content" class="">
-        	<div class="inner">
-            	<div class="general_content">
-                	<div class="main_content">
-                    	<div class="block_breadcrumbs">
-                        	<div class="text"><p>You are here:</p></div>
-                            
-                            <ul>
-                            	<li><a href="index.html">Home</a></li>
-                                <li>Registration</li>
-                            </ul>
-                        </div>
-                        <div class="separator" style="height:28px;"></div>
-                        
-                        <p class="general_title"><span>用户注册</span></p>
-                        <div class="separator" style="height:39px;"></div>
-                        
-                        <div class="block_registration">
-                        	<form action="#" class="w_validation" />
-                            	<div class="col_1">
-                                	<div class="label"><p>用户名<span>*</span>:</p></div>
-                                    <div class="field"><input type="text" class="req" placeholder="用户名长度大于2小于10" /></div>
-                                    <div class="clearboth"></div>
-                                    <div class="separator" style="height:14px;"></div>                                  
-                                    
-                                    <div class="label"><p>密码<span>*</span>:</p></div>
-                                    <div class="field"><input type="password" class="req" /></div>
-                                    <div class="clearboth"></div>
-                                    <div class="separator" style="height:12px;"></div>
-                                    
-                                    <div class="label"><p>重复密码<span>*</span>:</p></div>
-                                    <div class="field"><input type="password" class="req" /></div>
-                                    <div class="clearboth"></div>
-                                    <div class="separator" style="height:12px;"></div>
-                                    
-                                    <div class="label"><p>邮箱<span>*</span>:</p></div>
-                                    <div class="field"><input type="text" class="req" /></div>
-                                    <div class="clearboth"></div>
-                                    <div class="separator" style="height:12px;"></div>
-                                    
-                                    <div class="label"><p>验证码<span>*</span>:</p></div>
-                                    <div class="field"><img/></div>
-                                    <div class="clearboth"></div>
-                                    <div class="separator" style="height:40px;"></div>
-                                    
-                                    <div class="label"><input type="checkbox"/></div>
-                                    <div class=""><p class="info_text">同意用户注册协议 (<a href="#">用户注册协议</a>)</p></div>
-                                    <div class="clearboth"></div>
-                                </div>                               
-                                
-                                <div class="clearboth"></div>
-                                <div class="separator" style="height:32px;"></div>
-                                <p class="info_text"><input type="submit" class="general_button" value="马上注册" /></p>
-
-                            </form>
-                                <p class="subtitle">其他登录</p> 
-                                <div class="line_3" style="margin:10px 0px 10px;"></div>       
-                                <div class="fb_button"><a href="#"><img src="images/button_fb_login.png" alt="" /></a></div>
-                        </div>
-                        
-                        
-                    </div>
-                    
-  
-                </div>
-            </div>
-        </div>
-    	<!-- CONTENT END -->
-        
-        <!-- FOOTER BEGIN -->
-        <footer>
-            <div id="footer">
-                               
-            	<section class="bottom">
-                	<div class="inner">
-                    	<div class="line_1"></div>
-                        
-                        <div class="fr">
-                        	<div class="block_menu_footer">
-                            	<ul>
-                                	<li><a href="business.html">商务合作</a></li>
-                                    <li><a href="technology.html">联系我们</a></li>
-                                    <li><a href="education.html">加入我们</a></li>
-                                    <li><a href="media.html">意见反馈</a></li>
-                                </ul>
-                            </div>
-                            
-                        </div>
-                        
-                        <div class="block_copyrights"><p>&copy; 2011 Business Press. All rights reserved.</p></div>
-                    </div>
-                </section>
-            </div>
-        </footer>
-        <!-- FOOTER END -->
-    </div>
-    
-    <!-- POPUP BEGIN -->
-    <div id="overlay"></div>
-    <div id="login" class="block_popup">
-    	<div class="popup">
-        	<a href="#" class="close">Close</a>
-            
-            <div class="content">
-            	<div class="title"><p>登录</p></div>
-                
-                <div class="form">
-                	<form action="#" />
-                    	<div class="column">
-                        	<p class="label">用户名</p>
-                            <div class="field"><input type="text" /></div>
-                        </div>
-                        
-                        <div class="column">
-                        	<p class="label">密码</p>
-                            <div class="field"><input type="password" /></div>
-                        </div>
-						
-						<div class="column_2">
-                            <div class="remember">
-                            	<div class="checkbox"><input type="checkbox" /></div>
-                                <div class="remember_label"><p>记住账号</p></div>
-                            </div>
-                        </div>
-                        
-                        <div class="column_2">
-                            <p class="forgot_pass"><a href="#">忘记密码?</a></p>
-                        </div>
-                        
-                        <div class="column button">                       
-                            <a href="#" class="enter"><span>登录</span></a>
-                        </div>
-                        
-                        <div class="clearboth"></div>
-                    </form>
-                </div>
-                
-                <div class="subtitle"><p>第三方登录</p></div>
-                
-                <div class="fb_button"><a href="#"><img src="images/button_fb_login.png" alt="" /></a></div>
-                <div class="text"><p>Use your account on the social network Facebook, to create a profile on BusinessPress</p></div>
-            </div>
-        </div>
-    </div>
-    <!-- POPUP END -->
-</body>
-
-</html>
+<!-- HEADER END -->

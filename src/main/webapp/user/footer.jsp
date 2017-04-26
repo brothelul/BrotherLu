@@ -21,7 +21,7 @@
                             
                         </div>
                         
-                        <div class="block_copyrights"><p>&copy; 2011 Business Press. All rights reserved.</p></div>
+                        <div class="block_copyrights"><p>&copy; 2017 Around You. All rights reserved.</p></div>
                     </div>
                 </section>
             </div>

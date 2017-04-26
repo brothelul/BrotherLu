@@ -51,9 +51,16 @@
                       <list>
                             <value>classpath:com/swjtu/aroundyou/persistence/entity/user/UserLogin.hbm.xml</value>
                             <value>classpath:com/swjtu/aroundyou/persistence/entity/user/UserInfo.hbm.xml</value>
+                            <value>classpath:com/swjtu/aroundyou/persistence/entity/user/UserLoginLog.hbm.xml</value>                            
                             <value>classpath:com/swjtu/aroundyou/persistence/entity/message/Message.hbm.xml</value>
                             <value>classpath:com/swjtu/aroundyou/persistence/entity/category/FirstMessageCategory.hbm.xml</value>
                             <value>classpath:com/swjtu/aroundyou/persistence/entity/category/SecondMessageCategory.hbm.xml</value>
+                            <value>classpath:com/swjtu/aroundyou/persistence/entity/utils/AppConfig.hbm.xml</value>
+                            <value>classpath:com/swjtu/aroundyou/persistence/entity/comment/Comment.hbm.xml</value>
+                            <value>classpath:com/swjtu/aroundyou/persistence/entity/message/KeyWord.hbm.xml</value>
+                            <value>classpath:com/swjtu/aroundyou/persistence/entity/manager/ManagerLogin.hbm.xml</value>
+                            <value>classpath:com/swjtu/aroundyou/persistence/entity/manager/ManagerInfo.hbm.xml</value>
+                            <value>classpath:com/swjtu/aroundyou/persistence/entity/manager/ManagerLoginLog.hbm.xml</value>
                       </list>
                </property>
     </bean>
@@ -83,7 +90,7 @@
     </tx:advice>
     
     <aop:config>
-            <aop:pointcut expression="execution(* com.swjtu.aroundyou.biz.service.user..*Impl.*(..))" id="transactionPointcut"/>
+            <aop:pointcut expression="execution(* com.swjtu.aroundyou.biz.service..*Impl.*(..))" id="transactionPointcut"/>
             <aop:advisor advice-ref="transactionAdvice" pointcut-ref="transactionPointcut"/>
     </aop:config>
 </beans>

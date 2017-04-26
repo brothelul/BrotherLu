@@ -12,18 +12,25 @@ public class UserLogin implements Serializable{
 
 	private static final long serialVersionUID = -104124417338418994L;
 	
-	private UserId id;
+	private Integer userNo;
+	private Integer userType;
 	private String username;
 	private String password;
 
 	private Integer createId;
 	private Date createDate;
 	
-	public UserId getId() {
-		return id;
+	public Integer getUserNo() {
+		return userNo;
 	}
-	public void setId(UserId id) {
-		this.id = id;
+	public void setUserNo(Integer userNo) {
+		this.userNo = userNo;
+	}
+	public Integer getUserType() {
+		return userType;
+	}
+	public void setUserType(Integer userType) {
+		this.userType = userType;
 	}
 	public String getUsername() {
 		return username;

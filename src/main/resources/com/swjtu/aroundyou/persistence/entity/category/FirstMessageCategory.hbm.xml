@@ -11,15 +11,7 @@
 
         <property name="categoryName" type="string">
             <column name="first_category_name" />
-        </property>
-
-        <set name="secondCategorySet" table="second_message_category" inverse="false" lazy="true">
-            <key>
-                <column name="second_category_no" />
-            </key>
-            <one-to-many class="com.swjtu.aroundyou.persistence.entity.category.SecondMessageCategory" />
-        </set>
-        
+        </property>       
         <property name="createId" type="integer">
             <column name="create_id" />
         </property>

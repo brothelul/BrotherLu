@@ -6,280 +6,280 @@ import java.util.Map;
 
 import com.swjtu.aroundyou.persistence.dao.base.entity.Pagination;
 
-public interface GenericHibernateDao<T> {  
+public interface GenericHibernateDao<T,PK extends Serializable> {  
   
     /**  
-     * ±£´æÊµÌå  
+     * ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½  
      *   
      * @param entity  
-     *            ÊµÌå¶ÔÏó  
-     * @return ÊµÌåÖ÷¼ü  
+     *            Êµï¿½ï¿½ï¿½ï¿½ï¿½  
+     * @return Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
      */  
-    T save(T entity);  
+    PK save(T entity);  
   
     /**  
      *   
-     * É¾³ýÊµÌå  
+     * É¾ï¿½ï¿½Êµï¿½ï¿½  
      *   
      * @param entity  
-     *            ÊµÌå¶ÔÏó  
+     *            Êµï¿½ï¿½ï¿½ï¿½ï¿½  
      *   
      */  
     void delete(T entity);  
   
     /**  
      *   
-     * ¸üÐÂÊµÌå  
+     * ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½  
      *   
      * @param entity  
-     *            ÊµÌå¶ÔÏó  
+     *            Êµï¿½ï¿½ï¿½ï¿½ï¿½  
      *   
      */  
     void update(T entity);  
   
     /**  
      *   
-     * ±£´æ»ò¸üÐÂÊµÌå, ÊµÌåÃ»ÓÐÖ÷¼üÊ±±£´æ£¬·ñÔò¸üÐÂ  
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½, Êµï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½æ£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
      *   
      * @param entity  
-     *            ÊµÌå¶ÔÏó  
+     *            Êµï¿½ï¿½ï¿½ï¿½ï¿½  
      *   
      */  
     void saveOrUpdate(T entity);  
   
     /**  
      *   
-     * ÅúÁ¿±£´æÊµÌå  
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½  
      *   
      * @param entities  
-     *            ÊµÌå¼¯ºÏ  
+     *            Êµï¿½å¼¯ï¿½ï¿½  
      */  
     void saveAll(Collection<T> entities);  
   
     /**  
      *   
-     * ÅúÁ¿É¾³ýÊµÌå  
+     * ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½Êµï¿½ï¿½  
      *   
      * @param entities  
-     *            ÊµÌå¼¯ºÏ  
+     *            Êµï¿½å¼¯ï¿½ï¿½  
      *   
      */  
     void deleteAll(Collection<T> entities);  
   
     /**  
      *   
-     * ÅúÁ¿¸üÐÂÊµÌå  
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½  
      *   
      * @param entities  
-     *            ÊµÌå¼¯ºÏ  
+     *            Êµï¿½å¼¯ï¿½ï¿½  
      *   
      */  
     void updateAll(Collection<T> entities);  
   
     /**  
      *   
-     * ÅúÁ¿±£´æ»ò¸üÐÂÊµÌå, ÊµÌåÃ»ÓÐÖ÷¼üÊ±±£´æ£¬·ñÔò¸üÐÂ  
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½, Êµï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½æ£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
      *   
      * @param entity  
-     *            ÊµÌå¼¯ºÏ  
+     *            Êµï¿½å¼¯ï¿½ï¿½  
      *   
      */  
     void saveOrUpdateAll(Collection<T> entities);  
   
     /**  
      *   
-     * »ñÈ¡µ¥¸öÊµÌå£¬¸ù¾ÝÊµÌåÀà¼°ÊµÌåµÄÖ÷¼ü»ñÈ¡¡£  
+     * ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Êµï¿½å£¬ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½à¼°Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½  
      *   
      * @param entityClass  
-     *            ÊµÌåÀà  
+     *            Êµï¿½ï¿½ï¿½ï¿½  
      * @param id  
-     *            ÊµÌåÖ÷¼ü  
-     * @return ÊµÌå¶ÔÏó  
+     *            Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
+     * @return Êµï¿½ï¿½ï¿½ï¿½ï¿½  
      */  
     @SuppressWarnings("hiding")  
     <T> T get(Class<T> entityClass, Serializable id);  
   
     /**  
-     * »ñÈ¡µ¥¸öÊµÌå£¬¸ù¾Ý²éÑ¯Óï¾ä¼°²ÎÊý»ñÈ¡¡£  
+     * ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Êµï¿½å£¬ï¿½ï¿½Ý²ï¿½Ñ¯ï¿½ï¿½ä¼°ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½  
      *   
      * @param queryString  
-     *            ²éÑ¯Óï¾ä  
+     *            ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½  
      * @param params  
-     *            ¿ÉÑ¡µÄ²éÑ¯²ÎÊý  
-     * @return µ¥¸öÊµÌå£¬Èç¹û²éÑ¯½á¹ûÓÐ¶à¸ö£¬Ôò·µ»ØµÚÒ»¸öÊµÌå  
+     *            ï¿½ï¿½Ñ¡ï¿½Ä²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½  
+     * @return ï¿½ï¿½ï¿½ï¿½Êµï¿½å£¬ï¿½ï¿½ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½ò·µ»Øµï¿½Ò»ï¿½ï¿½Êµï¿½ï¿½  
      */  
     @SuppressWarnings("hiding")  
     <T> T get(CharSequence queryString, Map<String, Object> params);  
   
     /**  
-     * »ñÈ¡µ¥¸öÊµÌå£¬¸ù¾Ý²éÑ¯Óï¾ä¼°²ÎÊý»ñÈ¡¡£  
+     * ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Êµï¿½å£¬ï¿½ï¿½Ý²ï¿½Ñ¯ï¿½ï¿½ä¼°ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½  
      *   
      * @param queryString  
-     *            ²éÑ¯Óï¾ä  
+     *            ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½  
      * @param params  
-     *            ¿ÉÑ¡µÄ²éÑ¯²ÎÊý  
-     * @return µ¥¸öÊµÌå£¬Èç¹û²éÑ¯½á¹ûÓÐ¶à¸ö£¬Ôò·µ»ØµÚÒ»¸öÊµÌå  
+     *            ï¿½ï¿½Ñ¡ï¿½Ä²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½  
+     * @return ï¿½ï¿½ï¿½ï¿½Êµï¿½å£¬ï¿½ï¿½ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½ò·µ»Øµï¿½Ò»ï¿½ï¿½Êµï¿½ï¿½  
      */  
     @SuppressWarnings("hiding")  
     <T> T get(CharSequence queryString, Object... params);  
   
     /**  
      *   
-     * ²éÑ¯ÊµÌåÁÐ±í  
+     * ï¿½ï¿½Ñ¯Êµï¿½ï¿½ï¿½Ð±ï¿½  
      *   
      * @param queryString  
-     *            ²éÑ¯Óï¾ä  
+     *            ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½  
      * @param params  
-     *            ¿ÉÑ¡µÄ²éÑ¯²ÎÊý  
-     * @return ÊµÌåÁÐ±í  
+     *            ï¿½ï¿½Ñ¡ï¿½Ä²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½  
+     * @return Êµï¿½ï¿½ï¿½Ð±ï¿½  
      */  
     @SuppressWarnings("hiding")  
     <T> List<T> findList(CharSequence queryString, Object... params);  
   
     /**  
      *   
-     * ²éÑ¯ÊµÌåÁÐ±í  
+     * ï¿½ï¿½Ñ¯Êµï¿½ï¿½ï¿½Ð±ï¿½  
      *   
      * @param queryString  
-     *            ²éÑ¯Óï¾ä  
+     *            ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½  
      * @param params  
-     *            ¿ÉÑ¡µÄ²éÑ¯²ÎÊý  
-     * @return ÊµÌåÁÐ±í  
+     *            ï¿½ï¿½Ñ¡ï¿½Ä²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½  
+     * @return Êµï¿½ï¿½ï¿½Ð±ï¿½  
      */  
     @SuppressWarnings("hiding")  
     <T> List<T> findList(CharSequence queryString, Map<String, Object> params);  
   
     /**  
-     * ·ÖÒ³²éÑ¯ÊµÌå  
+     * ï¿½ï¿½Ò³ï¿½ï¿½Ñ¯Êµï¿½ï¿½  
      *   
      * @param queryString  
-     *            ²éÑ¯Óï¾ä  
+     *            ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½  
      * @param pageIndex  
-     *            µ±Ç°Ò³Âë£¬Èç¹ûpageIndex<1Ôò²»·ÖÒ³£¬ÇÒ·µ»ØpageSizeÌõ¼ÇÂ¼¡£  
+     *            ï¿½ï¿½Ç°Ò³ï¿½ë£¬ï¿½ï¿½ï¿½pageIndex<1ï¿½ò²»·ï¿½Ò³ï¿½ï¿½ï¿½Ò·ï¿½ï¿½ï¿½pageSizeï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½  
      * @param pageSize  
-     *            Ã¿Ò³¼ÇÂ¼Êý£¬Èç¹ûpageSize<1Ôò·µ»ØËùÓÐ¼ÇÂ¼¡£  
+     *            Ã¿Ò³ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½pageSize<1ï¿½ò·µ»ï¿½ï¿½ï¿½ï¿½Ð¼ï¿½Â¼ï¿½ï¿½  
      * @param params  
-     *            ¿ÉÑ¡µÄ²éÑ¯²ÎÊý  
-     * @return ÊµÌå·ÖÒ³¶ÔÏó  
+     *            ï¿½ï¿½Ñ¡ï¿½Ä²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½  
+     * @return Êµï¿½ï¿½ï¿½Ò³ï¿½ï¿½ï¿½ï¿½  
      */  
     @SuppressWarnings("hiding")  
     <T> Pagination<T> findPagination(CharSequence queryString, int pageIndex, int pageSize, Object... params);  
   
     /**  
-     * ·ÖÒ³²éÑ¯ÊµÌå  
+     * ï¿½ï¿½Ò³ï¿½ï¿½Ñ¯Êµï¿½ï¿½  
      *   
      * @param queryString  
-     *            ²éÑ¯Óï¾ä  
+     *            ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½  
      * @param params  
-     *            ¿ÉÑ¡µÄ²éÑ¯²ÎÊý  
+     *            ï¿½ï¿½Ñ¡ï¿½Ä²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½  
      * @param pageIndex  
-     *            µ±Ç°Ò³Âë£¬Èç¹ûpageIndex<2Ôò²»·ÖÒ³£¬ÇÒ·µ»ØpageSizeÌõ¼ÇÂ¼¡£  
+     *            ï¿½ï¿½Ç°Ò³ï¿½ë£¬ï¿½ï¿½ï¿½pageIndex<2ï¿½ò²»·ï¿½Ò³ï¿½ï¿½ï¿½Ò·ï¿½ï¿½ï¿½pageSizeï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½  
      * @param pageSize  
-     *            Ã¿Ò³¼ÇÂ¼Êý£¬Èç¹ûpageSize<1Ôò·µ»ØËùÓÐ¼ÇÂ¼¡£  
+     *            Ã¿Ò³ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½pageSize<1ï¿½ò·µ»ï¿½ï¿½ï¿½ï¿½Ð¼ï¿½Â¼ï¿½ï¿½  
      *   
-     * @return ÊµÌå·ÖÒ³¶ÔÏó  
+     * @return Êµï¿½ï¿½ï¿½Ò³ï¿½ï¿½ï¿½ï¿½  
      */  
     @SuppressWarnings("hiding")  
     <T> Pagination<T> findPagination(CharSequence queryString, Map<String, Object> params, int pageIndex, int pageSize);  
   
     /**  
-     * ·ÖÒ³²éÑ¯ÊµÌå£¬×Ô¶¨Òå×ÜÌõÊý²éÑ¯Óï¾ä£¬ÊÊºÏ¸´ÔÓµÄhql·ÖÒ³²éÑ¯  
+     * ï¿½ï¿½Ò³ï¿½ï¿½Ñ¯Êµï¿½å£¬ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¯ï¿½ï¿½ä£¬ï¿½ÊºÏ¸ï¿½ï¿½Óµï¿½hqlï¿½ï¿½Ò³ï¿½ï¿½Ñ¯  
      *   
      * @param queryString  
-     *            ²éÑ¯Óï¾ä  
+     *            ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½  
      * @param countString  
-     *            ²éÑ¯¼ÇÂ¼×ÜÌõÊýÓï¾ä  
+     *            ï¿½ï¿½Ñ¯ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
      * @param pageIndex  
-     *            µ±Ç°Ò³Âë£¬Èç¹ûpageIndex<1Ôò²»·ÖÒ³£¬ÇÒ·µ»ØpageSizeÌõ¼ÇÂ¼¡£  
+     *            ï¿½ï¿½Ç°Ò³ï¿½ë£¬ï¿½ï¿½ï¿½pageIndex<1ï¿½ò²»·ï¿½Ò³ï¿½ï¿½ï¿½Ò·ï¿½ï¿½ï¿½pageSizeï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½  
      * @param pageSize  
-     *            Ã¿Ò³¼ÇÂ¼Êý£¬Èç¹ûpageSize<1Ôò·µ»ØËùÓÐ¼ÇÂ¼¡£  
+     *            Ã¿Ò³ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½pageSize<1ï¿½ò·µ»ï¿½ï¿½ï¿½ï¿½Ð¼ï¿½Â¼ï¿½ï¿½  
      * @param params  
-     *            ¿ÉÑ¡µÄ²éÑ¯²ÎÊý  
-     * @return ÊµÌå·ÖÒ³¶ÔÏó  
+     *            ï¿½ï¿½Ñ¡ï¿½Ä²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½  
+     * @return Êµï¿½ï¿½ï¿½Ò³ï¿½ï¿½ï¿½ï¿½  
      */  
     @SuppressWarnings("hiding")  
     <T> Pagination<T> findPagination(CharSequence queryString, CharSequence countString, int pageIndex, int pageSize,  
             Object... params);  
   
     /**  
-     * ·ÖÒ³²éÑ¯ÊµÌå£¬×Ô¶¨Òå×ÜÌõÊý²éÑ¯Óï¾ä£¬ÊÊºÏ¸´ÔÓµÄhql·ÖÒ³²éÑ¯  
+     * ï¿½ï¿½Ò³ï¿½ï¿½Ñ¯Êµï¿½å£¬ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¯ï¿½ï¿½ä£¬ï¿½ÊºÏ¸ï¿½ï¿½Óµï¿½hqlï¿½ï¿½Ò³ï¿½ï¿½Ñ¯  
      *   
      * @param queryString  
-     *            ²éÑ¯Óï¾ä  
+     *            ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½  
      * @param countString  
-     *            ²éÑ¯¼ÇÂ¼×ÜÌõÊýÓï¾ä  
+     *            ï¿½ï¿½Ñ¯ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
      * @param params  
-     *            ¿ÉÑ¡µÄ²éÑ¯²ÎÊý  
+     *            ï¿½ï¿½Ñ¡ï¿½Ä²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½  
      * @param pageIndex  
-     *            µ±Ç°Ò³Âë£¬Èç¹ûpageIndex<2Ôò²»·ÖÒ³£¬ÇÒ·µ»ØpageSizeÌõ¼ÇÂ¼¡£  
+     *            ï¿½ï¿½Ç°Ò³ï¿½ë£¬ï¿½ï¿½ï¿½pageIndex<2ï¿½ò²»·ï¿½Ò³ï¿½ï¿½ï¿½Ò·ï¿½ï¿½ï¿½pageSizeï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½  
      * @param pageSize  
-     *            Ã¿Ò³¼ÇÂ¼Êý£¬Èç¹ûpageSize<1Ôò·µ»ØËùÓÐ¼ÇÂ¼¡£  
+     *            Ã¿Ò³ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½pageSize<1ï¿½ò·µ»ï¿½ï¿½ï¿½ï¿½Ð¼ï¿½Â¼ï¿½ï¿½  
      *   
-     * @return ÊµÌå·ÖÒ³¶ÔÏó  
+     * @return Êµï¿½ï¿½ï¿½Ò³ï¿½ï¿½ï¿½ï¿½  
      */  
     @SuppressWarnings("hiding")  
     <T> Pagination<T> findPagination(CharSequence queryString, CharSequence countString, Map<String, Object> params,  
             int pageIndex, int pageSize);  
   
     /**  
-     * ·ÖÒ³²éÑ¯ÊµÌå£¬×Ô¶¨Òå×ÜÌõÊý²éÑ¯Óï¾ä£¬ÊÊºÏ¸´ÔÓµÄsql·ÖÒ³²éÑ¯  
+     * ï¿½ï¿½Ò³ï¿½ï¿½Ñ¯Êµï¿½å£¬ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¯ï¿½ï¿½ä£¬ï¿½ÊºÏ¸ï¿½ï¿½Óµï¿½sqlï¿½ï¿½Ò³ï¿½ï¿½Ñ¯  
      *   
      * @param queryString  
-     *            ²éÑ¯Óï¾ä  
+     *            ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½  
      * @param countString  
-     *            ²éÑ¯¼ÇÂ¼×ÜÌõÊýÓï¾ä  
+     *            ï¿½ï¿½Ñ¯ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
      * @param params  
-     *            ¿ÉÑ¡µÄ²éÑ¯²ÎÊý  
+     *            ï¿½ï¿½Ñ¡ï¿½Ä²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½  
      * @param pageIndex  
-     *            µ±Ç°Ò³Âë£¬Èç¹ûpageIndex<2Ôò²»·ÖÒ³£¬ÇÒ·µ»ØpageSizeÌõ¼ÇÂ¼¡£  
+     *            ï¿½ï¿½Ç°Ò³ï¿½ë£¬ï¿½ï¿½ï¿½pageIndex<2ï¿½ò²»·ï¿½Ò³ï¿½ï¿½ï¿½Ò·ï¿½ï¿½ï¿½pageSizeï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½  
      * @param pageSize  
-     *            Ã¿Ò³¼ÇÂ¼Êý£¬Èç¹ûpageSize<1Ôò·µ»ØËùÓÐ¼ÇÂ¼¡£  
+     *            Ã¿Ò³ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½pageSize<1ï¿½ò·µ»ï¿½ï¿½ï¿½ï¿½Ð¼ï¿½Â¼ï¿½ï¿½  
      *   
-     * @return ÊµÌå·ÖÒ³¶ÔÏó  
+     * @return Êµï¿½ï¿½ï¿½Ò³ï¿½ï¿½ï¿½ï¿½  
      */  
     @SuppressWarnings("hiding")  
     public <T> Pagination<T> findSqlPagination(final CharSequence queryString, final CharSequence countString,  
             final Map<String, Object> params, int pageIndex, int pageSize);  
   
     /**  
-     * Ö´ÐÐÊý¾Ý¿â¸üÐÂ²Ù×÷  
+     * Ö´ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½Â²ï¿½ï¿½ï¿½  
      *   
-     * @deprecated ÓÃ{@link #executeUpdate(String)}Ìæ»»  
+     * @deprecated ï¿½ï¿½{@link #executeUpdate(String)}ï¿½æ»»  
      * @param hql  
      */  
     void execute(String hql);  
   
     /**  
-     * Ö´ÐÐÊý¾Ý¿â¸üÐÂ²Ù×÷  
+     * Ö´ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½Â²ï¿½ï¿½ï¿½  
      *   
-     * @deprecated ÓÃ{@link #executeSqlUpdate(String)}Ìæ»»  
+     * @deprecated ï¿½ï¿½{@link #executeSqlUpdate(String)}ï¿½æ»»  
      * @param sql  
      */  
     void executeSql(String sql);  
    
   
     /**  
-     * Ö´ÐÐÊý¾Ý¿â¸üÐÂ²Ù×÷  
+     * Ö´ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½Â²ï¿½ï¿½ï¿½  
      *   
      * @param sql  
-     * @return ¸üÐÂµÄ¼ÇÂ¼ÌõÊý  
+     * @return ï¿½ï¿½ï¿½ÂµÄ¼ï¿½Â¼ï¿½ï¿½ï¿½ï¿½  
      */  
     int executeSqlUpdate(String sql);  
   
     /**  
-     * Ö´ÐÐÊý¾Ý¿â¸üÐÂ²Ù×÷  
+     * Ö´ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½Â²ï¿½ï¿½ï¿½  
      *   
      * @param hql  
-     * @return ¸üÐÂµÄ¼ÇÂ¼ÌõÊý  
+     * @return ï¿½ï¿½ï¿½ÂµÄ¼ï¿½Â¼ï¿½ï¿½ï¿½ï¿½  
      */  
     int executeUpdate(String hql);  
   
     /**
      * 
      * @auther brotherlu
-     * @date  2017Äê2ÔÂ4ÈÕÉÏÎç9:08:27
+     * @date  2017ï¿½ï¿½2ï¿½ï¿½4ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½9:08:27
      * @param T
-     * <p>ÃèÊö£º¸ù¾ÝidÈ¥»ñÈ¡T</p>
+     * <p>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½idÈ¥ï¿½ï¿½È¡T</p>
      */
     public T getById(Serializable id);    
   
@@ -289,29 +289,29 @@ public interface GenericHibernateDao<T> {
   
     *//**  
      *   
-     * ²éÑ¯ÊµÌåÁÐ±í  
+     * ï¿½ï¿½Ñ¯Êµï¿½ï¿½ï¿½Ð±ï¿½  
      *   
      * @param queryString  
-     *            ²éÑ¯Óï¾ä  
+     *            ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½  
      * @param maxResults  
-     *            ÁÐ±í×î´óÊý  
+     *            ï¿½Ð±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
      * @param params  
-     *            ¿ÉÑ¡µÄ²éÑ¯²ÎÊý  
-     * @return ÊµÌåÁÐ±í  
+     *            ï¿½ï¿½Ñ¡ï¿½Ä²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½  
+     * @return Êµï¿½ï¿½ï¿½Ð±ï¿½  
      *//*  
     public <V> List<V> findListByMax(CharSequence queryString, int maxResults, Object... params);  
   
     *//**  
      *   
-     * ²éÑ¯ÊµÌåÁÐ±í  
+     * ï¿½ï¿½Ñ¯Êµï¿½ï¿½ï¿½Ð±ï¿½  
      *   
      * @param queryString  
-     *            ²éÑ¯Óï¾ä  
+     *            ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½  
      * @param maxResults  
-     *            ÁÐ±í×î´óÊý  
+     *            ï¿½Ð±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
      * @param params  
-     *            ¿ÉÑ¡µÄ²éÑ¯²ÎÊý  
-     * @return ÊµÌåÁÐ±í  
+     *            ï¿½ï¿½Ñ¡ï¿½Ä²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½  
+     * @return Êµï¿½ï¿½ï¿½Ð±ï¿½  
      *//*  
     public <V> List<V> findListByMax(CharSequence queryString, int maxResults, Map<String, Object> params);*/
 }

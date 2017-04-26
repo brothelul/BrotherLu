@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.swjtu.aroundyou.persistence.dao.base.GenericHibernateDao;
 import com.swjtu.aroundyou.persistence.dao.base.entity.Pagination;
 
-public class GenericHibernateDaoImpl<T>  implements GenericHibernateDao<T>{
+public class GenericHibernateDaoImpl<T,PK extends Serializable>  implements GenericHibernateDao<T,PK >{
 
 	    protected Class<T> entityClazz;
 	    
@@ -38,8 +38,8 @@ public class GenericHibernateDaoImpl<T>  implements GenericHibernateDao<T>{
 	    }  
 	  
 	    @SuppressWarnings("unchecked")
-	    public T save(T entity) {  
-	        return (T) getSession().save(entity);  
+	    public PK save(T entity) {  
+	        return (PK) getSession().save(entity); 
 	    }  
 	  
 	    public void delete(T entity) {  
@@ -102,10 +102,12 @@ public class GenericHibernateDaoImpl<T>  implements GenericHibernateDao<T>{
 	    @SuppressWarnings({ "unchecked", "rawtypes", "hiding" })  
 	    public <T> T get(CharSequence queryString, Object... params) {  
 	  
-	        Query qry = getSession().createQuery(queryString.toString());  
-	        for (int i = 0; i < params.length; ++i) {  
-	            qry.setParameter(i, params[i]);  
-	        }  
+	        Query qry = getSession().createQuery(queryString.toString());
+	        if (params != null) {
+		        for (int i = 0; i < params.length; ++i) {  
+		            qry.setParameter(i, params[i]);  
+		        } 
+			} 
 	        List list = qry.setMaxResults(1).list();  
 	        if (list.isEmpty())  
 	            return null;  
@@ -145,13 +147,16 @@ public class GenericHibernateDaoImpl<T>  implements GenericHibernateDao<T>{
 	        Query query = getSession().createQuery(queryString.toString());  
 	  
 	        if ((pageSize > 0) && (pageIndex > 0)) {  
-	            query.setFirstResult((pageIndex < 2) ? 0 : (pageIndex - 1) * pageSize);  
+	            query.setFirstResult((pageIndex - 1) * pageSize);  
 	            query.setMaxResults(pageSize);  
 	        }  
 	  
-	        for (int i = 0; i < params.length; ++i) {  
-	            query.setParameter(i, params[i]);  
-	        }  
+	        if (params != null) {
+		        for (int i = 0; i < params.length; i++) {  
+		            query.setParameter(i, params[i]);  
+		        }  
+			}
+	        
 	        @SuppressWarnings("rawtypes")  
 	        List items = query.list();  
 	        long rowsCount = 0L;  

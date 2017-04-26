@@ -3,6 +3,8 @@ package com.swjtu.aroundyou.persistence.entity.user;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.swjtu.aroundyou.utils.FormatUtil;
+
 /**
  * 
  * @author brotherlu
@@ -13,7 +15,8 @@ public class UserInfo implements Serializable{
 
 	private static final long serialVersionUID = 6014071030748333040L;
 
-	private UserId id;
+	private Integer userNo;
+	private Integer userType;
 	private String username;
 	private String faviconUri;
 	private String shortDesc;
@@ -24,12 +27,19 @@ public class UserInfo implements Serializable{
 	private Integer friend;  //存放友好度，用于限制恶劣用户评论和发表反动信息， 总值为5，扣分由后台操作
 	private String lastLoginIP;
 	private Date lastLoginDate;
+	private String lastLoginDatesString;
 	
-	public UserId getId() {
-		return id;
+	public Integer getUserNo() {
+		return userNo;
 	}
-	public void setId(UserId id) {
-		this.id = id;
+	public void setUserNo(Integer userNo) {
+		this.userNo = userNo;
+	}
+	public Integer getUserType() {
+		return userType;
+	}
+	public void setUserType(Integer userType) {
+		this.userType = userType;
 	}
 	public String getUsername() {
 		return username;
@@ -91,5 +101,7 @@ public class UserInfo implements Serializable{
 	public void setLastLoginDate(Date lastLoginDate) {
 		this.lastLoginDate = lastLoginDate;
 	}
-	
+	public String getLastLoginDatesString() {
+		return FormatUtil.formatDate(lastLoginDate, "yyyy-MM-dd HH:mm:ss");
+	}
 }

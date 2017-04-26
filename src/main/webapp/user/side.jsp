@@ -14,17 +14,20 @@
   		   success:function(data){
   			   
   			   var item = eval(data);
-  			   
-  			   $.each(item,function(i,item){
-  				   
-  				   var str ="<div class='article'><div class='pic'><a href='#' class='w_hover'><img src='"+item.photoUri+"' alt='' /><span></span></a></div>";
-  				   str = str +"<div class='text'><p class='title'><a href='#'>"+item.messageTitle+"</a></p><div class='date'><p>"
-  				   str = str +item.createDateString+"</p></div><div class='icons'><ul><li><a href='#' class='views'>41</a></li><li><a href='#' class='comments'>22</a></li></ul></div></div></div>";
-  				   str = str +"	<div class='line_3'></div>";
-  				   
+  			   if(item != null){
+  				 var str = "";
+    			   $.each(item,function(i,item){
+      				   if(i==0){
+      					 str = str + "<h4>今日最热</h4>";
+      				   }
+      				   str = str + "<div class='article'><div class='pic'><a class='w_hover'><img src='"+item.photoUri+"' alt='' /><span></span></a></div>";
+      				   str = str +"<div class='text'><p class='title'><a href='getMessage.do?messageNo="+item.messageNo+"'>"+item.messageTitle+"</a></p><div class='date'><p>"
+      				   str = str +item.createDateString+"</p></div><div class='icons'><ul><li><a class='comments'>"+item.cmtCount+"</a></li></ul></div></div></div>";
+      				   str = str +"	<div class='line_3'></div>";
+      				   
+      			   });
   				   $(".block_popular_posts").append(str);
-  			   });
-  			   
+  			   } 			   
   			   return false;
   		   }
   		   
@@ -35,8 +38,10 @@
         <div class="sidebar">                       
                      <div class="block_search_top">
                         	<h4>热门搜索</h4>                           
-                            <form action="#" >
-                            	<div class="field"><input type="text" class="w_def_text" title="输入关键字" /></div>
+                            <form action="search.jsp" method="get">
+                            	<div class="field">
+                            	<input type="text" class="w_def_text" title="输入关键字" name="keyWord"/>
+                            	</div>
                                 <button type="submit" class="button" value="submit"></button>                               
                                 <div class="clearboth"></div>
                             </form>
@@ -46,13 +51,10 @@
                                                         
                      <div class="separator" style="height:31px;"></div>
                         
-                        <div class="block_popular_posts">
-                             <h4>今日最热</h4>                       
-
-                        </div>
+                        <div class="block_popular_posts"></div>
                         
                         <div class="separator" style="height:31px;"></div>
-                        
+<!--                         
                         <div class="block_popular_stuff">
                         	<h4>热门视频</h4>
                             
@@ -75,12 +77,11 @@
                             <div class="line_2"></div>
                         </div>
                         
-                        <div class="separator" style="height:31px;"></div>
+                        <div class="separator" style="height:31px;"></div> -->
                         
                         <div class="block_calendar">
-                        	<h4>日历</h4>
-                            
-                            <div class="calendar" id="calendar_sidebar">
+<!--                         	<h4>日历</h4> -->                           
+                           <div class="calendar" id="calendar_sidebar">
                             </div>
                             
                             <script type="text/javascript">
@@ -104,47 +105,7 @@
                             <div class="line_2"></div>
                         </div>
                         
-                        <div class="separator" style="height:31px;"></div>
-                        
-                        <div class="block_twitter_widget">
-                        	<h4>Twitter Widget</h4>
-                            <div class="lnk_follow"><a href="#" target="_blank">Follow on Twitter</a></div>
-                            
-   <!--                         <div class="tweet">
-                            	<script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>
-								<script type="text/javascript" src="layout/plugins/tweet/tweet.widget.js"></script>
-                                <script type="text/javascript">
-                                    // ('YOUR USERNAME','NUMBER OF POSTS');
-                                    AddTweet('Web_Visions',1);
-                                </script>
-                            </div> -->
-                            
-                            <div class="line_2"></div>
-                        </div>
-                        
-                        <div class="separator" style="height:31px;"></div>
-                        
-                        <div class="block_popular_stuff">
-                        	<h4>热门图片</h4>
-                            
-                            <div class="content">
-                            	<a href="#" class="view_all">查看所有</a>
-                            	<div class="media"><a href="resources/images/pic_pop_photo_big.jpg" class="general_pic_hover zoom no_fx" data-rel="prettyPhoto" title="Popular Photo"><img src="resources/images/pic_pop_photo.jpg" alt="" /></a></div>
-                                <p><a href="blog_post_w_slider.html">Editors their default model text, and a search for will uncover many.</a> <img src="resources/images/icon_photo.gif" alt="" /></p>
-                                <p class="date">11 July, 2012</p>
-                            </div>
-                            
-                            <div class="info">
-                            	<ul>
-                                	<li class="comments"><a href="#">100</a></li>
-                                    <li class="views"><a href="#">134</a></li>
-                                </ul>
-                            </div>
-                            <div class="clearboth"></div>                       
-                           <div class="line_2"></div>
-                        </div>
-                        
-                      	<div class="separator" style="height:31px;"></div>
+                        <div class="separator" style="height:31px;"></div>                    
                         
                     </div>
                     <div class="block_all">

@@ -41,6 +41,7 @@
 <link rel="stylesheet" href="resources/layout/plugins/flexslider/flexslider.css" type="text/css" />
 <script type="text/javascript" src="resources/layout/plugins/flexslider/jquery.flexslider-min.js"></script>
 <!-- FlexSlider end -->
+<script type="text/javascript" src="resources/layout/plugins/laypage/laypage.js"></script>
 
 <!-- iButtons start -->
 <link rel="stylesheet" href="resources/layout/plugins/ibuttons/css/jquery.ibutton.css" type="text/css" />
@@ -52,6 +53,7 @@
 <!-- jQuery Form Plugin end -->
 
 <script type="text/javascript" src="resources/layout/js/main.js"></script>
+<script type="text/javascript" src="resources/layout/plugins/pagination/jquery.pagination.js"></script>
 
 <script type="text/javascript">
 	jQuery(function () {

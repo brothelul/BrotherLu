@@ -17,7 +17,7 @@
         <property name="photoUri" type="string">
             <column name="photo_uri" />
         </property>
-        <property name="active" type="character">
+        <property name="active" type="integer">
             <column name="active" />
         </property>
         <property name="messageContent" type="string">
@@ -26,14 +26,18 @@
         <property name="isHot" type="character">
             <column name="is_hot" />
         </property>
-        <many-to-one name="secondMessageCategory" class="com.swjtu.aroundyou.persistence.entity.category.SecondMessageCategory" fetch="join">
+        <property name="viewCount" type="integer">
+            <column name="view_count"/>
+        </property>
+        <property name="cmtCount" type="integer">
+            <column name="cmt_count"/>
+        </property>
+        <many-to-one name="secondMessageCategory" class="com.swjtu.aroundyou.persistence.entity.category.SecondMessageCategory" fetch="join" lazy="false">
             <column name="second_category_no" />
         </many-to-one>
-        <many-to-one name="userInfo" class="com.swjtu.aroundyou.persistence.entity.user.UserInfo" fetch="join">
+        <many-to-one name="userInfo" class="com.swjtu.aroundyou.persistence.entity.user.UserInfo" fetch="join" lazy="false">
             <column name="user_no" />
-            <column name="user_type"/>
-        </many-to-one>
-        
+        </many-to-one>        
         <property name="createId" type="integer">
              <column name="create_id"/>
         </property>

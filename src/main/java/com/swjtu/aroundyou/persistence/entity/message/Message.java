@@ -2,9 +2,12 @@ package com.swjtu.aroundyou.persistence.entity.message;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import com.swjtu.aroundyou.persistence.entity.category.SecondMessageCategory;
+import com.swjtu.aroundyou.persistence.entity.comment.Comment;
 import com.swjtu.aroundyou.persistence.entity.user.UserInfo;
+import com.swjtu.aroundyou.utils.DateUtil;
 import com.swjtu.aroundyou.utils.FormatUtil;
 
 public class Message implements Serializable {
@@ -15,13 +18,15 @@ public class Message implements Serializable {
 	private String messageName;
 	private String messageTitle;
 	private String photoUri;
-	private Character active;
+	private Integer active;
 	private String messageContent;
 	private Character isHot;
 	private Integer viewCount;
 	private String createDateString;
 	private SecondMessageCategory secondMessageCategory;
 	private UserInfo userInfo;
+	private List<Comment> comments;
+	private Integer cmtCount;
 	
 	private Integer createId;
 	private Date createDate;
@@ -54,10 +59,10 @@ public class Message implements Serializable {
 	public void setPhotoUri(String photoUri) {
 		this.photoUri = photoUri;
 	}
-	public Character getActive() {
+	public Integer getActive() {
 		return active;
 	}
-	public void setActive(Character active) {
+	public void setActive(Integer active) {
 		this.active = active;
 	}
 	public String getMessageContent() {
@@ -78,10 +83,30 @@ public class Message implements Serializable {
 	public void setViewCount(Integer viewCount) {
 		this.viewCount = viewCount;
 	}
+	@SuppressWarnings("deprecation")
 	public String getCreateDateString() {
-		return  FormatUtil.formatDate(createDate, "yyyy-MM-dd hh:mm:ss");
+		Date current = new Date();
+		int diff = DateUtil.dateDiff(current, createDate);
+		if (diff < 60 && diff > 1) {
+			return diff + "分钟前";
+		}else if (diff > 59 && diff < 721) {
+			return diff/60 + "小时前";
+		}else if (diff < 1) {
+			return "刚刚";
+		}else {
+			if (current.getYear() != createDate.getYear()) {
+				return  FormatUtil.formatDate(createDate, "yyyy-MM-dd  HH:mm");
+			}else {
+				return  FormatUtil.formatDate(createDate, "MM-dd  HH:mm");
+			}
+		}
 	}
-
+	public Integer getCmtCount() {
+		return cmtCount;
+	}
+	public void setCmtCount(Integer cmtCount) {
+		this.cmtCount = cmtCount;
+	}
 	public SecondMessageCategory getSecondMessageCategory() {
 		return secondMessageCategory;
 	}
@@ -94,6 +119,12 @@ public class Message implements Serializable {
 	}
 	public void setUserInfo(UserInfo userInfo) {
 		this.userInfo = userInfo;
+	}
+	public List<Comment> getComments() {
+		return comments;
+	}
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
 	}
 	public Integer getCreateId() {
 		return createId;

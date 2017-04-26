@@ -7,7 +7,7 @@ import com.swjtu.aroundyou.persistence.dao.category.FirstCategoryDao;
 import com.swjtu.aroundyou.persistence.entity.category.FirstMessageCategory;
 
 @Repository(value=FirstCategoryDao.NAME)
-public class FirstCategoryDaoImpl extends GenericHibernateDaoImpl<FirstMessageCategory> 
+public class FirstCategoryDaoImpl extends GenericHibernateDaoImpl<FirstMessageCategory,Integer> 
             implements FirstCategoryDao {
 
 	

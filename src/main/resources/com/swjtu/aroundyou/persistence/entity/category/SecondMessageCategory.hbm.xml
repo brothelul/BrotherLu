@@ -13,11 +13,14 @@
         <property name="categoryName" type="string">
             <column name="second_category_name" />
         </property>
+        <property name="categoryDesc" type="string">
+            <column name="second_category_desc"/>
+        </property>
         
         <many-to-one name="firstCategoryDTO" class="com.swjtu.aroundyou.persistence.entity.category.FirstMessageCategory" fetch="join">
             <column name="first_category_no" />
         </many-to-one>
-        
+             
         <property name="createId" type="integer">
             <column name="create_id" />
         </property>

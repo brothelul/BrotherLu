@@ -2,6 +2,7 @@ package com.swjtu.aroundyou.persistence.entity.category;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -16,7 +17,7 @@ public class FirstMessageCategory implements Serializable{
 
 	private Integer categoryNo;
 	private String categoryName;
-	private Set<SecondMessageCategory> secondCategorySet;
+	private List<SecondMessageCategory> secondCategorys;
 	
 	private Integer createId;
 	private Date createDate;
@@ -36,11 +37,11 @@ public class FirstMessageCategory implements Serializable{
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
-	public Set<SecondMessageCategory> getSecondCategorySet() {
-		return secondCategorySet;
+	public List<SecondMessageCategory> getSecondCategorys() {
+		return secondCategorys;
 	}
-	public void setSecondCategorySet(Set<SecondMessageCategory> secondCategorySet) {
-		this.secondCategorySet = secondCategorySet;
+	public void setSecondCategorys(List<SecondMessageCategory> secondCategorys) {
+		this.secondCategorys = secondCategorys;
 	}
 	public Integer getCreateId() {
 		return createId;

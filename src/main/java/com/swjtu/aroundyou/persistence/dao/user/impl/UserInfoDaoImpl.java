@@ -16,4 +16,10 @@ public class UserInfoDaoImpl extends GenericHibernateDaoImpl<UserInfo,Integer> i
 		return findPagination(hql, page, pageSize, null);
 	}
 
+	@Override
+	public Pagination<UserInfo> getIdUsers(Integer page, Integer pageSize) {
+		String hql = "from UserInfo where identifyUri != null and passIdentify = 1";
+		return findPagination(hql, page, pageSize, null);
+	}
+
 }

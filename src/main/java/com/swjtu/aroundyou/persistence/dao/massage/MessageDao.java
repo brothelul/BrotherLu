@@ -64,12 +64,13 @@ public interface MessageDao extends GenericHibernateDao<Message,Integer> {
 	/**
 	 * 
 	 * @param pageSize 
+	 * @param type 
 	 * @auther brotherlu
 	 * @date  2017年4月18日下午3:08:21
 	 * @param List<Message>
 	 * <p>描述：根据UserNo获取message</p>
 	 */
-	Pagination<Message> getMessagesByUser(Integer userNo,Integer page, Integer pageSize);
+	Pagination<Message> getMessagesByUser(Integer userNo,Integer page, Integer pageSize, Integer type);
 	
 	Pagination<Message> getMessageForManage(Integer page,Integer pageSize);
 	
@@ -82,4 +83,6 @@ public interface MessageDao extends GenericHibernateDao<Message,Integer> {
 	void updateCmtCount(Integer cmtCount, Integer msgNo);
 
 	List<Message> getMessagesByCat(Integer cateNo);
+
+	Message getMsg(Integer msgNo);
 }

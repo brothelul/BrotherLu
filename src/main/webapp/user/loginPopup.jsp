@@ -1,31 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="utf-8"%>
-
 <script type="text/javascript">
+  function login(){
+	  var formData = $('form').serializeArray();
+	  $.ajax({		  
+		  type:"post",
+		  dataType:"json",
+		  data:formData,
+		  url:"login.do",
+		  cache:true,
+		  
+		  success:function(data){
+			  var item =jQuery.parseJSON(data);
+			  $(".remember").empty();
+			  if(item.status == "200"){ 
+				  window.location.reload();
+			  }else{
+				  $(".remember").append("用户名或密码不正确");
+			  }
+		}
+	  });
+  };
 
-/*       $(function(){
-    	  
-    	  $("#submit").click(
-    		    	
-        		  $.ajax({
-        			  
-        			  type:"post",
-        			  url:"login.do",
-        			  dataType:"html",
-        			  data:$("#loginForm").serialize(),
-        			  success:function(msg){
-        				  
-        				  alert(msg+$("#loginForm").serialize());
-        				  if(msg == "200"){
-        					  
-        				  }else{
-        					  $(".content").append("<font color='red'>"+msg+"</font>");
-        				  }
-        			  }
-        		  })
-          );
-    	  
-      }) */
 </script>
      <!-- POPUP BEGIN -->
     <div id="overlay"></div>
@@ -37,7 +33,7 @@
             	<div class="title"><p>登录</p></div>
                 
                 <div class="form" >
-                	<form id="loginForm" method="post" action="login.do">
+                	<form id="loginForm"  method="post">
                     	<div class="column">
                         	<p class="label">用户名</p>
                             <div class="field"><input id="username"  name="username" type="text" class="input"/></div>
@@ -49,19 +45,15 @@
                         </div>
 						
 						<div class="column_2">
-                            <div class="remember">
-                            	<div class="checkbox"><input type="checkbox" /></div>
-                                <div class="remember_label"><p>记住账号</p></div>
+                            <div class="remember" style="color: red;">
                             </div>
                         </div>
                         
                         <div class="column_2">
-                            <p class="forgot_pass"><a href="#">忘记密码?</a></p>
+                           
                         </div>
-                        <div class="column button">
-                          <!--     <a href="" id="submit" class="enter"><span>登录</span></a> --> 
-                               <!-- <button type="submit" value="登录" class="enter"></button> -->   
-                               <input type="submit" class="general_button standart type_1" value="登录"/>                                 
+                        <div class="column button">  
+                               <input type="button" class="general_button standart type_1" value="登录" onclick="login();"/>                                 
                         </div>      
                         <div class="clearboth"></div>
                     </form>

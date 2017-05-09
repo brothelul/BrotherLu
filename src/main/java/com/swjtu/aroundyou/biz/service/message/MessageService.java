@@ -72,12 +72,13 @@ public interface MessageService {
 	/**
 	 * 
 	 * @param pageSize 
+	 * @param type 
 	 * @auther brotherlu
 	 * @date  2017年4月18日下午3:06:17
 	 * @param List<Message>
 	 * <p>描述：根据UserNo查找用户</p>
 	 */
-	Pagination<Message> getMessagesByUser(Integer userNo,Integer page, Integer pageSize);
+	Pagination<Message> getMessagesByUser(Integer userNo,Integer page, Integer pageSize, Integer type);
 	
 	/**
 	 * 
@@ -95,4 +96,8 @@ public interface MessageService {
 	void updateCmtCount(Integer cmtCount,Integer msgNo);
 
 	void changeHot(Integer msgNo, Integer updateId, Date current);
+
+	Message getMsg(Integer msgNo);
+
+	void saveMessage(Message message);
 }

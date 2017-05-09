@@ -16,21 +16,6 @@ $(function(){
 </script>
 <script type="text/javascript">
 $(document).ready(function(){
-  $(".click").click(function(){
-  $(".tip").fadeIn(200);
-  });
-  
-  $(".tiptop a").click(function(){
-  $(".tip").fadeOut(200);
-});
-
-  $(".sure").click(function(){
-  $(".tip").fadeOut(100);
-});
-
-  $(".cancel").click(function(){
-  $(".tip").fadeOut(100);
- });
 
   var page = 1;
   var pageSize = 5;
@@ -47,15 +32,7 @@ $(document).ready(function(){
 		  loadMessage(page,pageSize); 
 	  }
   });
-  
-  $("#delete").click(function(){
-	  
-  });
-  
-  $("#changeHot").click(function(){
-	  alert(1);
-  });
-  
+   
 });
 
 function loadMessage(page,pageSize){
@@ -93,7 +70,7 @@ function loadMessage(page,pageSize){
 						  str = str + "待提交";
 					  }
 					  if(msg.active == 1){
-						  str = str +"<a href='active.do?type=1&msgNo="+msg.messageNo+"'><i>未审核</i></a>";
+						  str = str +"<a href='active.do?type=1&msgNo="+msg.messageNo+"'><img src='resources/images/approve.png'/></a><a href='active.do?type=0&msgNo="+msg.messageNo+"' ><img src='resources/images/reject.png'/></a>";
 					  }
 					  if(msg.active == 2){
 						  str = str + "<font color='#008B45'>已审核</font>"
@@ -120,27 +97,14 @@ function loadMessage(page,pageSize){
 	<div class="place">
     <span>位置：</span>
     <ul class="placeul">
-    <li><a href="#">首页</a></li>
-    <li><a href="#">图片列表</a></li>
+    <li><a href="index.jsp">首页</a></li>
+    <li><a href="imgtable.html">消息管理</a></li>
     </ul>
     </div>
     
     <div class="rightinfo">
     
-    <div class="tools">
-    
-    	<ul class="toolbar">
-        <li class="click"><span><img src="resources/images/t01.png"/></span>添加</li>
-        <li class="click"><span><img src="resources/images/t02.png" /></span>修改</li>
-        <li><span><img src="resources/images/t03.png" /></span>删除</li>
-        <li><span><img src="resources/images/t04.png" /></span>统计</li>
-        </ul>
-        
-        
-        <ul class="toolbar1">
-        <li><span><img src="resources/images/t05.png" /></span>设置</li>
-        </ul>
-    
+    <div class="tools">   
     </div>
     
     
@@ -175,35 +139,10 @@ function loadMessage(page,pageSize){
     	<div class="message">共<i class="blue" id = "count"></i>条记录，当前显示第&nbsp;<i class="blue" id ="current">&nbsp;</i>页</div>
         <ul class="paginList">
         <li class="paginItem"><a href="javascript:;"><span class="pagepre"></span></a></li>
-        <li class="paginItem"><a href="javascript:;">1</a></li>
-        <li class="paginItem current"><a href="javascript:;">2</a></li>
-        <li class="paginItem"><a href="javascript:;">3</a></li>
-        <li class="paginItem"><a href="javascript:;">4</a></li>
-        <li class="paginItem"><a href="javascript:;">5</a></li>
-        <li class="paginItem more"><a href="javascript:;">...</a></li>
-        <li class="paginItem"><a href="javascript:;">10</a></li>
         <li class="paginItem"><a href="javascript:;"><span class="pagenxt"></span></a></li>
         </ul>
     </div>
     
-    
-    <div class="tip">
-    	<div class="tiptop"><span>提示信息</span><a></a></div>
-        
-      <div class="tipinfo">
-        <span><img src="resources/images/ticon.png" /></span>
-        <div class="tipright">
-        <p>是否确认对信息的修改 ？</p>
-        <cite>如果是请点击确定按钮 ，否则请点取消。</cite>
-        </div>
-        </div>
-        
-        <div class="tipbtn">
-        <input name="" type="button"  class="sure" value="确定" />&nbsp;
-        <input name="" type="button"  class="cancel" value="取消" />
-        </div>
-    
-    </div>
      </div>
     
 <script type="text/javascript">

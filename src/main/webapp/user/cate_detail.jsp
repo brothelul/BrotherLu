@@ -12,11 +12,14 @@
      	   //获取所有消息    	   
      	var page = 1;
      	var pageSize = 6;
-        loadCateMessage(page,pageSize);
+     	var pageCount = loadCateMessage(page,pageSize);
    	  $(".prev").click(function(){ //上一页
  		  if(page > 1){
  			page--;
  			loadCateMessage(page,pageSize);
+ 		  }else{
+ 			  alert("已经到第一页了");
+ 			  return false;
  		  }
  	  });
  	  
@@ -24,6 +27,9 @@
  		  if(page < pageCount){
   			 page++;
   			loadCateMessage(page,pageSize);  
+ 		  }else{
+ 			  alert("已经到最后一页了");
+ 			  return false;
  		  }
 
  	  });
@@ -47,6 +53,7 @@
         }
  
       function loadCateMessage(page,pageSize){
+    	  var pageCount = 0;
             var cateNo = getUrlVar("cateNo");
         	$.ajax({		  
         		  type:"post",
@@ -54,12 +61,13 @@
         		  data:{"page":page,"pageSize":pageSize,"cateNo":cateNo},
         		  url:"loadCatMessages.do",
         		  cache:true,
+        		  async:false,
         		  
         		  success:function(data){
         			  var item =jQuery.parseJSON(data);
         			  if(item.status == "200"){
         				  var header = "";
-         				  var desc="后续需要添加字段，描述。";
+         				  var desc="";
              			  var str = "";
         				  var pagin = item.result;
         				  $.each(pagin.items,function(i,msg){
@@ -81,6 +89,14 @@
          					   str = str + "<a class='comments'>"+msg.cmtCount+"</a></div><div class='clearboth'></div></div></article>";					   
              			   
         			  });
+        				  if(pagin.pagesCount <= 1){
+        					  $("#page").remove();
+        				  }
+        				  if(pagin.rowsCount == 0){
+        					  desc="暂无该分类的消息信息";
+        					  $("#page").remove();
+        					  $("#line").remove();
+        				  }
             			   $(".main_content h2").empty();
              			   $(".main_content h2").append(header);
              			   $(".general_subtitle").empty();
@@ -91,6 +107,7 @@
         			 }
         		  }
         	});
+        	return pageCount;
         };
         </script>
 
@@ -112,17 +129,15 @@
                         
                         <div class="line_4" style="margin:0px 0px 22px;"></div>
                         
-                        <div class="block_main_news">
-                        
+                        <div class="block_main_news">                       
                 
                         </div>
                         
-                        <div class="line_2" style="margin:8px 0px 25px;"></div>
+                        <div class="line_2" style="margin:8px 0px 25px;" id ="line"></div>
                         
-                        <div class="block_pager">
+                        <div class="block_pager" id="page">
                         	<a href="javascript:;" class="prev">Previous</a>
-                            <a href="javascript:;" class="next">Next</a>
-                                                       
+                            <a href="javascript:;" class="next">Next</a>                                                      
                             <div class="clearboth"></div>
                         </div>
                         

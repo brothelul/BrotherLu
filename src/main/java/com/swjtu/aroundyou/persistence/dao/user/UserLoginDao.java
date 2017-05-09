@@ -14,5 +14,7 @@ public interface UserLoginDao extends GenericHibernateDao<UserLogin,Integer>{
 	 * @param UserLogin
 	 * <p>描述：判断用户登录，成功则获取到id</p>
 	 */
-	public Integer findUserLoginForLogin(String username, String password); 
+	Integer findUserLoginForLogin(String username, String password);
+
+	UserLogin validateUsername(String username); 
 }

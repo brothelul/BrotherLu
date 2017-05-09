@@ -64,4 +64,12 @@ public interface UserService {
 	public void saveUserInfo(UserInfo userInfo);
 	
 	Pagination<UserInfo> getAllUsers(Integer page,Integer pageSize);
+
+	Pagination<UserInfo> getIdUsers(Integer page, Integer pageSize);
+
+	UserLogin getUserLogin(Integer userNo);
+
+	void updateUserLogin(UserLogin userLogin);
+
+	boolean validateUsername(String username);
 }

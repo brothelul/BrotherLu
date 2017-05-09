@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="resources/css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="resources/js/jquery.js"></script>
+<script language="javascript">
+$(function(){	
+	//导航切换
+	$(".imglist li").click(function(){
+		$(".imglist li.selected").removeClass("selected")
+		$(this).addClass("selected");
+	})	
+})	
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+  var page = 1;
+  var pageSize = 5;
+  loadMessage(page,pageSize);  // 首次加载
+  $(".pagenxt").click(function(){ //上一页
+	  if(pageCount > page){
+		  page = page + 1;
+		  loadMessage(page,pageSize); 
+	  }
+	  });
+  $(".pagepre").click(function(){//下一页
+	  if(1 < page){
+		  page = page - 1;
+		  loadMessage(page,pageSize); 
+	  }
+  });
+   
+});
+
+function loadMessage(page,pageSize){
+
+	$.ajax({		  
+		  type:"post",
+		  dataType:"json",
+		  data:{"page":page,"pageSize":pageSize},
+		  url:"getIdUser.do",
+		  
+		  success:function(data){
+			  var item =jQuery.parseJSON(data);
+			  if(item.status == "200"){
+				  $("#customer").empty();
+				  var pagin = item.result;
+				  $.each(pagin.items,function(i,user){
+					  var str ="";	
+					  if(i%2 == 1){
+						  str = str + "<tr class='odd'>";
+					  }else{
+						  str = str + "<tr>"
+					  }
+					  str = str + "<td>"+user.userNo+"</td><td>"+user.username+"</td><td class='imgtd'><img src='../user/"+user.identifyUri+"' style='width:80px;height: 60px;'/></td>";	
+					  str = str + "<td><textarea style='width:80%; height:100%;' placeholder='输入不通过理由' id='reason'></textarea></td>";
+					  str = str + "<td><a href='javascript:;' onclick='controlUser(1,this);'><img src='resources/images/approve.png' style='width:20px;'/></a>&nbsp;&nbsp;<a href='javascript:;' onclick='controlUser(0,this);'><img src='resources/images/reject.png' style='width:20px;'/></a></td></tr>";
+					  $("#customer").append(str);
+				  });
+				  if(pagin.rowsCount == 0){
+					  str = "<div style='margin-top:20px;'><center>暂无记录</center></div>"
+					  $(".imgtable").after(str);
+				  }
+				  $("#count").empty();
+				  $("#current").empty();
+				  $("#count").append(pagin.rowsCount);
+				  $("#current").append(pagin.curIndex);
+				  pageCount = pagin.pagesCount;
+			  }
+		  }
+	});
+};
+
+function controlUser(type,test){
+	var userNo = $(test).parents("tr").children(":first-child").html();
+	alert(userNo);
+	$.ajax({		  
+		  type:"post",
+		  dataType:"json",
+		  data:{"type":type,"reason":"","userNo":userNo},
+		  url:"controlUser.do",
+		  
+		  success:function(data){
+			  var item =jQuery.parseJSON(data);
+			  if(item.status == "200"){				
+				  window.location.reload();  
+			  }else{
+				  window.location = "error.html";
+			  }
+		 }
+	});
+};
+</script>
+</head>
+
+
+<body>
+
+	<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="index.jsp">首页</a></li>
+    <li><a href="customer.html">商家审核</a></li>
+    </ul>
+    </div>
+    
+    <div class="rightinfo">
+    
+    <div class="tools">   
+    </div>
+    
+    
+    <table class="imgtable">
+    
+    <thead>
+    <tr>
+    <th>用户编号</th>
+    <th>申请人</th>
+    <th width="100px;">缩略图</th>
+    <th>说明</th>
+    <th>操作</th>
+    </tr>
+    </thead>
+    
+    <tbody id = "customer">   
+    </tbody>
+    
+    </table>
+    
+    
+    
+    
+    
+   
+    <div class="pagin">
+    	<div class="message">共<i class="blue" id = "count"></i>条记录，当前显示第&nbsp;<i class="blue" id ="current">&nbsp;</i>页</div>
+        <ul class="paginList">
+        <li class="paginItem"><a href="javascript:;"><span class="pagepre"></span></a></li>
+
+        <li class="paginItem"><a href="javascript:;"><span class="pagenxt"></span></a></li>
+        </ul>
+    </div>
+    </div>
+    
+<script type="text/javascript">
+	$('.imgtable tbody tr:odd').addClass('odd');
+	</script>
+</body>
+</html>

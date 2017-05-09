@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="utf-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
    
  <script type="text/javascript">
  
@@ -77,10 +76,10 @@
                 	<div class="inner">
                     	<nav class="main_menus">                 	    
                         	<ul>
-                        	    <li class="common"><a><img src="${author.faviconUri}" alt="" style="margin:-36px 0 0 -5px;height: 80px;border-radius:35px;width: 80px;"/></a></li>
-								<li class="common"><a href="toUserPage.do?userNo=${userInfo.userNo}">${author.username}</a></li>
+                        	    <li class="common"><a><img src="${author.faviconUri}" alt="" style="margin:-36px 0 0 -19px;height: 80px;border-radius:38px;width: 80px;"/></a></li>
+								<li class="common"><a href="toUserPage.do?userNo=${author.userNo}">${author.username}</a></li>
 								<li class="common1">
-								<a>
+								<a href="createMessage.jsp">
 								<c:if test="${author.userNo == userInfo.userNo}">
 								<c:if test="${author.userType == 1}">
 								 发布信息    

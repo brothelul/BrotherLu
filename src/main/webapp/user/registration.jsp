@@ -25,10 +25,35 @@ function agree(){
 	}
 };
 
+function getUsername(){
+	var username = $("#username").val();
+    var flag = false;
+	$.ajax({		  
+		  type:"post",
+		  dataType:"json",
+		  data:{"username":username},
+		  url:"validateUsername.do",
+		  async:false,
+		  
+		  success:function(data){
+			  var item =jQuery.parseJSON(data);
+			  $("#code_validate").empty();
+			  if(item.status == "200"){
+				  flag = true;
+			  }else{
+				  alert("用户名已存在");
+			  }
+			  }
+	});
+	
+	return flag;
+};
+
 function validateUsername(){
 	var username = $("#username").val();
 	$("#un_validate").empty();
-	if(username.length < 2 || username.length > 10){
+	var result = !getUsername();
+	if(username.length < 2 || username.length > 10 ||result ){
 		$("#un_validate").append("<img src='resources/layout/images/validate_failed.png'/>");
 		return false;
 	}else{
@@ -62,6 +87,21 @@ function validateRPsw(){
 	}
 };
 
+function validateEmail(){
+	var search_str = /^[\w\-\.]+@[\w\-\.]+(\.\w+)+$/;
+	var email_val = $("#email").val();
+	$("#email_validate").empty();
+	if(!search_str.test(email_val) || email_val == ""){       	
+		alert("请输入正确的邮箱格式");	 
+		$("#email_validate").append("<img src='resources/layout/images/validate_failed.png'/>");
+		$('#email').focus();	 
+		return false;
+	 }else{
+		$("#email_validate").append("<img src='resources/layout/images/validate_success.png'/>");
+		return true;
+	}
+};
+
 function validateCode(){
     var code = $("#code").val();
     var flag = false;
@@ -77,7 +117,6 @@ function validateCode(){
 			  $("#code_validate").empty();
 			  if(item.status == "200"){
 				  $("#code_validate").append("<img src='resources/layout/images/validate_success.png'/>");
-				  alert(3);
 				  flag = true;  
 			  }else{
 				  $("#code_validate").append("<img src='resources/layout/images/validate_failed.png'/>");
@@ -91,23 +130,24 @@ function registUser(){
 	var username = $("#username").val();
 	var password = $("#password").val();
 	var code = $("#code").val();
+	var email = $("#email").val();
 
 	$.ajax({		  
 		  type:"post",
 		  url:"registUser.do",
 		  dataType:"json",
-		  data:{"code":code,"username":username,"password":password},
+		  data:{"code":code,"username":username,"password":password,"email":email},
 		  
 		  success:function(data){
 			  var item = jQuery.parseJSON(data);
-			  $("#main_content").empty();
+			  $(".main_content").empty();
 			  if(item.status == "200"){
-				  $("#main_content").append("<h4>注册成功！</h4>");
+				  $(".main_content").append("<div style='text-align: center;'><h3>注册成功！</h3></div>");
 				  $('#overlay').show();
 				  $('#login').show();
 				  $(target).show(500);
 			  }else{
-				  $("#main_content").append("<h4>注册失败！请按照提示操作！</h4>");
+				  $(".main_content").append("<div style='text-align: center;'><h3>注册失败！请按照提示操作！</h3></div>");
 			  }
 			  }
 		  });
@@ -119,11 +159,11 @@ function registSuccess(){
  	var unv = validateUsername();
 	var pwv = validatePsw();
 	var rpwv = validateRPsw();
+	var emv = validateEmail();
 
-	if(unv&&pwv&&rpwv&&cv){
+	if(unv&&pwv&&rpwv&&cv&&emv){
 		registUser();
 	}
-	alert(2); 
 };
 
 
@@ -175,6 +215,16 @@ function registSuccess(){
                                      </div>  
                                     <div class="clearboth"></div>
                                     <div class="separator" style="height:12px;"></div>                                  
+                                    
+                                    <div class="label"><p>邮箱<span>*</span>:</p></div>
+                                    <div class="field">
+                                    <div style="float:left;border:0px none;width:90%;height:100%;">
+                                            <input type="text" class="text req" placeholder="填写常用邮箱" id="email" onblur="validateEmail();"/>
+                                     </div>
+                                     <div style="float:left;border:0px none;width:10%;height:100%;" id="email_validate"></div>
+                                     </div>
+                                    <div class="clearboth"></div>
+                                    <div class="separator" style="height:12px;"></div>
                                     
                                     <div class="label"><p>验证码<span>*</span>:</p></div>
                                     <div class="field">
@@ -231,7 +281,7 @@ function registSuccess(){
     </div>
     
     <!-- POPUP BEGIN -->
-    <%@include file="loginPopup.jsp" %>
+    <%@include file="rloginPopup.jsp" %>
     <!-- POPUP END -->
 </body>
 

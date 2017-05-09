@@ -93,4 +93,5 @@
             <aop:pointcut expression="execution(* com.swjtu.aroundyou.biz.service..*Impl.*(..))" id="transactionPointcut"/>
             <aop:advisor advice-ref="transactionAdvice" pointcut-ref="transactionPointcut"/>
     </aop:config>
+    
 </beans>

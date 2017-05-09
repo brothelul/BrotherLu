@@ -53,11 +53,35 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public void saveUserInfo(UserInfo userInfo) {
-		userInfoDao.save(userInfo);
+		userInfoDao.saveOrUpdate(userInfo);
 	}
 
 	@Override
 	public Pagination<UserInfo> getAllUsers(Integer page, Integer pageSize) {
 		return userInfoDao.getUsers(page, pageSize);
+	}
+
+	@Override
+	public Pagination<UserInfo> getIdUsers(Integer page, Integer pageSize) {
+		return userInfoDao.getIdUsers(page,pageSize);
+	}
+
+	@Override
+	public UserLogin getUserLogin(Integer userNo) {
+		return userLoginDao.getById(userNo);
+	}
+
+	@Override
+	public void updateUserLogin(UserLogin userLogin) {
+		userLoginDao.update(userLogin);
+	}
+
+	@Override
+	public boolean validateUsername(String username) {
+		UserLogin userLogin = userLoginDao.validateUsername(username);
+		if (userLogin == null) {
+			return true;
+		}
+		return false;
 	}
 }

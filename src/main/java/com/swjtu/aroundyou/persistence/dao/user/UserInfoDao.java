@@ -7,5 +7,8 @@ import com.swjtu.aroundyou.persistence.entity.user.UserInfo;
 public interface UserInfoDao extends GenericHibernateDao<UserInfo,Integer> {
 
 	String NAME = "userInfoDao";
+	
 	Pagination<UserInfo> getUsers(Integer page,Integer pageSize);
+	
+	Pagination<UserInfo> getIdUsers(Integer page, Integer pageSize);
 }

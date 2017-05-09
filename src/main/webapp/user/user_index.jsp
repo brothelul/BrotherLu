@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="utf-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 
@@ -16,7 +17,7 @@ function loadUserMessage(page,pageSize){
 	$.ajax({		  
 		  type:"post",
 		  dataType:"json",
-		  data:{"page":page,"pageSize":pageSize},
+		  data:{"page":page,"pageSize":pageSize,"type":2},
 		  url:"loadAuthorMessages.do",
 		  cache:true,
 		  
@@ -33,9 +34,12 @@ function loadUserMessage(page,pageSize){
 						   str = str + "<a class='comments' id='cmtCount'><span>"+msg.cmtCount+"</span></a></div><div class='line_3' style='margin:10px 0px 17px;'></div><div class='clearboth'></div></div>";
 				  });
 				  
-				  if(pagin.rowCount == 0){
+				 if(pagin.pagesCount > page){
+	 					str = str +"<div style='font-size: 14px;line-height: 30px;text-align: center;background-color: #f4f5f6;margin-top: 0px;cursor: pointer;' id='more'><center><a href='javascript:;' onclick='loadMore();' style='color: #406599;'>点击加载更多消息</a></center></div>";					   
+				 }
+				  if(pagin.rowsCount == 0){
 					  str = str + "<div class='block_author' style='font-size:16px;'><div class='bio'><p><b>该用户暂时还没有发布任何信息。</b></p></div></div>";
-				  }
+				  }				  
 			  }
 			   if(item.status == "400"){
 				   str = str + "<div class='block_author' style='font-size:16px;'><div class='bio'><p><b>该用户暂时还没有发布任何信息。</b></p></div></div>";
@@ -44,6 +48,13 @@ function loadUserMessage(page,pageSize){
 		  }
 	});
 };
+
+function loadMore(){
+	$("#more").remove();
+	var page = 1;
+	page++;
+	loadUserMessage(page,6);
+}
 </script>
 
 <body>
@@ -55,13 +66,12 @@ function loadUserMessage(page,pageSize){
         	<div class="inner">
             <div class="general_content">
             	<div class="main_content">
-            	<div class="block_author" style="font-size:16px;"><div class="bio"><p><b>他发布的消息</b></p></div></div>                   
-                        <div class="separator" style="height:40px;"></div>
-                            
+            	<div class="block_author" style="font-size:16px;"><div class="bio"><p><b>他发布的消息</b></p></div></div>                      
+                        <div class="line_4" style="margin:0px 0px 20px;"></div>                       
                         <div class="clearboth"></div>
                        </div>   
                                                                               
-                      <%@include file="user_side.jsp" %>                                       
+                      <%@include file="side.jsp" %>                                       
                 	   <div class="clearboth"></div>
                 </div>
                 </div>

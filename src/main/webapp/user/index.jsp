@@ -73,12 +73,14 @@
         
      	  var page =1;
      	  var pageSize = 4;
-     	  var pageCount = 2;
-     	  loadMessage(page,pageSize);
+     	  var pageCount = loadMessage(page,pageSize);
      	  $(".prev").click(function(){ //上一页
      		  if(page > 1){
      			 page--;
      			 loadMessage(page,pageSize);
+     		  }else{
+     			  alert("已经到第一页了");
+     			  return false;
      		  }
      	  });
      	  
@@ -86,6 +88,9 @@
      		  if(page < pageCount){
       			 page++;
      			 loadMessage(page,pageSize);  
+     		  }else{
+     			  alert("已经到最后一页了");
+     			  return false;
      		  }
 
      	  });
@@ -93,12 +98,14 @@
         
      function loadMessage(page,pageSize){
 
+    	  var pageCount = 0;
         	$.ajax({		  
         		  type:"post",
         		  dataType:"json",
         		  data:{"page":page,"pageSize":pageSize},
         		  url:"getAllMessages.do",
         		  cache:true,
+        		  async:false,
         		  
         		  success:function(data){
         			  var item =jQuery.parseJSON(data);
@@ -120,11 +127,16 @@
          				      str = str + "<div class='r_part'><div class='category'><p><a href='cate_detail.jsp?cateNo="+msg.secondMessageCategory.categoryNo+"'>"+msg.secondMessageCategory.categoryName;
          				      str = str + "</a></p></div><a class='views'>"+msg.cmtCount+"</a></div></div></article>";
          				      $(".block_topic_news").append(str); 
-         				     pageCount = pagin.pagesCount;
         			  });
+        				  if(pagin.pagesCount <= 1){
+        					  $("#page").remove();
+        				  }
+      				     pageCount = pagin.pagesCount;
         			 }
         		  }
         	});
+        	
+        	return pageCount;
         };
         
         </script>
@@ -183,60 +195,14 @@
                         <div class="line_4" style="margin:-4px 0px 18px;"></div>
                         
                         <div class="block_topic_news">
-
-<!--                             
-                            <article class="block_topic_post">
-                            	<p class="title"><a href="news_post.html">Many desktop publishing packages and web page editors now use.</a></p>
-                                <div class="f_pic"><a href="news_post.html" class="general_pic_hover scale"><img src="resources/images/pic_home_main_news_2.jpg" alt="" /></a></div>
-                                <p class="text">There are many variations of passages of available, but the majority have alteration.</p>
-                                <div class="info">
-                                	<div class="date"><p>11 July, 2012</p></div>
-                                    
-                                    <div class="r_part">
-                                    	<div class="category"><p><a href="#">Business</a></p></div>
-                                        <a href="#" class="views">183</a>
-                                    </div>
-                                </div>
-                            </article>
-                            
-                            <article class="block_topic_post">
-                            	<p class="title"><a href="news_post.html">Many desktop publishing packages and web page editors now use.</a></p>
-                                <div class="f_pic"><a href="news_post.html" class="general_pic_hover scale"><img src="resources/images/pic_home_main_news_3.jpg" alt="" /></a></div>
-                                <p class="text">There are many variations of passages of available, but the majority have alteration.</p>
-                                <div class="info">
-                                	<div class="date"><p>11 July, 2012</p></div>
-                                    
-                                    <div class="r_part">
-                                    	<div class="category"><p><a href="#">Business</a></p></div>
-                                        <a href="#" class="views">183</a>
-                                    </div>
-                                </div>
-                            </article>
-                            
-                            <article class="block_topic_post">
-                            	<p class="title"><a href="news_post.html">Many desktop publishing packages and web page editors now use.</a></p>
-                                <div class="f_pic"><a href="news_post.html" class="general_pic_hover scale"><img src="resources/images/pic_home_main_news_4.jpg" alt="" /></a></div>
-                                <p class="text">There are many variations of passages of available, but the majority have alteration.</p>
-                                <div class="info">
-                                	<div class="date"><p>11 July, 2012</p></div>
-                                    
-                                    <div class="r_part">
-                                    	<div class="category"><p><a href="#">Business</a></p></div>
-                                        <a href="#" class="views">183</a>
-                                    </div>
-                                </div>
-                            </article> -->
                             
                         </div>
                         
                         <div class="line_3" style="margin:20px 0px 24px;"></div>
                         
-                        <div class="block_pager">
+                        <div class="block_pager" id="page">
                         	<a href="javascript:;" class="prev">Previous</a>
-                            <a href="javascript:;" class="next">Next</a>
-                            
-                            <div class="pages" id="pages">
-                            </div>
+                            <a href="javascript:;" class="next">Next</a>                          
                             
                             <div class="clearboth"></div>
                         </div>

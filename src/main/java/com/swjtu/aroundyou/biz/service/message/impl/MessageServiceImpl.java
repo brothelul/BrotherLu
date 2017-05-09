@@ -76,8 +76,8 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public Pagination<Message> getMessagesByUser(Integer userNo,Integer page,Integer pageSize) {		
-		Pagination<Message> messages = messageDao.getMessagesByUser(userNo, page,pageSize);
+	public Pagination<Message> getMessagesByUser(Integer userNo,Integer page,Integer pageSize,Integer type) {		
+		Pagination<Message> messages = messageDao.getMessagesByUser(userNo, page,pageSize,type);
 		return messages;
 	}
 
@@ -95,9 +95,11 @@ public class MessageServiceImpl implements MessageService {
 
 	@Override
 	public void activeMessage(Integer type, Integer updateId, Date current,Integer msgNo) {
-		Integer active = 0; // 状态为 待提交
+		Integer active = 1; // 状态为 待提交
 		if (type == 1) { //状态为 已审核
 			active = 2;
+		}else if (type == 0) {
+			active = 0;
 		}
 		messageDao.activeMessage(active,updateId,current,msgNo);
 	}
@@ -128,6 +130,16 @@ public class MessageServiceImpl implements MessageService {
 		message.setUpdateId(updateId);
 		message.setUpdateDate(current);
 		messageDao.update(message);
+	}
+
+	@Override
+	public Message getMsg(Integer msgNo) {
+		return messageDao.getMsg(msgNo);
+	}
+
+	@Override
+	public void saveMessage(Message message) {
+		messageDao.saveOrUpdate(message);
 	}
 	
 }

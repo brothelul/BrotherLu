@@ -22,12 +22,14 @@ import test.factory.FactoryAndTestMethodTest.NullArgsTest;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.swjtu.aroundyou.biz.service.category.CategoryService;
 import com.swjtu.aroundyou.biz.service.comment.CommentService;
 import com.swjtu.aroundyou.biz.service.message.KeyWordService;
 import com.swjtu.aroundyou.biz.service.message.MessageService;
 import com.swjtu.aroundyou.biz.service.user.UserService;
 import com.swjtu.aroundyou.biz.service.utils.AppConfigService;
 import com.swjtu.aroundyou.persistence.dao.base.entity.Pagination;
+import com.swjtu.aroundyou.persistence.entity.category.SecondMessageCategory;
 import com.swjtu.aroundyou.persistence.entity.comment.Comment;
 import com.swjtu.aroundyou.persistence.entity.manager.ManagerInfo;
 import com.swjtu.aroundyou.persistence.entity.message.HostKey;
@@ -36,6 +38,7 @@ import com.swjtu.aroundyou.persistence.entity.message.Message;
 import com.swjtu.aroundyou.persistence.entity.user.UserInfo;
 import com.swjtu.aroundyou.persistence.entity.utils.AppConfig;
 import com.swjtu.aroundyou.persistence.entity.utils.JsonResponseObject;
+import com.swjtu.aroundyou.utils.MailUitl;
 import com.swjtu.aroundyou.utils.SimplePropertyFilter;
 
 @Controller
@@ -54,6 +57,8 @@ public class MessageController {
 	private AppConfigService appConfigService;
 	@Autowired
 	private KeyWordService keyWordService;
+	@Autowired
+	private CategoryService categoryService;
 	
 	@RequestMapping(value="user/getHotMessages.do")
 	@ResponseBody
@@ -217,14 +222,23 @@ public class MessageController {
 	@ResponseBody
 	public String loadAuthorMessages(HttpSession session,
 			@RequestParam("page") Integer page,
-			@RequestParam("pageSize")Integer pageSize){
+			@RequestParam("pageSize")Integer pageSize,
+			@RequestParam("type")Integer type){
 		JsonResponseObject responseObject = new JsonResponseObject();
-		UserInfo userInfo = (UserInfo) session.getAttribute("author");
+		UserInfo userInfo = null;
+		if (type==2) {
+			userInfo = (UserInfo) session.getAttribute("author");
+
+		}else {
+			userInfo = (UserInfo) session.getAttribute("userInfo");
+		}
+
 		if (userInfo == null) {
 			responseObject.setStatus("500");
 			return JSON.toJSONString(responseObject);
 		}
-		Pagination<Message> messages = messageService.getMessagesByUser(userInfo.getUserNo(), page,pageSize);
+		
+		Pagination<Message> messages = messageService.getMessagesByUser(userInfo.getUserNo(), page,pageSize,type);
 		responseObject.setStatus("200");
 		responseObject.setResult(messages);
 		return JSON.toJSONString(responseObject,SerializerFeature.DisableCircularReferenceDetect);
@@ -252,7 +266,7 @@ public class MessageController {
 		return JSON.toJSONString(responseObject,SerializerFeature.DisableCircularReferenceDetect);
 	}
 	
-	@RequestMapping(value= "manager/deleteMsg",method=RequestMethod.GET)
+	@RequestMapping(value= "manager/deleteMsg.do",method=RequestMethod.GET)
 	public String deleteMessgae(@RequestParam("msgNo")Integer msgNo,
 			HttpSession session){
 		Date current = new Date();
@@ -291,6 +305,15 @@ public class MessageController {
 		}
 		Integer updateId = managerInfo.getManagerNo();
 		messageService.activeMessage(type,updateId,current,msgNo);
+		Message message = messageService.getMsg(msgNo);
+		if (type == 0) {
+			String content = "你的消息（编号："+msgNo+"）未通过审核，请修改后再次提交。";
+			MailUitl.sendMail(message.getUserInfo().getEmailAddress(), content);
+		}
+		if (type == 1) {
+			String content = "你的消息（编号："+msgNo+"）通过审核，请到AroundYou查看。";
+			MailUitl.sendMail(message.getUserInfo().getEmailAddress(), content);
+		}
 		return "redirect:imgtable.html";
 	}
 	
@@ -316,5 +339,87 @@ public class MessageController {
 		Integer updateId = managerInfo.getManagerNo();
 		messageService.changeHot(msgNo,updateId,current);
 		return "redirect:imgtable.html";
+	}
+	
+	@RequestMapping(value="user/publishMessage.do")
+	public String publishMessage(@RequestParam("msgNo")Integer msgNo,
+			HttpSession session){
+		UserInfo userInfo = (UserInfo) session.getAttribute("userInfo");
+		Date current = new Date();
+		if (userInfo == null || userInfo.getUserType() == 0) {
+			return "redirect:index.jsp";
+		}
+		Integer updateId = userInfo.getUserNo();
+		messageService.activeMessage(2, updateId, current, msgNo);
+		return "redirect:createMessage.jsp";
+	}
+	
+	@RequestMapping(value= "user/deleteMsg.do",method=RequestMethod.GET)
+	public String deleteMessgaeU(@RequestParam("msgNo")Integer msgNo,
+			HttpSession session){
+		Date current = new Date();
+		UserInfo userInfo = (UserInfo) session.getAttribute("userInfo");
+		if (userInfo == null || userInfo.getUserType() == 0) {
+			return "redirect:index.jsp";
+		}
+		Integer deleteId = userInfo.getUserNo();
+		messageService.deleteMsg(msgNo, deleteId, current);
+		return "redirect:createMessage.jsp";
+	}
+	
+	@RequestMapping(value="user/getMsg.do",method=RequestMethod.POST)
+	@ResponseBody
+	public String getMessage(@RequestParam("msgNo")Integer msgNo){
+		JsonResponseObject responseObject = new JsonResponseObject();
+		Message message = messageService.getMsg(msgNo);
+		responseObject.setStatus("200");
+		responseObject.setResult(message);
+		return JSON.toJSONString(responseObject);
+	}
+	
+	@RequestMapping(value="user/saveMessage.do",method=RequestMethod.POST)
+	@ResponseBody
+	public String saveMessage(@RequestParam(value="msgNo",required=false)Integer msgNo,
+			@RequestParam("title")String title,
+			@RequestParam("name")String name,
+			@RequestParam("content")String content,
+			@RequestParam("cateNo")Integer cateNo,
+			@RequestParam("msgUrl")String msgUrl,
+			@RequestParam("type")Integer type,
+			HttpSession session){
+		JsonResponseObject responseObject = new JsonResponseObject();
+		Date current = new Date();
+		Message message;
+		SecondMessageCategory category = categoryService.getCategory(cateNo);
+		if (msgNo == null) {
+			message = new Message();
+			UserInfo userInfo = (UserInfo) session.getAttribute("userInfo");
+			if (userInfo == null) {
+				responseObject.setStatus("401");
+			}		
+			message.setCreateId(userInfo.getUserNo());
+			message.setCreateDate(current);
+			message.setUserInfo(userInfo);
+			message.setViewCount(0);
+			message.setCmtCount(0);
+		}else {
+			message = messageService.getMsg(msgNo);
+		}
+		
+		if (type == 0) {
+			message.setActive(0);
+		}else{
+			message.setActive(1);
+		}
+		message.setIsHot('N');
+		message.setMessageContent(content);
+		message.setMessageName(name);
+		message.setMessageTitle(title);
+		message.setSecondMessageCategory(category);
+		message.setPhotoUri(msgUrl);
+		messageService.saveMessage(message);
+		
+		responseObject.setStatus("200");		
+		return JSON.toJSONString(responseObject);
 	}
 }

@@ -31,7 +31,7 @@
     <servlet-mapping>  
         <servlet-name>dispatcherServlet</servlet-name>  
         <url-pattern>*.do</url-pattern>  
-    </servlet-mapping>  
+    </servlet-mapping>    
   
     <!-- 配置编码方式过滤器,注意一点:要配置在所有过滤器的前面 -->  
     <filter>  

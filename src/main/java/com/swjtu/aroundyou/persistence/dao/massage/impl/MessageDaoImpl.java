@@ -60,10 +60,10 @@ public class MessageDaoImpl extends GenericHibernateDaoImpl<Message,Integer> imp
 	}
 
 	@Override
-	public Pagination<Message> getMessagesByUser(Integer userNo, Integer page,Integer pageSize) {
+	public Pagination<Message> getMessagesByUser(Integer userNo, Integer page,Integer pageSize,Integer type) {
 		
-		String hql = "from Message where active=2 and deleteId = null and userInfo.userNo = ?";
-		return findPagination(hql, page, pageSize, userNo);
+		String hql = "from Message where active=? and deleteId = null and userInfo.userNo = ?";
+		return findPagination(hql, page, pageSize, type, userNo);
 	}
 
 	@Override
@@ -138,6 +138,17 @@ public class MessageDaoImpl extends GenericHibernateDaoImpl<Message,Integer> imp
 		String hql = "from Message where deleteId = null and deleteDate = null and active = 2 and messageNo = ?";
 		Query query = getSession().createQuery(hql)
 				                  .setParameter(0, id);
+		if (query.list() != null && query.list().size() > 0) {
+			return (Message) query.list().get(0);
+		}
+		return null;
+	}
+
+	@Override
+	public Message getMsg(Integer msgNo) {
+		String hql = "from Message where deleteId = null and messageNo = :msgNo";
+		Query query = getSession().createQuery(hql)
+				                  .setParameter("msgNo", msgNo);
 		if (query.list() != null && query.list().size() > 0) {
 			return (Message) query.list().get(0);
 		}

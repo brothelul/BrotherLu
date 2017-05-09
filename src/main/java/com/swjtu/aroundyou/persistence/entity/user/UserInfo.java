@@ -20,10 +20,10 @@ public class UserInfo implements Serializable{
 	private String username;
 	private String faviconUri;
 	private String shortDesc;
-	private String longDesc;
+	private String longDesc;  //暂时用于存放审核失败原因
 	private String emailAddress;
 	private String identifyUri;  //存放认证的图片
-	private Integer passIdentify;  //是否通过认证，1 为通过 ， 0 为未通过，初始值为3
+	private Integer passIdentify;  //是否通过认证，0为初始，1为已经上传但是未审核，2为通过，3为未通过
 	private Integer friend;  //存放友好度，用于限制恶劣用户评论和发表反动信息， 总值为5，扣分由后台操作
 	private String lastLoginIP;
 	private Date lastLoginDate;

@@ -28,4 +28,15 @@ public class UserLoginDaoImpl extends GenericHibernateDaoImpl<UserLogin,Integer>
 		
 		return userLoginDTO.getUserNo();
 	}
+
+	@Override
+	public UserLogin validateUsername(String username) {
+		String hql = "from UserLogin where username = :username";
+		Query query = getSession().createQuery(hql)
+				                  .setParameter("username", username);
+		if (query.list() != null&&query.list().size() > 0) {
+			return (UserLogin) query.list().get(0);
+		}
+		return null;
+	}
 }

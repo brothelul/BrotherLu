@@ -54,35 +54,10 @@
                         <div class="block_popular_posts"></div>
                         
                         <div class="separator" style="height:31px;"></div>
-<!--                         
-                        <div class="block_popular_stuff">
-                        	<h4>热门视频</h4>
-                            
-                            <div class="content">
-                            	<a href="#" class="view_all">查看所有</a>
-                            	<div class="media"><a href="http://www.youtube.com/watch?v=ySIvism2af8" class="general_pic_hover play no_fx" data-rel="prettyPhoto" title="Popular Video"><img src="resources/images/pic_pop_video.jpg" alt="" /></a></div>
-                                <p><a href="blog_post_w_video.html">Publishing packages and web page editors their default model.</a> <img src="resources/images/icon_video.gif" alt="" /></p>
-                                <p class="date">11 July, 2012</p>
-                            </div>
-                            
-                            <div class="info">
-                            	<ul>
-                                	<li class="comments"><a href="#">115</a></li>
-                                    <li class="views"><a href="#">220</a></li>
-                                </ul>
-                            </div>
-                            
-                            <div class="clearboth"></div>
-                            
-                            <div class="line_2"></div>
-                        </div>
-                        
-                        <div class="separator" style="height:31px;"></div> -->
-                        
                         <div class="block_calendar">
-<!--                         	<h4>日历</h4> -->                           
+                          
                            <div class="calendar" id="calendar_sidebar">
-                            </div>
+                           </div>
                             
                             <script type="text/javascript">
 								var today = new Date();
@@ -109,13 +84,7 @@
                         
                     </div>
                     <div class="block_all">
-                      <div class="block_to_top ">
-                        	<a href="#" >返回顶部</a>
-                      </div>   
-                      <br/>
-                      <div class="block_refresh">
-                        	<a href="#">刷新页面</a>
-                        </div>
+
                          
                     </div>
                 	<div class="clearboth"></div>

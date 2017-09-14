@@ -87,33 +87,6 @@ function loadSearchMessages(page,pageSize,key){
                             </form>
                           </div>                     
                         <div class="separator" style="height:40px;"></div>
-
-<!--                          <div class="block_author">
-                        	<div class="photo"><a href="#"><img src="resources/images/ava_default_2.jpg" alt="" /></a></div>
-                            <div class="bio">
-                            	<p>There are many variations of passages of available, but the majority have suffered alteration in some form, by injected humour, or <b>randomised words which</b> don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
-                                
-                                <p class="www"><a href="#">www.websitename.com</a></p>
-                                <p class="email"><a href="mailto:#" target="_blank">webvisionss@gmail.com</a></p>
-                                
-                                <div class="line_3" style="margin:10px 0px 17px;"></div>                               
-                            </div>
-                            
-                            <div class="clearboth"></div>
-                        </div>
-                        <div class="block_author">
-                        	<div class="photo"><a href="#"><img src="resources/images/ava_default_2.jpg" alt="" /></a></div>
-                            <div class="bio">
-                            	<p>There are many variations of passages of available, but the majority have suffered alteration in some form, by injected humour, or <b>randomised words which</b> don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
-                                
-                                <p class="www"><a href="#">www.websitename.com</a></p>
-                                <p class="email"><a href="mailto:#" target="_blank">webvisionss@gmail.com</a></p>
-                                
-                                <div class="line_3" style="margin:10px 0px 17px;"></div>                               
-                            </div>
-                            
-                            <div class="clearboth"></div>
-                        </div> -->
                                                                
                     </div>
                       <%@include file="search_side.jsp" %>                                       

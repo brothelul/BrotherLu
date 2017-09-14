@@ -2,7 +2,6 @@
     pageEncoding="utf-8"%>
    
  <script type="text/javascript">
- 
  // 页面加载时获取分类信息
   (function(){	   
 	   
@@ -15,8 +14,14 @@
 		   
 		   success:function(data){
 
+			    $(".fl div ul").empty();
                 var item =jQuery.parseJSON(data);                			 				   
-                $(".fl div ul").append("<li class='current'><a>"+item.cityName+"</a></li><li><a>"+item.lowTemp+"°/"+item.highTemp+"°</a></li><li><a>"+item.weather+"</a></li><li><a>"+item.quality+"</a></li>");		                
+                if(item.cityName == null){
+                	console.log("没有获取到天气");
+                	$(".fl div ul").append("<li class='current'><a>暂时未获取到天气信息</a></li>");
+                }else{
+                	$(".fl div ul").append("<li class='current'><a>"+item.cityName+"</a></li><li><a>"+item.lowTemp+"°/"+item.highTemp+"°</a></li><li><a>"+item.weather+"</a></li><li><a>"+item.quality+"</a></li>");
+                } 	                
 
 		   }
 	   });
@@ -82,10 +87,10 @@
 								<a href="createMessage.jsp">
 								<c:if test="${author.userNo == userInfo.userNo}">
 								<c:if test="${author.userType == 1}">
-								 发布信息    
+								 个人中心(发布信息)    
 								</c:if>
 								<c:if test="${author.userType == 0}">
-								 申请发布信息    
+								 个人中心(申请发布信息)    
 								</c:if>
 								</c:if>
 								</a>

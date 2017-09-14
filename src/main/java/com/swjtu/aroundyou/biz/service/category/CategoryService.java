@@ -23,7 +23,7 @@ public interface CategoryService {
 	
 	SecondMessageCategory getCategory(Integer cateNo);
 	
-	void updateCategory(Integer cateNo,String desc);
+	void updateCategory(Integer cateNo,String cateName,String desc);
 	
 	void saveCategory(SecondMessageCategory category); 
 	

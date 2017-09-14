@@ -3,7 +3,6 @@
 <script type="text/javascript">
   function login(){
 	  var formData = $('form').serializeArray();
-	  alert(formData);
 	  $.ajax({		  
 		  type:"post",
 		  dataType:"json",

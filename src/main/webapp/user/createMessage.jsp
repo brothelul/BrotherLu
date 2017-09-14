@@ -131,7 +131,7 @@ function loadAllCate(){
 			   var item = eval(data);	
 			   var str ="";
 			   $.each(item,function(i,cate){
-				   str = str +"<option label='"+cate.categoryName+"' value='"+cate.categoryNo+"'/>";
+				   str = str +"<option value='"+cate.categoryNo+"'><a>"+cate.categoryName+"</a></option>";
 			   });
 			   $("#cate").empty();
 			   $("#cate").append(str);
@@ -155,7 +155,16 @@ function edit(test){
 			  if(item.status == "200"){
 				  $("#title").val(msg.messageTitle);
 				  $("#name").val(msg.messageName);
-				  $("#mcontent").val(msg.messageContent);
+				  var mcontent = msg.messageContent;
+				  var arr = mcontent.split('<br/>地址：');
+				  
+				  var addr = arr[arr.length - 1];
+				  $("#addr").val(addr);
+				  console.log(arr.length);
+				  arr.pop();
+				  arr = arr.join('<br/>');
+				  console.log(arr);
+				  $("#mcontent").val(arr);
 				  $("#cate").val(msg.secondMessageCategory.categoryNo);
 			      $("#msgNo").val(msg.messageNo);
 				  $("#named").after("<div id='msg'><a href='javascript:;'><img style='width: 50%;height: 200px;' src='"+msg.photoUri+"' alt='' id='msgUrl'/></a></div>");
@@ -167,15 +176,53 @@ function edit(test){
         initialIndex : 2
     });
 };
+function checkTitle(){
+	var title = $("#title").val();
+	if(title == '' || title.length > 40){
+		alert("消息标题不为空，且字数少于40");
+		return false;
+	}
+	return true;
+};
+
+function checkAddr(){
+	var addr = $("#addr").val();
+	if(addr == '' || addr.length > 40){
+		alert("活动地址不为空，且地址少于40字");
+		return false;
+	}
+	return true;
+};
+
+function checkKeyWord(){
+	var key = $("#name").val();
+	if(key == '' || key.length > 10){
+		alert("关键字不为空，且字数少于10");
+		return false;
+	}
+	var szMsg=/[@\/'\\"#$%&\^*]/;
+	if(szMsg.test(key)){
+		alert("关键字不能含有非法字符，如"+szMsg);
+		return false;
+	}
+	return true;
+};
 
 function save(type){
+	checkTitle();
+	checkKeyWord();
+	checkAddr();
+	var msgUrl = $("#msgUrl").attr("src");
+	if(msgUrl == ''|| msgUrl == null){
+		alert("请先上传图片再提交");
+		return; 
+	}
 	var msgNo = $("#msgNo").val();
 	var title = $("#title").val();
 	var name = $("#name").val();
-	var content = $("#mcontent").val();
+	var addr = $("#addr").val();
+	var content = $("#mcontent").val()+"<br/>地址："+addr;
 	var cateNo = $("#cate").val();
-	var msgUrl = $("#msgUrl").attr("src");
-	alert(msgUrl);
 	
 	$.ajax({		  
 		  type:"post",
@@ -193,7 +240,6 @@ function save(type){
 					  });
 				  }
 				  if(type == 1){
-
 					  $('.block_tabs_type_2 .tabs').tabs('.block_tabs_type_2 .tab_content', {
 					        initialIndex : 1
 					  });
@@ -208,6 +254,7 @@ function save(type){
 				  $("#name").val('');
 				  $("#mcontent").val('');
 				  $("#cate").val('');
+				  $("#addr").val('');
 			  }
 		  }
 	});
@@ -217,8 +264,6 @@ function uploadImg(){
 	var formData = new FormData();
 	var file = $("#file")[0].files[0];
 	formData.append("file",file);
-	alert(file.name);
-	alert(file.size);
 	
 	$.ajax({ 
 		url : "fileUpload.do", 
@@ -232,9 +277,11 @@ function uploadImg(){
 
 		success : function(data){
 			var item = jQuery.parseJSON(data);
-			alert(item.status);
 			if(item.status == "200"){
-				 $("#named").after("<div id='msg'><a href='javascript:;'><img style='width: 50%;height: 200px;' src='"+item.result+"' alt='' id='msgUrl'/></a></div>");
+				 $("#pic").before("<div id='msg'><a href='javascript:;'><img style='width: 50%;height: 200px;' src='"+item.result+"' alt='' id='msgUrl'/></a></div>");
+			}
+			if(item.status == "500"){
+				alert("图片上传出错，图片格式应为jgp/png/jpeg/gif中一种，图片最大尺寸为5M");
 			}
 		 }
 		});
@@ -262,7 +309,6 @@ function uploadImgU(){
 
 		success : function(data){
 			var item = jQuery.parseJSON(data);
-			alert(item.status);
 			if(item.status == "200"){
 				window.location.reload();
 			}
@@ -277,8 +323,6 @@ function uploadIcon(){
 	var formData = new FormData();
 	var file = $("#icon")[0].files[0];
 	formData.append("file",file);
-	alert(file.name);
-	alert(file.size);
 	
 	$.ajax({ 
 		url : "fileUpload.do", 
@@ -292,7 +336,6 @@ function uploadIcon(){
 
 		success : function(data){
 			var item = jQuery.parseJSON(data);
-			alert(item.status);
 			if(item.status == "200"){
 				 $("#uIcon").removeAttr("src");
 				 $("#uIcon").attr("src",item.result);
@@ -329,6 +372,7 @@ function validateEmail(){
 	 return false;
 	 }
 };
+
 </script>
 <body>
 	<div class="wrapper sticky_footer">
@@ -346,9 +390,9 @@ function validateEmail(){
                         <div class="block_tabs_type_2">
                             <div class="tabs">
                                 <ul>
-                                    <li><a href="#1" class="current">草稿消息</a></li><!-- tab link -->
-                                    <li><a href="#2">待审核消息</a></li><!-- tab link -->
-                                    <li><a href="#3">写消息</a></li><!-- tab link -->      
+                                    <li><a href="#1" class="current">草稿信息</a></li><!-- tab link -->
+                                    <li><a href="#2">待审核信息</a></li><!-- tab link -->
+                                    <li><a href="#3">写信息</a></li><!-- tab link -->      
                                     <li><a href="#4">个人资料</a></li>                            
                                 </ul>
                             </div>
@@ -380,15 +424,17 @@ function validateEmail(){
                       		<div class="block_leave_reply">
                       	     <form class="w_validation" id="comment" enctype="multipart/form-data">
                       	     <input type="hidden" id="msgNo"/>
-                      	       <div class="field"><input type="text" placeholder ="信息标题" id="title"/></div>
-                      	       <div class="field" id="named"><input type="text" placeholder ="关键字" id="name"/></div>
-                      	       
-                      	       <div style="margin-top: 10px;margin-bottom: 15px;">
-                      	       <label>文章图片</label>
+                      	       <div class="field"><input type="text" placeholder ="信息标题" id="title" onblur="checkTitle();"/></div>
+                      	       <div class="field" id="named"><input type="text" placeholder ="关键字" id="name" onblur="checkKeyWord();"/></div>
+                      	       <div class="field">
+                      	        <input type="text" placeholder ="活动地址（地址请填写的尽量详细）" id="addr" onblur="checkAddr();"/>
+                      	       </div>
+                      	       <div style="margin-top: 10px;margin-bottom: 15px;" id="pic">
+                      	       <label>信息图片</label>
                       	       <input type="file" placeholder ="上传文章图片" id="file" onchange="uploadImg();"/>
                       	       </div>
                       	       <div style="margin-bottom: 15px;">
-                      	       <label>分类</label>
+                      	       <label>所在分类</label>
                       	       <select id="cate">
                       	       </select>
                       	       </div>

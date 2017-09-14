@@ -48,10 +48,9 @@ function loadUserMessage(page,pageSize){
 		  }
 	});
 };
-
+var page = 1;
 function loadMore(){
 	$("#more").remove();
-	var page = 1;
 	page++;
 	loadUserMessage(page,6);
 }

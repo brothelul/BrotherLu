@@ -76,11 +76,12 @@ function loadMessage(page,pageSize){
 
 function controlUser(type,test){
 	var userNo = $(test).parents("tr").children(":first-child").html();
-	alert(userNo);
+	var reason = $(test).parents("tr").children().eq(3).children().val();
+	alert(reason);
 	$.ajax({		  
 		  type:"post",
 		  dataType:"json",
-		  data:{"type":type,"reason":"","userNo":userNo},
+		  data:{"type":type,"reason":reason,"userNo":userNo},
 		  url:"controlUser.do",
 		  
 		  success:function(data){
@@ -119,7 +120,7 @@ function controlUser(type,test){
     <tr>
     <th>用户编号</th>
     <th>申请人</th>
-    <th width="100px;">缩略图</th>
+    <th width="100px;">认证图片</th>
     <th>说明</th>
     <th>操作</th>
     </tr>

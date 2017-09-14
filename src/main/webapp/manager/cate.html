@@ -6,18 +6,6 @@
 <link href="resources/css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="resources/js/jquery.js"></script>
 <script type="text/javascript">
-/* $(function () {
-
-    //方法二：
-    (function ($) {
-        $.getUrlParam = function (name) {
-            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-            var r = window.location.search.substr(1).match(reg);
-            if (r != null) return unescape(r[2]); return null;
-        }
-    })(jQuery);
-
-}); */
 
 function getUrlVars(){
     var vars = [], hash;
@@ -41,9 +29,10 @@ function getUrlVar(name){
 $(document).ready(function(){
 	var cateNo = getUrlVar("cateNo");
 	if(cateNo == null){
-		$("#name").removeAttr("disabled");
 		$("#edit").val("确认添加");
+		$("#add").append("添加分类");
 	}else{
+		$("#add").append("修改分类");
 		$.ajax({		  
 			  type:"post",
 			  dataType:"json",
@@ -65,8 +54,17 @@ $(document).ready(function(){
 	
 	$("#edit").click(function(){
 		var desc = $("#desc").val();
+		var cateName = $("#name").val();
+		if(''==cateName){
+			alert("分类名不能为空");
+			return false;
+		}
+		if(''==desc){
+			alert("描述不能为空");
+			console.log('desc is null');
+			return false;
+		}
 		if(cateNo == null){
-			var cateName = $("#name").val();
 			$.ajax({		  
 				  type:"post",
 				  dataType:"json",
@@ -84,7 +82,7 @@ $(document).ready(function(){
 			$.ajax({		  
 				  type:"post",
 				  dataType:"json",
-				  data:{"cateNo":cateNo,"desc":desc},
+				  data:{"cateNo":cateNo,"cateName":cateName,"desc":desc},
 				  url:"saveCategory.do",
 				  
 				  success:function(data){
@@ -106,7 +104,8 @@ $(document).ready(function(){
     <span>位置：</span>
     <ul class="placeul">
     <li><a href="#">首页</a></li>
-    <li><a href="#">表单</a></li>
+    <li><a href="#">分类管理</a></li>
+    <li><a href="#" id="add"></a></li>
     </ul>
     </div>
     
@@ -115,7 +114,7 @@ $(document).ready(function(){
     <div class="formtitle"><span>分类信息</span></div>
     
     <ul class="forminfo">
-    <li><label>分类名称</label><input id="name" type="text" class="dfinput" disabled="disabled"/></li>
+    <li><label>分类名称</label><input id="name" type="text" class="dfinput"/></li>
     <li id="test"><label>分类描述</label><input id="desc" type="text" class="dfinput" /></li>
     <li><label>&nbsp;</label>
     <input id="edit" type="button" class="btn" value="确认修改"/>

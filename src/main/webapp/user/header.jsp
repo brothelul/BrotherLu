@@ -3,11 +3,10 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
    
  <script type="text/javascript">
- 
+
  // 页面加载时获取分类信息
-  (function(){	   
-	   $.ajax({
-		   
+  (function(){	  
+	   $.ajax({		   
 		   type:"get",
 		   dataType:"json",
 		   url:"loadCategory.do",
@@ -40,7 +39,6 @@
 	   });
 	   
 	   $.ajax({
-		   
 		   type:"get",
 		   dataType:"json",
 		   url:"weather.do",
@@ -48,9 +46,14 @@
 		   
 		   success:function(data){
 
-                var item =jQuery.parseJSON(data);                			 				   
-                $(".fl div ul").append("<li class='current'><a>"+item.cityName+"</a></li><li><a>"+item.lowTemp+"°/"+item.highTemp+"°</a></li><li><a>"+item.weather+"</a></li><li><a>"+item.quality+"</a></li>");		                
-
+			    $(".fl div ul").html('');
+                var item =jQuery.parseJSON(data); 
+                if(item.cityName == null){
+                	console.log("没有获取到天气");
+                	$(".fl div ul").append("<li class='current'><a>暂时未获取到天气信息</a></li>");
+                }else{
+                	$(".fl div ul").append("<li class='current'><a>"+item.cityName+"</a></li><li><a>"+item.lowTemp+"°/"+item.highTemp+"°</a></li><li><a>"+item.weather+"</a></li><li><a>"+item.quality+"</a></li>");
+                }               		                
 		   }
 	   });
    })();

@@ -23,7 +23,7 @@ public interface SecondCategoryDao extends GenericHibernateDao<SecondMessageCate
 	
 	Pagination<SecondMessageCategory> getCategories(Integer pageSize,Integer page);
 	
-	void updateCategory(Integer cateNo,String desc);
+	void updateCategory(Integer cateNo,String cateName,String desc);
 	
 	void deleteCategory(Integer cateNo,Integer deleteId,Date current);
 }

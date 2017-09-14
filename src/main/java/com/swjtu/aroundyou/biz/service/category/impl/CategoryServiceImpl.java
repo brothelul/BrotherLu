@@ -49,8 +49,8 @@ public class CategoryServiceImpl implements CategoryService {
 		return secondCategoryDao.getById(cateNo);
 	}
 	@Override
-	public void updateCategory(Integer cateNo, String desc) {
-		secondCategoryDao.updateCategory(cateNo, desc);	
+	public void updateCategory(Integer cateNo, String cateName,String desc) {
+		secondCategoryDao.updateCategory(cateNo, cateName,desc);	
 	}
 	@Override
 	public void saveCategory(SecondMessageCategory category) {

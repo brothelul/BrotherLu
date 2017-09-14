@@ -40,8 +40,8 @@ public class WeatherController {
 		Weather weather = new Weather();
 		
 		try {
-			String name = "成都";
-			
+			String name = getCity();
+			logger.info(name);
 			String urlEncoderCityName = new String(URLEncoder.encode(name, "utf-8"));		
 			String url = getWeatherUrl(urlEncoderCityName).toString();
 			
@@ -96,5 +96,17 @@ public class WeatherController {
 		weatherUrl.setCityName(cityname);
 		
 		return weatherUrl;
+	}
+	
+	private String getCity() throws IOException{
+		String key = appConfigService.getAppConfigValue("CITY", "KEY");
+		String uri = appConfigService.getAppConfigValue("CITY", "URI");
+		String url = uri + "?key="+key;
+		String response = HttpRequestUrl.getUrlResponse(url);
+		logger.info(response);
+		JSONObject result = JSONObject.parseObject(response).getJSONObject("result");
+		String city = result.getString("area");
+		String cityName = city.substring(city.lastIndexOf('省')+1, city.length()-1);
+		return cityName;
 	}
 }

@@ -75,9 +75,10 @@ public class CategoryController {
 	@RequestMapping(value="manager/saveCategory.do",method=RequestMethod.POST)
 	@ResponseBody
 	public String saveCategory(@RequestParam("cateNo")Integer cateNo
-			,@RequestParam("desc")String desc){
+			,@RequestParam("desc")String desc
+			,@RequestParam("cateName")String cateName){
 		JsonResponseObject responseObject = new JsonResponseObject();
-		categoryService.updateCategory(cateNo, desc);
+		categoryService.updateCategory(cateNo, cateName,desc);
 		responseObject.setStatus("200");
 		return JSON.toJSONString(responseObject);
 	}

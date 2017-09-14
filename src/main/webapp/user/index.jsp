@@ -24,7 +24,13 @@
      			       // 页面加载时获取旋转框信息
      				   if(i<5){
           				 
-     					   var str = "<li><div class='slide'><img src='"+item.photoUri+"' alt='"+item.messageName+"'/><div class='caption'><p class='title'>"+item.messageTitle+"</p><p>"+item.messageContent+"</p></div></div></li>";
+     					   var str = "<li><div class='slide'><a href='getMessage.do?messageNo="+item.messageNo+"'><img src='"+item.photoUri+"' alt='"+item.messageName+"'/></a><div class='caption'><p class='title'>"+item.messageTitle+"</p><p>";
+      				       var content = item.messageContent;
+     				       if(content.length > 160){
+     				    	  content = content.substring(0,160);
+     				    	  content = content +"......";
+     				       }
+     					   str = str +content+"</p></div></div></li>";
                            $("#sliders").append(str);
      				   }else{
      			     	   //获取热门消息
@@ -37,12 +43,10 @@
      					   str = str +"<div class='icons'><ul>";  //后面补充count<a href='#' class='views'>56</a></li><li>
      					   str = str +"<li><a class='comments'>"+item.cmtCount+"</a></li></ul></div></div></div>";//后面补充count
 
-         				   if(i%2 == 0){
-
+         				   if(i%2 == 1){
          					   str = str +"<div class='line_3' style='margin:14px 0px 17px;'></div>";
          					   $(".block_home_col_1").append(str);   					   
-         				   }else if(i%2 == 1){
-         					   
+         				   }else if(i%2 == 0){         					   
          					   str = str +"<div class='line_3' style='margin:14px 0px 17px;'></div>";
          					   $(".block_home_col_2").append(str);
          				   }
@@ -50,6 +54,7 @@
      				   }
 
      			   });
+                   slider();
      		   }
      	   });
        })();
@@ -167,7 +172,7 @@
                             <script type="text/javascript">
                             
                                 //旋转木马
-								$(function () {
+								function slider() {
 									$('#home_slider').flexslider({
 										animation : 'slide',
 										controlNav : true,
@@ -180,7 +185,7 @@
 										useCSS : false
 									});
 									
-								});
+								};
 							</script>
                         </div>
                         

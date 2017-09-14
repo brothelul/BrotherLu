@@ -17,9 +17,7 @@
 
 	function managerlogin(){
 		var username = $("#username").val();
-		var password = $("#password").val();
-		
-		alert(username +":"+password);
+		var password = $("#password").val();		
 		$.ajax({		  
 			  type:"post",
 			  dataType:"json",
@@ -33,7 +31,7 @@
 				  if(item.status == "200"){
 					  window.location="main.jsp";
 				  }else{
-					  window.location="login.jsp";
+					  $("#msg").html("用户名或密码不正确");
 				  }
 			  }  
 		});
@@ -54,7 +52,7 @@
 
 
 <div class="logintop">    
-    <span>欢迎登录后台管理界面平台</span>    
+    <span>欢迎登录AroundYou后台管理界面</span>    
     <ul>
     <li><a href="../user/index.jsp">回首页</a></li>
     </ul>    
@@ -69,9 +67,8 @@
     <ul>
     <li><input id="username" type="text" class="loginuser" /></li>
     <li><input id="password" type="password" class="loginpwd"/></li>
-    <li><input name="" type="button" class="loginbtn" value="登录"  onclick="managerlogin();"/>
-    <label><input name="" type="checkbox" value="" checked="checked" />记住密码</label>
-    <label><a href="#">忘记密码？</a></label></li>
+    <li><input name="" type="button" class="loginbtn" value="登录" style="float:right;margin-right: 62px;margin-bottom: 10px;" onclick="managerlogin();"/>
+    <label style="color: red;" id="msg"></label></li>
     </ul>
     
     

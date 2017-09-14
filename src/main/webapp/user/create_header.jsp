@@ -2,7 +2,6 @@
     pageEncoding="utf-8"%>
    
  <script type="text/javascript">
- 
  // 页面加载时获取分类信息
   (function(){	   
 	   
@@ -15,8 +14,14 @@
 		   
 		   success:function(data){
 
+			    $(".fl div ul").empty();
                 var item =jQuery.parseJSON(data);                			 				   
-                $(".fl div ul").append("<li class='current'><a>"+item.cityName+"</a></li><li><a>"+item.lowTemp+"°/"+item.highTemp+"°</a></li><li><a>"+item.weather+"</a></li><li><a>"+item.quality+"</a></li>");		                
+                if(item.cityName == null){
+                	console.log("没有获取到天气");
+                	$(".fl div ul").append("<li class='current'><a>暂时未获取到天气信息</a></li>");
+                }else{
+                	$(".fl div ul").append("<li class='current'><a>"+item.cityName+"</a></li><li><a>"+item.lowTemp+"°/"+item.highTemp+"°</a></li><li><a>"+item.weather+"</a></li><li><a>"+item.quality+"</a></li>");
+                } 		                
 
 		   }
 	   });
@@ -80,6 +85,7 @@
                         	    <li class="common"><a><img src="${userInfo.faviconUri}" alt="" style="margin:-36px 0 0 -19px;height: 80px;border-radius:38px;width: 80px;"/></a></li>
 								<li class="common"><a href="toUserPage.do?userNo=${userInfo.userNo}">${userInfo.username}</a></li>
 						      </c:if>
+						      <li class="common1"><a href="index.jsp">回首页</a></li>
 						    </ul>
 						</nav>
                     </div>

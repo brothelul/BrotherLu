@@ -85,11 +85,18 @@
  	 		}
  	 	});
  	};
- 	
+ 
+    var pagem = 1;
  	function loadMore(){
- 		var page = 1;
-		page++;
-    	loadComments(page,6);
+		pagem++;
+    	loadComments(pagem,6);
+ 	}
+ 	
+ 	function removeTextareaStyle(){
+ 		$(".textarea").removeAttr("style");
+ 	}
+ 	function addTextareaStyle(){
+ 		$(".textarea").attr("style","height:30px;");
  	}
 </script>
 <body>
@@ -127,8 +134,8 @@
                         <div class="block_leave_reply"> 
                         <form class="w_validation" id="comment" >
                         <input type="hidden" value="${message.messageNo}" id="messageNo"/>
-                        <div class="textarea"><textarea cols="1" rows="1" placeholder="说点什么..." id="cmtContent"></textarea></div> 
-                        <div style="float: right;margin-bottom:10px;"> <input type="button" class="general_button" value="提交评论"  id="commentButton"/></div>
+                        <div class="textarea" style="height: 30px;"><textarea cols="1" rows="1" placeholder="说点什么..." id="cmtContent" onfocus="removeTextareaStyle();"></textarea></div> 
+                        <div style="float: right;margin-bottom:10px;"> <input type="button" class="general_button" value="提交评论"  id="commentButton" onclick="addTextareaStyle();"/></div>
                         </form>
                         </div>                                                                   
                         

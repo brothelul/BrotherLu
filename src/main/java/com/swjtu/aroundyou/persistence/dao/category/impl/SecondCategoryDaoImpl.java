@@ -35,11 +35,12 @@ public class SecondCategoryDaoImpl extends GenericHibernateDaoImpl<SecondMessage
 	}
 
 	@Override
-	public void updateCategory(Integer cateNo, String desc) {
-		String hql = "update SecondMessageCategory set categoryDesc = :desc where categoryNo = :cateNo";
+	public void updateCategory(Integer cateNo,String cateName, String desc) {
+		String hql = "update SecondMessageCategory set categoryDesc = :desc,categoryName = :cateName where categoryNo = :cateNo";
 		Query query = getSession().createQuery(hql)
 				                  .setParameter("cateNo", cateNo)
-				                  .setParameter("desc", desc);
+				                  .setParameter("desc", desc)
+				                  .setParameter("cateName", cateName);
 		query.executeUpdate();
 	}
 
